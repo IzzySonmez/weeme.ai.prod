@@ -1,0 +1,420 @@
+{
+  "common": {
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "success": "Başarılı",
+    "cancel": "İptal",
+    "confirm": "Onayla",
+    "save": "Kaydet",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "copy": "Kopyala",
+    "copied": "Kopyalandı!",
+    "close": "Kapat",
+    "back": "Geri",
+    "next": "İleri",
+    "previous": "Önceki",
+    "search": "Ara",
+    "filter": "Filtrele",
+    "sort": "Sırala",
+    "refresh": "Yenile",
+    "reset": "Sıfırla"
+  },
+  "auth": {
+    "login": "Giriş Yap",
+    "register": "Üye Ol",
+    "logout": "Çıkış",
+    "username": "Kullanıcı Adı",
+    "email": "E-posta",
+    "password": "Şifre",
+    "welcomeBack": "Tekrar Hoş Geldiniz",
+    "loginToAccount": "Hesabınıza giriş yapın",
+    "createAccount": "Hesap Oluşturun",
+    "freeCreditsStart": "3 ücretsiz kredi ile başlayın",
+    "alreadyHaveAccount": "Zaten hesabın var mı?",
+    "noAccount": "Hesabın yok mu?",
+    "loginNow": "Giriş yap",
+    "registerNow": "Hemen üye ol",
+    "loggingIn": "Giriş yapılıyor...",
+    "creatingAccount": "Hesap oluşturuluyor...",
+    "createFreeAccount": "Ücretsiz Hesap Oluştur",
+    "loginRequired": "Giriş Gerekli",
+    "loginRequiredMessage": "Bu özelliğe erişmek için önce giriş yapın."
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "suggestions": "AI Öneriler",
+    "aiContent": "İçerik Üret",
+    "billing": "Plan & Ödeme",
+    "settings": "Ayarlar",
+    "features": "Özellikler",
+    "howItWorks": "Nasıl Çalışır",
+    "plans": "Planlar",
+    "testimonials": "Referanslar",
+    "contact": "İletişim"
+  },
+  "home": {
+    "title": "weeme.ai - AI SEO Automation Platform",
+    "subtitle": "SEO'nuzu yapay zekâ ile otomatikleştirin",
+    "description": "Tek bir kod satırı ile sitenizi bağlayın. AI destekli kapsamlı SEO analizi, otomatik raporlar ve eylem planları ile organik trafiğinizi artırın.",
+    "startFree": "Ücretsiz Başla",
+    "watchDemo": "Demo İzle",
+    "aiPoweredSeo": "AI Destekli SEO Otomasyonu",
+    "stats": {
+      "activeSites": "Aktif Site",
+      "averageIncrease": "Ortalama Artış",
+      "totalScans": "Toplam Tarama",
+      "satisfaction": "Memnuniyet"
+    },
+    "howItWorks": {
+      "title": "3 Adımda SEO Otomasyonu",
+      "subtitle": "Karmaşık SEO süreçlerini basitleştirdik. Sadece 3 adımda profesyonel sonuçlar alın.",
+      "steps": {
+        "addCode": {
+          "title": "Kodu Ekle",
+          "description": "Tek satır kod ile sitenizi bağlayın"
+        },
+        "autoScan": {
+          "title": "Otomatik Tarama",
+          "description": "AI destekli kapsamlı SEO analizi"
+        },
+        "getResults": {
+          "title": "Sonuçları Al",
+          "description": "Detaylı raporlar ve eylem planları"
+        }
+      }
+    },
+    "features": {
+      "title": "Güçlü Özellikler",
+      "subtitle": "Modern SEO ihtiyaçlarınız için tasarlanmış kapsamlı araç seti",
+      "seoAnalysis": {
+        "title": "Kapsamlı SEO Analizi",
+        "description": "Meta etiketler, başlık yapısı, performans, mobil uyumluluk ve daha fazlası"
+      },
+      "autoReporting": {
+        "title": "Otomatik Raporlama",
+        "description": "Haftalık, iki haftalık veya aylık otomatik rapor akışı ve geçmiş takibi"
+      },
+      "aiSuggestions": {
+        "title": "AI Destekli Öneriler",
+        "description": "Yapay zeka ile kişiselleştirilmiş SEO önerileri ve eylem planları"
+      },
+      "secureIntegration": {
+        "title": "Güvenli Entegrasyon",
+        "description": "Tek satır kod ile güvenli bağlantı, veri gizliliği garantisi"
+      },
+      "multiSite": {
+        "title": "Çoklu Site Yönetimi",
+        "description": "Birden fazla sitenizi tek panelden yönetin ve karşılaştırın"
+      },
+      "performanceTracking": {
+        "title": "Performans Takibi",
+        "description": "Gerçek zamanlı performans metrikleri ve trend analizi"
+      }
+    },
+    "testimonials": {
+      "title": "Müşteri Deneyimleri",
+      "subtitle": "500+ mutlu müşterimizin başarı hikayeleri"
+    },
+    "pricing": {
+      "title": "Basit Fiyatlandırma",
+      "subtitle": "İhtiyacınıza uygun planı seçin, istediğiniz zaman değiştirin",
+      "free": {
+        "title": "Free",
+        "price": "₺0",
+        "description": "Başlangıç için ideal",
+        "features": [
+          "3 kredi (3 tarama)",
+          "Temel SEO raporu",
+          "Panel erişimi",
+          "E-posta desteği"
+        ]
+      },
+      "pro": {
+        "title": "Pro",
+        "price": "₺99",
+        "description": "Büyüyen işletmeler için",
+        "popular": "Popüler",
+        "features": [
+          "Sınırsız tarama",
+          "AI SEO önerileri",
+          "Detaylı raporlar",
+          "Öncelikli destek",
+          "Çoklu site yönetimi"
+        ]
+      },
+      "advanced": {
+        "title": "Advanced",
+        "price": "₺199",
+        "description": "Kurumsal çözümler",
+        "badge": "En Gelişmiş",
+        "features": [
+          "Tüm Pro özellikleri",
+          "AI içerik üretimi",
+          "Sosyal medya entegrasyonu",
+          "7/24 destek",
+          "API erişimi"
+        ]
+      }
+    },
+    "cta": {
+      "title": "SEO Otomasyonuna Hemen Başlayın",
+      "description": "500+ işletme weeme.ai ile organik trafiğini artırdı. Sıra sizde! Ücretsiz başlayın, 3 dakikada kurulum yapın.",
+      "benefits": [
+        "Kredi kartı gerektirmez",
+        "3 dakikada kurulum",
+        "İstediğiniz zaman iptal"
+      ]
+    }
+  },
+  "dashboard": {
+    "welcome": "Hoş geldin",
+    "todayIs": "Bugün",
+    "seoPerformance": "SEO performansını takip et ve optimize et",
+    "stats": {
+      "totalScans": "Toplam Tarama",
+      "averageScore": "Ortalama Skor",
+      "lastTrend": "Son Trend",
+      "activeTracking": "Aktif Takip",
+      "descriptions": {
+        "totalScans": "Yapılan SEO analizi sayısı",
+        "averageScore": "Tüm sitelerin ortalama SEO skoru",
+        "lastTrend": "Son iki tarama arasındaki değişim",
+        "activeTracking": "Otomatik takip edilen site sayısı"
+      }
+    },
+    "quickScan": {
+      "title": "Hızlı SEO Taraması",
+      "description": "Sitenizin SEO performansını anında analiz edin",
+      "placeholder": "https://example.com",
+      "scanButton": "Tara",
+      "scanning": "Taranıyor...",
+      "creditsRemaining": "Kalan Kredi",
+      "creditsPerScan": "Her tarama 1 kredi harcar",
+      "buyCredits": "Kredi Al"
+    },
+    "latestReport": {
+      "title": "Son Tarama Sonucu",
+      "seoScore": "SEO Skoru",
+      "strengths": "Güçlü Yönler",
+      "improvements": "İyileştirme Alanları"
+    },
+    "trackingCodes": {
+      "title": "Otomatik Takip Kodları",
+      "description": "Sitelerinizi otomatik olarak takip edin",
+      "newCode": "Yeni Kod",
+      "createNew": "Yeni Takip Kodu Oluştur",
+      "create": "Oluştur",
+      "noCodesYet": "Henüz Takip Kodu Yok",
+      "noCodesDescription": "Sitelerinizi otomatik olarak takip etmek için takip kodu oluşturun.",
+      "createFirst": "İlk Takip Kodunu Oluştur",
+      "active": "Aktif",
+      "inactive": "Pasif",
+      "lastScan": "Son",
+      "nextScan": "Sonraki"
+    },
+    "reportsHistory": {
+      "title": "Tarama Geçmişi",
+      "description": "Tüm SEO analizleriniz ve sonuçları",
+      "noReports": "Henüz Tarama Yapılmadı",
+      "noReportsDescription": "İlk SEO taramanızı yapmak için yukarıdan bir site URL'i girin.",
+      "learnFromScan": "Tarama ile neler öğrenirsiniz?",
+      "scanFeatures": [
+        "Meta etiket analizi",
+        "Sayfa hızı testi",
+        "Mobil uyumluluk",
+        "SEO önerileri"
+      ]
+    },
+    "upgrade": {
+      "title": "Daha Fazla Özellik İster misiniz?",
+      "description": "Pro veya Advanced plana geçerek AI destekli öneriler, sınırsız tarama ve daha fazlasına erişin.",
+      "upgradePlan": "Planını Yükselt"
+    }
+  },
+  "suggestions": {
+    "title": "AI SEO Asistanı",
+    "description": "Yapay zeka destekli kişiselleştirilmiş SEO önerileri",
+    "aiAssistant": {
+      "title": "Yapay Zeka SEO Asistanı",
+      "description": "Siteniz için özelleştirilmiş öneriler alın"
+    },
+    "quickCommands": "Hızlı Komutlar",
+    "currentReport": "Mevcut Rapor Temel Alınacak",
+    "freePrompt": "Serbest Prompt Modu",
+    "freePromptDescription": "Rapor kullanılmayacak. Sadece girdiğiniz prompt'a göre genel öneriler alacaksınız.",
+    "technicalChecks": "Teknik Kontroller",
+    "reportBased": "Rapor Bazlı Öneriler",
+    "freePromptMode": "Serbest Prompt",
+    "getReportSuggestions": "Rapor Bazlı Öneriler Al",
+    "getFreeSuggestions": "Serbest Öneriler Al",
+    "aiThinking": "AI Düşünüyor...",
+    "quickWins": "Hızlı Kazanımlar",
+    "issuesAndSolutions": "Sorunlar ve Çözümler",
+    "whyImportant": "Neden önemli:",
+    "howToSolve": "Nasıl çözülür:",
+    "codeSnippets": "Kod Snippet'leri",
+    "roadmap": "30-60-90 Gün Yol Haritası",
+    "first30Days": "İlk 30 Gün",
+    "60Days": "60 Gün",
+    "90Days": "90 Gün",
+    "importantNotes": "Önemli Notlar",
+    "recentSuggestions": "Son Öneriler",
+    "upgradeRequired": "AI SEO Önerileri",
+    "upgradeDescription": "Yapay zeka destekli detaylı SEO önerileri ve kod snippet'leri için Pro veya Advanced planına geçin.",
+    "upgradeToAdvanced": "Advanced'a Yükselt",
+    "upgradeAdvancedDescription": "Kod snippet'leri ve gelişmiş AI önerileri için"
+  },
+  "aiContent": {
+    "title": "AI İçerik Üreticisi",
+    "description": "Sosyal medya platformları için AI destekli içerik üretimi",
+    "contentGenerator": {
+      "title": "İçerik Üreticisi",
+      "description": "AI ile viral potansiyeli yüksek içerikler oluşturun"
+    },
+    "selectPlatform": "Platform Seçin",
+    "industryIdeas": "Sektörünüze Özel Fikirler",
+    "randomSelect": "Rastgele seç",
+    "yourIndustry": "Sektörünüz",
+    "targetAudience": "Hedef Kitleniz",
+    "tone": "Ton",
+    "hashtagCount": "Hashtag Sayısı",
+    "targetLength": "Hedef Uzunluk (Twitter için)",
+    "businessGoal": "İş Hedefi (Opsiyonel)",
+    "contentTopic": "İçerik konunuzu yazın",
+    "includeEmojis": "Emojileri dahil et",
+    "generateContent": "İçerik Üret",
+    "aiGenerating": "AI İçerik Üretiyor...",
+    "contentHistory": {
+      "title": "İçerik Geçmişi",
+      "description": "Daha önce üretilen içerikleriniz",
+      "clearHistory": "Geçmişi Temizle",
+      "noContent": "Henüz İçerik Üretilmedi",
+      "noContentDescription": "İlk sosyal medya içeriğinizi yukarıdan oluşturun.",
+      "prompt": "Prompt:",
+      "estimatedEngagement": "Tahmini engagement"
+    },
+    "platforms": {
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram",
+      "twitter": "Twitter / X",
+      "facebook": "Facebook"
+    },
+    "industries": {
+      "teknoloji": "Teknoloji",
+      "sağlık": "Sağlık",
+      "eğitim": "Eğitim",
+      "finans": "Finans",
+      "eticaret": "E-ticaret",
+      "gayrimenkul": "Gayrimenkul",
+      "turizm": "Turizm",
+      "gıda": "Gıda & Restoran",
+      "moda": "Moda & Tekstil",
+      "spor": "Spor & Fitness",
+      "diğer": "Diğer"
+    },
+    "audiences": {
+      "b2b": "B2B (İş Dünyası)",
+      "b2c": "B2C (Bireysel Müşteri)",
+      "genç_yetişkin": "Genç Yetişkin (18-35)",
+      "orta_yaş": "Orta Yaş (35-55)",
+      "üst_düzey_yönetici": "Üst Düzey Yönetici",
+      "girişimci": "Girişimci & Startup",
+      "öğrenci": "Öğrenci",
+      "anne_baba": "Anne & Baba",
+      "emekli": "Emekli",
+      "karma": "Karma Kitle"
+    },
+    "tones": {
+      "profesyonel": "Profesyonel",
+      "bilgilendirici": "Bilgilendirici",
+      "samimi": "Samimi",
+      "eğlenceli": "Eğlenceli",
+      "satış_odaklı": "Satış Odaklı",
+      "hikaye_anlatımı": "Hikaye Anlatımı"
+    },
+    "upgradeRequired": "AI İçerik Üreticisi",
+    "upgradeDescription": "Sosyal medya platformları için AI destekli içerik üretimi sadece Advanced üyelerde mevcuttur.",
+    "advancedFeatures": "Advanced Plan Özellikleri",
+    "upgradeToAdvanced": "Advanced'a Yükselt"
+  },
+  "payment": {
+    "title": "Plan Seçimi",
+    "description": "İhtiyacınıza en uygun planı seçin",
+    "currentPlan": "Mevcut Planınız",
+    "selectedPlan": "Seçilen Plan",
+    "paymentSummary": "Ödeme Özeti",
+    "confirmSelection": "Seçiminizi onaylayın",
+    "securePayment": "Güvenli Ödeme",
+    "sslProtected": "256-bit SSL şifreleme ile korunur",
+    "secure": "Güvenli",
+    "confirmAndPay": "Onayla & Öde",
+    "processing": "İşleniyor...",
+    "trustIndicators": [
+      "SSL Güvenli",
+      "İstediğiniz zaman iptal",
+      "7 gün para iade garantisi"
+    ],
+    "packages": {
+      "credits": {
+        "title": "50 Kredi Paketi",
+        "description": "Free üyeliğinize 50 kredi ekler.",
+        "badge": "HIZLI ÇÖZÜM",
+        "features": [
+          "50 SEO taraması",
+          "Temel raporlar",
+          "E-posta desteği",
+          "30 gün geçerlilik"
+        ]
+      },
+      "pro": {
+        "title": "Pro Üyelik",
+        "description": "Sınırsız SEO taraması + AI önerileri",
+        "badge": "EN POPÜLER",
+        "savings": "%33 İNDİRİM",
+        "features": [
+          "Sınırsız tarama",
+          "AI SEO önerileri",
+          "Detaylı raporlar",
+          "Öncelikli destek",
+          "Çoklu site yönetimi"
+        ]
+      },
+      "advanced": {
+        "title": "Advanced Üyelik",
+        "description": "Tüm özellikler + AI içerik üretimi",
+        "badge": "EN GELİŞMİŞ",
+        "savings": "%33 İNDİRİM",
+        "features": [
+          "Tüm Pro özellikleri",
+          "AI içerik üretimi",
+          "Sosyal medya entegrasyonu",
+          "Kod snippet'leri",
+          "7/24 destek",
+          "API erişimi"
+        ]
+      }
+    }
+  },
+  "errors": {
+    "somethingWentWrong": "Bir Hata Oluştu",
+    "unexpectedError": "Beklenmeyen bir hata oluştu. Lütfen sayfayı yenileyin veya ana sayfaya dönün.",
+    "refreshPage": "Sayfayı Yenile",
+    "goHome": "Ana Sayfaya Dön",
+    "errorDetails": "Hata Detayları (Development)"
+  },
+  "seo": {
+    "score": "SEO Skoru",
+    "excellent": "🎉 Mükemmel",
+    "good": "👍 İyi",
+    "average": "⚠️ Orta",
+    "needsImprovement": "🔧 Geliştirilmeli",
+    "strengths": "Güçlü Yönler",
+    "improvements": "İyileştirmeler",
+    "suggestions": "Öneriler",
+    "metaAnalysis": "Meta etiket analizi",
+    "pageSpeed": "Sayfa hızı testi",
+    "mobileCompatibility": "Mobil uyumluluk",
+    "seoRecommendations": "SEO önerileri"
+  }
+}

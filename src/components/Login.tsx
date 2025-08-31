@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
+import LanguageSwitcher from './LanguageSwitcher';
 import { LogIn, UserPlus, Sparkles, Eye, EyeOff, Mail, User, Lock, ArrowRight, CheckCircle2, Shield, Zap, Star, Globe, Award } from 'lucide-react';
 import LoadingSpinner from './LoadingSpinner';
 
@@ -11,6 +13,7 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = ({ mode }) => {
+  const { t, i18n } = useTranslation();
   const { login, register, user, isLoading } = useAuth();
   const navigate = useNavigate();
 
@@ -96,7 +99,7 @@ const Login: React.FC<LoginProps> = ({ mode }) => {
   };
 
   if (isLoading) {
-    return <LoadingSpinner message="Giriş kontrol ediliyor..." size="lg" fullScreen />;
+    return <LoadingSpinner message={t('common.loading')} size="lg" fullScreen />;
   }
 
   return (
@@ -148,19 +151,19 @@ const Login: React.FC<LoginProps> = ({ mode }) => {
                 <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
                   <Zap className="h-5 w-5" />
                 </div>
-                <span className="text-lg">3 dakikada kurulum</span>
+                <span className="text-lg">{i18n.language === 'en' ? '3-minute setup' : '3 dakikada kurulum'}</span>
               </div>
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
                   <Shield className="h-5 w-5" />
                 </div>
-                <span className="text-lg">Güvenli ve GDPR uyumlu</span>
+                <span className="text-lg">{i18n.language === 'en' ? 'Secure and GDPR compliant' : 'Güvenli ve GDPR uyumlu'}</span>
               </div>
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
                   <Award className="h-5 w-5" />
                 </div>
-                <span className="text-lg">500+ mutlu müşteri</span>
+                <span className="text-lg">{i18n.language === 'en' ? '500+ happy customers' : '500+ mutlu müşteri'}</span>
               </div>
             </div>
 
@@ -168,15 +171,15 @@ const Login: React.FC<LoginProps> = ({ mode }) => {
             <div className="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-white/20">
               <div className="text-center">
                 <div className="text-3xl font-bold">500+</div>
-                <div className="text-white/80">Aktif Site</div>
+                <div className="text-white/80">{t('home.stats.activeSites')}</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold">%87</div>
-                <div className="text-white/80">Ortalama Artış</div>
+                <div className="text-white/80">{t('home.stats.averageIncrease')}</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold">15K+</div>
-                <div className="text-white/80">Toplam Tarama</div>
+                <div className="text-white/80">{t('home.stats.totalScans')}</div>
               </div>
             </div>
           </div>
@@ -187,6 +190,9 @@ const Login: React.FC<LoginProps> = ({ mode }) => {
           <div className="w-full max-w-md">
             {/* Mobile Logo */}
             <div className="lg:hidden text-center mb-8">
+              <div className="flex justify-center mb-4">
+                <LanguageSwitcher />
+              </div>
               <Link
                 to="/"
                 className="inline-flex items-center gap-3 group"
@@ -215,7 +221,7 @@ const Login: React.FC<LoginProps> = ({ mode }) => {
                     }`}
                   >
                     <LogIn className="h-4 w-4 inline mr-2" />
-                    Giriş Yap
+                    {t('auth.login')}
                   </button>
                   <button
                     onClick={() => setActive('register')}
@@ -226,7 +232,7 @@ const Login: React.FC<LoginProps> = ({ mode }) => {
                     }`}
                   >
                     <UserPlus className="h-4 w-4 inline mr-2" />
-                    Üye Ol
+                    {t('auth.register')}
                   </button>
                 </div>
               </div>
@@ -236,21 +242,21 @@ const Login: React.FC<LoginProps> = ({ mode }) => {
                 {active === 'login' ? (
                   <div className="space-y-6">
                     <div className="text-center mb-8">
-                      <h2 className="text-2xl font-bold text-gray-900 mb-2">Tekrar Hoş Geldiniz</h2>
-                      <p className="text-gray-600">Hesabınıza giriş yapın</p>
+                      <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('auth.welcomeBack')}</h2>
+                      <p className="text-gray-600">{t('auth.loginToAccount')}</p>
                     </div>
 
                     <div className="space-y-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Kullanıcı Adı
+                          {t('auth.username')}
                         </label>
                         <div className="relative">
                           <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                           <input
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            placeholder="kullaniciadi"
+                            placeholder={i18n.language === 'en' ? 'username' : 'kullaniciadi'}
                             className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                           />
                         </div>
@@ -258,7 +264,7 @@ const Login: React.FC<LoginProps> = ({ mode }) => {
                       
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Şifre
+                          {t('auth.password')}
                         </label>
                         <div className="relative">
                           <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -290,17 +296,17 @@ const Login: React.FC<LoginProps> = ({ mode }) => {
                       ) : (
                         <LogIn className="h-5 w-5" />
                       )}
-                      {busy ? 'Giriş yapılıyor...' : 'Giriş Yap'}
+                      {busy ? t('auth.loggingIn') : t('auth.login')}
                     </button>
 
                     <div className="text-center">
                       <p className="text-gray-600">
-                        Hesabın yok mu?{' '}
+                        {t('auth.noAccount')}{' '}
                         <button 
                           onClick={() => setActive('register')}
                           className="text-blue-600 hover:text-blue-700 font-semibold hover:underline transition-colors"
                         >
-                          Hemen üye ol
+                          {t('auth.registerNow')}
                         </button>
                       </p>
                     </div>
@@ -308,21 +314,21 @@ const Login: React.FC<LoginProps> = ({ mode }) => {
                 ) : (
                   <div className="space-y-6">
                     <div className="text-center mb-8">
-                      <h2 className="text-2xl font-bold text-gray-900 mb-2">Hesap Oluşturun</h2>
-                      <p className="text-gray-600">3 ücretsiz kredi ile başlayın</p>
+                      <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('auth.createAccount')}</h2>
+                      <p className="text-gray-600">{t('auth.freeCreditsStart')}</p>
                     </div>
 
                     <div className="space-y-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Kullanıcı Adı
+                          {t('auth.username')}
                         </label>
                         <div className="relative">
                           <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                           <input
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            placeholder="kullaniciadi"
+                            placeholder={i18n.language === 'en' ? 'username' : 'kullaniciadi'}
                             className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                           />
                         </div>
@@ -330,7 +336,7 @@ const Login: React.FC<LoginProps> = ({ mode }) => {
 
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                          E‑posta
+                          {t('auth.email')}
                         </label>
                         <div className="relative">
                           <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -338,7 +344,7 @@ const Login: React.FC<LoginProps> = ({ mode }) => {
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="ornek@domain.com"
+                            placeholder={i18n.language === 'en' ? 'example@domain.com' : 'ornek@domain.com'}
                             className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                           />
                         </div>
@@ -346,7 +352,7 @@ const Login: React.FC<LoginProps> = ({ mode }) => {
 
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Şifre
+                          {t('auth.password')}
                         </label>
                         <div className="relative">
                           <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -372,24 +378,24 @@ const Login: React.FC<LoginProps> = ({ mode }) => {
                     <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4">
                       <h4 className="font-semibold text-green-900 mb-3 flex items-center gap-2">
                         <CheckCircle2 className="h-5 w-5" />
-                        Ücretsiz Başlangıç Paketi
+                        {i18n.language === 'en' ? 'Free Starter Package' : 'Ücretsiz Başlangıç Paketi'}
                       </h4>
                       <div className="grid grid-cols-2 gap-3 text-sm">
                         <div className="flex items-center gap-2">
                           <Zap className="h-4 w-4 text-green-600" />
-                          <span className="text-green-800">3 ücretsiz tarama</span>
+                          <span className="text-green-800">{i18n.language === 'en' ? '3 free scans' : '3 ücretsiz tarama'}</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <Shield className="h-4 w-4 text-green-600" />
-                          <span className="text-green-800">Detaylı raporlar</span>
+                          <span className="text-green-800">{i18n.language === 'en' ? 'Detailed reports' : 'Detaylı raporlar'}</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <Globe className="h-4 w-4 text-green-600" />
-                          <span className="text-green-800">Çoklu site desteği</span>
+                          <span className="text-green-800">{i18n.language === 'en' ? 'Multi-site support' : 'Çoklu site desteği'}</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <Star className="h-4 w-4 text-green-600" />
-                          <span className="text-green-800">Premium destek</span>
+                          <span className="text-green-800">{i18n.language === 'en' ? 'Premium support' : 'Premium destek'}</span>
                         </div>
                       </div>
                     </div>
@@ -404,17 +410,17 @@ const Login: React.FC<LoginProps> = ({ mode }) => {
                       ) : (
                         <UserPlus className="h-5 w-5" />
                       )}
-                      <span>{busy ? 'Hesap oluşturuluyor...' : 'Ücretsiz Hesap Oluştur'}</span>
+                      <span>{busy ? t('auth.creatingAccount') : t('auth.createFreeAccount')}</span>
                     </button>
 
                     <div className="text-center">
                       <p className="text-gray-600">
-                        Zaten hesabın var mı?{' '}
+                        {t('auth.alreadyHaveAccount')}{' '}
                         <button 
                           onClick={() => setActive('login')}
                           className="text-blue-600 hover:text-blue-700 font-semibold hover:underline transition-colors"
                         >
-                          Giriş yap
+                          {t('auth.loginNow')}
                         </button>
                       </p>
                     </div>
@@ -424,11 +430,15 @@ const Login: React.FC<LoginProps> = ({ mode }) => {
                 {/* Terms */}
                 <div className="mt-6 text-center">
                   <p className="text-xs text-gray-500 leading-relaxed">
-                    Devam ederek{' '}
-                    <a href="#" className="text-blue-600 hover:underline">Kullanım Koşulları</a>
+                    {i18n.language === 'en' ? 'By continuing you agree to our' : 'Devam ederek'}{' '}
+                    <a href="#" className="text-blue-600 hover:underline">
+                      {i18n.language === 'en' ? 'Terms of Service' : 'Kullanım Koşulları'}
+                    </a>
                     {' '}ve{' '}
-                    <a href="#" className="text-blue-600 hover:underline">Gizlilik Politikası</a>
-                    'nı kabul etmiş olursunuz.
+                    <a href="#" className="text-blue-600 hover:underline">
+                      {i18n.language === 'en' ? 'Privacy Policy' : 'Gizlilik Politikası'}
+                    </a>
+                    {i18n.language === 'en' ? '.' : '\'nı kabul etmiş olursunuz.'}
                   </p>
                 </div>
               </div>

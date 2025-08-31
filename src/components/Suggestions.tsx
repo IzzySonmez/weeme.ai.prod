@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import { config } from '../lib/config';
 import type { SEOReport } from '../types';
@@ -45,6 +46,7 @@ interface SuggestionsProps {
 }
 
 const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
+  const { t, i18n } = useTranslation();
   const { user } = useAuth();
 
   const [prompt, setPrompt] = useState('');
@@ -302,8 +304,8 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
       <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 flex items-center justify-center">
         <div className="glass rounded-3xl border border-white/20 shadow-2xl p-12 text-center">
           <Lock className="h-16 w-16 text-gray-400 mx-auto mb-6" />
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">Giriş Gerekli</h3>
-          <p className="text-gray-600 text-lg">SEO önerilerine erişmek için önce giriş yapın.</p>
+          <h3 className="text-2xl font-bold text-gray-900 mb-4">{t('auth.loginRequired')}</h3>
+          <p className="text-gray-600 text-lg">{t('auth.loginRequiredMessage')}</p>
         </div>
       </div>
     );
@@ -331,13 +333,11 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
             </div>
             
             <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-6">
-              AI SEO Önerileri
+              {t('suggestions.upgradeRequired')}
             </h2>
             
             <p className="text-gray-600 text-xl mb-12 leading-relaxed max-w-3xl mx-auto">
-              Yapay zeka destekli detaylı SEO önerileri ve kod snippet'leri için 
-              <span className="font-bold text-purple-600"> Pro </span> veya 
-              <span className="font-bold text-purple-600"> Advanced </span> planına geçin.
+              {t('suggestions.upgradeDescription')}
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
@@ -346,55 +346,35 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                   <div className="p-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow-lg">
                     <Target className="h-8 w-8 text-white" />
                   </div>
-                  <span className="font-bold text-blue-900 text-xl">Pro Plan</span>
+                  <span className="font-bold text-blue-900 text-xl">{t('home.pricing.pro.title')}</span>
                 </div>
                 <ul className="text-left space-y-4">
-                  <li className="flex items-center gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-blue-600 flex-shrink-0" />
-                    <span className="text-blue-800">AI SEO önerileri</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-blue-600 flex-shrink-0" />
-                    <span className="text-blue-800">Detaylı eylem planları</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-blue-600 flex-shrink-0" />
-                    <span className="text-blue-800">30-60-90 gün roadmap</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-blue-600 flex-shrink-0" />
-                    <span className="text-blue-800">Sınırsız tarama</span>
-                  </li>
+                  {t('home.pricing.pro.features', { returnObjects: true }).map((feature: string, index: number) => (
+                    <li key={index} className="flex items-center gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-blue-600 flex-shrink-0" />
+                      <span className="text-blue-800">{feature}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
 
               <div className="glass rounded-3xl p-8 border border-purple-200 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
                 <div className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold rounded-full">
-                  EN POPÜLER
+                  {t('payment.packages.pro.badge')}
                 </div>
                 <div className="flex items-center gap-4 mb-6">
                   <div className="p-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl shadow-lg">
                     <Code className="h-8 w-8 text-white" />
                   </div>
-                  <span className="font-bold text-purple-900 text-xl">Advanced Plan</span>
+                  <span className="font-bold text-purple-900 text-xl">{t('home.pricing.advanced.title')}</span>
                 </div>
                 <ul className="text-left space-y-4">
-                  <li className="flex items-center gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-purple-600 flex-shrink-0" />
-                    <span className="text-purple-800">Tüm Pro özellikleri</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-purple-600 flex-shrink-0" />
-                    <span className="text-purple-800">Kod snippet'leri</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-purple-600 flex-shrink-0" />
-                    <span className="text-purple-800">AI içerik üretimi</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-purple-600 flex-shrink-0" />
-                    <span className="text-purple-800">7/24 premium destek</span>
-                  </li>
+                  {t('home.pricing.advanced.features', { returnObjects: true }).map((feature: string, index: number) => (
+                    <li key={index} className="flex items-center gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-purple-600 flex-shrink-0" />
+                      <span className="text-purple-800">{feature}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -404,7 +384,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
               className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-12 py-6 rounded-3xl hover:from-purple-700 hover:to-pink-700 transition-all duration-200 font-bold text-xl shadow-2xl hover:shadow-3xl transform hover:scale-105 flex items-center gap-4 mx-auto"
             >
               <Rocket className="h-6 w-6" />
-              Planını Yükselt
+              {t('dashboard.upgrade.upgradePlan')}
               <ArrowRight className="h-6 w-6" />
             </button>
           </div>
@@ -428,9 +408,9 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-4 animate-gradient">
-            AI SEO Asistanı
+            {t('suggestions.title')}
           </h1>
-          <p className="text-gray-600 text-xl">Yapay zeka destekli kişiselleştirilmiş SEO önerileri</p>
+          <p className="text-gray-600 text-xl">{t('suggestions.description')}</p>
         </div>
 
         {/* Pro upsell banner */}
@@ -451,8 +431,8 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                 onClick={() => onOpenBilling?.()}
                 className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-2xl hover:from-purple-700 hover:to-pink-700 transition-all duration-200 font-bold shadow-2xl hover:shadow-3xl transform hover:scale-105"
               >
-                Yükselt
-              </button>
+              <h2 className="text-3xl font-bold text-gray-900">{t('suggestions.aiAssistant.title')}</h2>
+              <p className="text-gray-600 text-lg">{t('suggestions.aiAssistant.description')}</p>
             </div>
           </div>
         )}
@@ -465,8 +445,8 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                 <Brain className="h-8 w-8 text-white" />
               </div>
               <div>
-                <h2 className="text-3xl font-bold text-gray-900">Yapay Zeka SEO Asistanı</h2>
-                <p className="text-gray-600 text-lg">Siteniz için özelleştirilmiş öneriler alın</p>
+                <h3 className="font-bold text-gray-900 text-2xl">{t('suggestions.upgradeToAdvanced')}</h3>
+                <p className="text-gray-600 text-lg">{t('suggestions.upgradeAdvancedDescription')}</p>
               </div>
             </div>
 
@@ -474,15 +454,25 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
             <div className="mb-8">
               <div className="flex items-center gap-3 mb-4">
                 <Wand2 className="h-5 w-5 text-purple-600" />
-                <span className="font-semibold text-gray-700">Hızlı Komutlar</span>
+                <span className="font-semibold text-gray-700">{t('suggestions.quickCommands')}</span>
               </div>
               <div className="flex flex-wrap gap-3">
                 {[
-                  'Eksik başlık etiketleri ve zayıf iç bağlantılar için 10 maddelik eylem planı yaz',
-                  'Sayfa hızı ve Core Web Vitals için 30-60-90 günlük iyileştirme planı çıkar',
-                  'Site genelinde meta title/description standartlarını ve örnek şablonları öner',
-                  'Sitemap, robots.txt ve structured data için kontrol listesi oluştur',
-                  'Blog içerikleri için uzun kuyruk anahtar kelime stratejisi öner',
+                  i18n.language === 'en' 
+                    ? 'Write a 10-point action plan for missing title tags and weak internal links'
+                    : 'Eksik başlık etiketleri ve zayıf iç bağlantılar için 10 maddelik eylem planı yaz',
+                  i18n.language === 'en'
+                    ? 'Create a 30-60-90 day improvement plan for page speed and Core Web Vitals'
+                    : 'Sayfa hızı ve Core Web Vitals için 30-60-90 günlük iyileştirme planı çıkar',
+                  i18n.language === 'en'
+                    ? 'Suggest site-wide meta title/description standards and example templates'
+                    : 'Site genelinde meta title/description standartlarını ve örnek şablonları öner',
+                  i18n.language === 'en'
+                    ? 'Create checklist for sitemap, robots.txt and structured data'
+                    : 'Sitemap, robots.txt ve structured data için kontrol listesi oluştur',
+                  i18n.language === 'en'
+                    ? 'Suggest long-tail keyword strategy for blog content'
+                    : 'Blog içerikleri için uzun kuyruk anahtar kelime stratejisi öner',
                 ].map((q) => (
                   <button
                     key={q}
@@ -500,12 +490,12 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
               <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-2xl p-6 mb-8">
                 <div className="flex items-center gap-3 mb-3">
                   <FileCode2 className="h-5 w-5 text-blue-600" />
-                  <span className="font-semibold text-blue-900">Mevcut Rapor Temel Alınacak</span>
+                  <span className="font-semibold text-blue-900">{t('suggestions.currentReport')}</span>
                 </div>
                 <div className="text-sm text-blue-800 grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div><strong>Site:</strong> {latestReport.websiteUrl}</div>
-                  <div><strong>Skor:</strong> {latestReport.score}/100</div>
-                  <div><strong>Eksikler:</strong> {latestReport.negatives.length} adet</div>
+                  <div><strong>{i18n.language === 'en' ? 'Site:' : 'Site:'}</strong> {latestReport.websiteUrl}</div>
+                  <div><strong>{i18n.language === 'en' ? 'Score:' : 'Skor:'}</strong> {latestReport.score}/100</div>
+                  <div><strong>{i18n.language === 'en' ? 'Issues:' : 'Eksikler:'}</strong> {latestReport.negatives.length} {i18n.language === 'en' ? 'items' : 'adet'}</div>
                 </div>
               </div>
             )}
@@ -514,10 +504,10 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
               <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-6 mb-8">
                 <div className="flex items-center gap-3 mb-3">
                   <Lightbulb className="h-5 w-5 text-amber-600" />
-                  <span className="font-semibold text-amber-900">Serbest Prompt Modu</span>
+                  <span className="font-semibold text-amber-900">{t('suggestions.freePrompt')}</span>
                 </div>
                 <div className="text-sm text-amber-800">
-                  Rapor kullanılmayacak. Sadece girdiğiniz prompt'a göre genel öneriler alacaksınız.
+                  {t('suggestions.freePromptDescription')}
                 </div>
               </div>
             )}
@@ -527,7 +517,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
               <div className="glass rounded-2xl p-6 mb-8">
                 <div className="flex items-center gap-3 mb-4">
                   <Settings className="h-5 w-5 text-gray-600" />
-                  <span className="font-semibold text-gray-700">Teknik Kontroller</span>
+                  <span className="font-semibold text-gray-700">{t('suggestions.technicalChecks')}</span>
                 </div>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {checks.map(c => (
@@ -549,15 +539,22 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
             {/* Prompt */}
             <div className="mb-8">
               <label className="block text-sm font-semibold text-gray-700 mb-3">
-                {useReportBase ? 'Rapor üzerine ek soru/istek (opsiyonel):' : 'SEO sorunuz veya ihtiyacınız nedir?'}
+                {useReportBase 
+                  ? (i18n.language === 'en' ? 'Additional question/request on report (optional):' : 'Rapor üzerine ek soru/istek (opsiyonel):')
+                  : (i18n.language === 'en' ? 'What is your SEO question or need?' : 'SEO sorunuz veya ihtiyacınız nedir?')
+                }
               </label>
               <textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 rows={4}
                 placeholder={useReportBase 
-                  ? "Örnek: Bu eksikleri nasıl öncelik sırasına koymalıyım? Hangi araçları kullanabilirim?"
-                  : "Örnek: E-ticaret sitesi için genel SEO stratejisi öner. Hangi araçları kullanmalıyım?"
+                  ? (i18n.language === 'en' 
+                      ? "Example: How should I prioritize these issues? What tools can I use?"
+                      : "Örnek: Bu eksikleri nasıl öncelik sırasına koymalıyım? Hangi araçları kullanabilirim?")
+                  : (i18n.language === 'en'
+                      ? "Example: Suggest general SEO strategy for e-commerce site. What tools should I use?"
+                      : "Örnek: E-ticaret sitesi için genel SEO stratejisi öner. Hangi araçları kullanmalıyım?")
                 }
                 className="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-purple-500 focus:border-transparent glass transition-all duration-200 resize-none text-lg"
               />
@@ -575,7 +572,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                   />
                   <div className="flex items-center gap-2">
                     <BarChart3 className="h-5 w-5 text-purple-600" />
-                    <span className="font-medium">Rapor Bazlı Öneriler</span>
+                    <span className="font-medium">{t('suggestions.reportBased')}</span>
                   </div>
                 </label>
                 <label className="inline-flex items-center gap-3 text-gray-700 cursor-pointer">
@@ -588,7 +585,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                   />
                   <div className="flex items-center gap-2">
                     <Search className="h-5 w-5 text-purple-600" />
-                    <span className="font-medium">Serbest Prompt</span>
+                    <span className="font-medium">{t('suggestions.freePromptMode')}</span>
                   </div>
                 </label>
               </div>
@@ -603,7 +600,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                 ) : (
                   <Sparkles className="h-5 w-5" />
                 )}
-                {loading ? 'AI Düşünüyor...' : useReportBase ? 'Rapor Bazlı Öneriler Al' : 'Serbest Öneriler Al'}
+                {loading ? t('suggestions.aiThinking') : useReportBase ? t('suggestions.getReportSuggestions') : t('suggestions.getFreeSuggestions')}
               </button>
             </div>
 
@@ -614,7 +611,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                   <div className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-8">
                     <div className="flex items-center gap-3 text-green-700 font-bold mb-6 text-xl">
                       <Zap className="h-6 w-6" />
-                      Hızlı Kazanımlar ({result.quickWins.length})
+                      {t('suggestions.quickWins')} ({result.quickWins.length})
                     </div>
                     <ul className="space-y-4">
                       {result.quickWins.map((w, i) => (
@@ -633,7 +630,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                   <div className="bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200 rounded-2xl p-8">
                     <div className="flex items-center gap-3 text-blue-700 font-bold mb-6 text-xl">
                       <Target className="h-6 w-6" />
-                      Sorunlar ve Çözümler ({result.issues.length})
+                      {t('suggestions.issuesAndSolutions')} ({result.issues.length})
                     </div>
                     <div className="space-y-6">
                       {result.issues.map((it, i) => (
@@ -646,12 +643,12 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                           </div>
                           {it?.why && typeof it.why === 'string' && (
                             <div className="text-blue-800 mb-4 bg-blue-50 rounded-xl p-4">
-                              <strong>Neden önemli:</strong> {it.why}
+                              <strong>{t('suggestions.whyImportant')}</strong> {it.why}
                             </div>
                           )}
                           {Array.isArray(it?.how) && it.how.length > 0 && (
                             <div>
-                              <div className="font-semibold text-gray-700 mb-3">Nasıl çözülür:</div>
+                              <div className="font-semibold text-gray-700 mb-3">{t('suggestions.howToSolve')}</div>
                               <ul className="space-y-3">
                                 {it.how.map((h, j) => (
                                   <li key={j} className="text-gray-800 flex items-start gap-3">
@@ -672,7 +669,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                   <div className="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200 rounded-2xl p-8">
                     <div className="flex items-center gap-3 text-purple-700 font-bold mb-6 text-xl">
                       <Code className="h-6 w-6" />
-                      Kod Snippet'leri ({result.snippets.length})
+                      {t('suggestions.codeSnippets')} ({result.snippets.length})
                     </div>
                     <div className="space-y-6">
                       {result.snippets.map((s, i) => (
@@ -693,7 +690,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                               ) : (
                                 <Copy className="h-4 w-4" />
                               )}
-                              {copiedKey === `snip-${i}` ? 'Kopyalandı' : 'Kopyala'}
+                              {copiedKey === `snip-${i}` ? t('common.copied') : t('common.copy')}
                             </button>
                           </div>
                           <pre className="bg-gray-900 text-gray-100 p-6 text-sm overflow-x-auto font-mono">
@@ -715,7 +712,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                   <div className="bg-gradient-to-br from-orange-50 to-red-50 border border-orange-200 rounded-2xl p-8">
                     <div className="flex items-center gap-3 text-orange-700 font-bold mb-6 text-xl">
                       <TrendingUp className="h-6 w-6" />
-                      30-60-90 Gün Yol Haritası
+                      {t('suggestions.roadmap')}
                     </div>
                     <div className="grid sm:grid-cols-3 gap-6">
                       <div className="glass border border-orange-200 rounded-2xl p-6">
@@ -723,7 +720,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                           <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
                             <span className="text-white text-sm font-bold">30</span>
                           </div>
-                          İlk 30 Gün
+                          {t('suggestions.first30Days')}
                         </div>
                         <ul className="space-y-3">
                           {Array.isArray(result.roadmap.d30) && result.roadmap.d30.map((x, i) => (
@@ -739,7 +736,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                           <div className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center">
                             <span className="text-white text-sm font-bold">60</span>
                           </div>
-                          60 Gün
+                          {t('suggestions.60Days')}
                         </div>
                         <ul className="space-y-3">
                           {Array.isArray(result.roadmap.d60) && result.roadmap.d60.map((x, i) => (
@@ -755,7 +752,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                           <div className="w-8 h-8 bg-orange-700 rounded-full flex items-center justify-center">
                             <span className="text-white text-sm font-bold">90</span>
                           </div>
-                          90 Gün
+                          {t('suggestions.90Days')}
                         </div>
                         <ul className="space-y-3">
                           {Array.isArray(result.roadmap.d90) && result.roadmap.d90.map((x, i) => (
@@ -774,7 +771,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                   <div className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-2xl p-8">
                     <div className="flex items-center gap-3 text-gray-700 font-bold mb-4 text-xl">
                       <Info className="h-6 w-6" />
-                      Önemli Notlar
+                      {t('suggestions.importantNotes')}
                     </div>
                     <ul className="space-y-3">
                       {result.notes.map((n, i) => (
@@ -786,7 +783,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                     </ul>
                   </div>
                 )}
-              </div>
+              {i18n.language === 'en' ? 'Upgrade' : 'Yükselt'}
             )}
           </div>
 
@@ -795,17 +792,17 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
             <div className="glass rounded-3xl border border-white/20 shadow-2xl p-8">
               <div className="flex items-center gap-3 mb-6">
                 <Clock className="h-6 w-6 text-gray-600" />
-                <h3 className="font-bold text-gray-900 text-xl">Son Öneriler</h3>
+                <h3 className="font-bold text-gray-900 text-xl">{t('suggestions.recentSuggestions')}</h3>
               </div>
               <div className="space-y-4">
                 {history.slice(0, 3).map(h => (
                   <div key={h.id} className="glass border border-gray-200 rounded-2xl p-4">
                     <div className="flex items-center justify-between">
                       <div className="text-sm text-gray-600">
-                        {new Date(h.at).toLocaleString('tr-TR')}
+                        {new Date(h.at).toLocaleString(i18n.language === 'en' ? 'en-US' : 'tr-TR')}
                       </div>
                       <div className="text-xs text-gray-500">
-                        {h.prompt || 'Rapor bazlı'}
+                        {h.prompt || (i18n.language === 'en' ? 'Report-based' : 'Rapor bazlı')}
                       </div>
                     </div>
                   </div>

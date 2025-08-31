@@ -1,7 +1,8 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { withTranslation, WithTranslation } from 'react-i18next';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
 
-interface Props {
+interface Props extends WithTranslation {
   children: ReactNode;
 }
 
@@ -27,6 +28,8 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   render() {
+    const { t } = this.props;
+    
     if (this.state.hasError) {
       return (
         <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 flex items-center justify-center p-4 relative overflow-hidden">
@@ -46,16 +49,16 @@ class ErrorBoundary extends Component<Props, State> {
               </div>
               
               <h2 className="text-4xl font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent mb-6">
-                Bir Hata Oluştu
+                {t('errors.somethingWentWrong')}
               </h2>
               
               <p className="text-gray-600 text-xl mb-8 leading-relaxed">
-                Beklenmeyen bir hata oluştu. Lütfen sayfayı yenileyin veya ana sayfaya dönün.
+                {t('errors.unexpectedError')}
               </p>
 
               {process.env.NODE_ENV === 'development' && this.state.error && (
                 <div className="bg-gray-900 rounded-2xl p-6 mb-8 text-left overflow-auto max-h-64">
-                  <h3 className="text-red-400 font-bold mb-4">Hata Detayları (Development)</h3>
+                  <h3 className="text-red-400 font-bold mb-4">{t('errors.errorDetails')}</h3>
                   <pre className="text-gray-300 text-sm whitespace-pre-wrap">
                     {this.state.error.toString()}
                     {this.state.errorInfo?.componentStack}
@@ -69,7 +72,7 @@ class ErrorBoundary extends Component<Props, State> {
                   className="bg-gradient-to-r from-red-600 to-orange-600 text-white px-8 py-4 rounded-2xl hover:from-red-700 hover:to-orange-700 transition-all duration-200 font-bold text-lg shadow-2xl hover:shadow-3xl transform hover:scale-105 flex items-center gap-3"
                 >
                   <RefreshCw className="h-6 w-6" />
-                  Sayfayı Yenile
+                  {t('errors.refreshPage')}
                 </button>
                 
                 <button
@@ -77,7 +80,7 @@ class ErrorBoundary extends Component<Props, State> {
                   className="bg-white text-gray-700 px-8 py-4 rounded-2xl border border-gray-300 hover:bg-gray-50 transition-all duration-200 font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center gap-3"
                 >
                   <Home className="h-6 w-6" />
-                  Ana Sayfaya Dön
+                  {t('errors.goHome')}
                 </button>
               </div>
             </div>
@@ -90,4 +93,4 @@ class ErrorBoundary extends Component<Props, State> {
   }
 }
 
-export default ErrorBoundary;
+export default withTranslation()(ErrorBoundary);

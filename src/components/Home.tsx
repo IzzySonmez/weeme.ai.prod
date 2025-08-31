@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import LanguageSwitcher from './LanguageSwitcher';
 import { 
   Sparkles, 
   Rocket, 
@@ -21,6 +23,7 @@ import {
 } from 'lucide-react';
 
 const Home: React.FC = () => {
+  const { t } = useTranslation();
   const [activeStep, setActiveStep] = useState(0);
   const [stats, setStats] = useState({
     sites: 0,
@@ -57,44 +60,50 @@ const Home: React.FC = () => {
 
   const steps = [
     {
-      title: "Kodu Ekle",
-      description: "Tek satır kod ile sitenizi bağlayın",
+      title: t('home.howItWorks.steps.addCode.title'),
+      description: t('home.howItWorks.steps.addCode.description'),
       icon: "🔗"
     },
     {
-      title: "Otomatik Tarama",
-      description: "AI destekli kapsamlı SEO analizi",
+      title: t('home.howItWorks.steps.autoScan.title'),
+      description: t('home.howItWorks.steps.autoScan.description'),
       icon: "🤖"
     },
     {
-      title: "Sonuçları Al",
-      description: "Detaylı raporlar ve eylem planları",
+      title: t('home.howItWorks.steps.getResults.title'),
+      description: t('home.howItWorks.steps.getResults.description'),
       icon: "📊"
     }
   ];
 
   const testimonials = [
     {
-      name: "Ahmet Yılmaz",
-      role: "E-ticaret Müdürü",
+      name: i18n.language === 'en' ? "John Smith" : "Ahmet Yılmaz",
+      role: i18n.language === 'en' ? "E-commerce Manager" : "E-ticaret Müdürü",
       company: "TechStore",
-      content: "weeme.ai sayesinde organik trafiğimiz 3 ayda %150 arttı. Otomatik raporlar çok değerli.",
+      content: i18n.language === 'en' 
+        ? "Thanks to weeme.ai, our organic traffic increased by 150% in 3 months. Automated reports are very valuable."
+        : "weeme.ai sayesinde organik trafiğimiz 3 ayda %150 arttı. Otomatik raporlar çok değerli.",
       rating: 5,
       avatar: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop"
     },
     {
-      name: "Elif Kaya",
-      role: "Dijital Pazarlama Uzmanı",
+      name: i18n.language === 'en' ? "Sarah Johnson" : "Elif Kaya",
+      role: i18n.language === 'en' ? "Digital Marketing Specialist" : "Dijital Pazarlama Uzmanı",
       company: "StartupCo",
-      content: "AI önerileri gerçekten işe yarıyor. SEO bilgim sınırlıydı ama şimdi profesyonel sonuçlar alıyorum.",
+      content: i18n.language === 'en'
+        ? "AI suggestions really work. My SEO knowledge was limited but now I get professional results."
+        : "AI önerileri gerçekten işe yarıyor. SEO bilgim sınırlıydı ama şimdi profesyonel sonuçlar alıyorum.",
       rating: 5,
       avatar: "https://images.pexels.com/photos/3763188/pexels-photo-3763188.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop"
     },
     {
-      name: "Mehmet Özkan",
-      role: "Kurucu",
+      name: i18n.language === 'en' ? "Michael Brown" : "Mehmet Özkan",
+      role: i18n.language === 'en' ? "Founder" : "Kurucu",
       company: "DigitalAgency",
-      content: "Müşterilerimize sunduğumuz raporlar çok profesyonel. weeme.ai iş süreçlerimizi hızlandırdı.",
+      content: i18n.language === 'en'
+        ? "The reports we provide to our clients are very professional. weeme.ai accelerated our business processes."
+        : "Müşterilerimize sunduğumuz raporlar çok profesyonel. weeme.ai iş süreçlerimizi hızlandırdı.",
       rating: 5,
       avatar: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop"
     }
@@ -117,37 +126,39 @@ const Home: React.FC = () => {
           
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
             <button onClick={() => scrollTo('features')} className="text-gray-600 hover:text-purple-600 transition-colors">
-              Özellikler
+              {t('navigation.features')}
             </button>
             <button onClick={() => scrollTo('how-it-works')} className="text-gray-600 hover:text-purple-600 transition-colors">
-              Nasıl Çalışır
+              {t('navigation.howItWorks')}
             </button>
             <button onClick={() => scrollTo('plans')} className="text-gray-600 hover:text-purple-600 transition-colors">
-              Planlar
+              {t('navigation.plans')}
             </button>
             <button onClick={() => scrollTo('testimonials')} className="text-gray-600 hover:text-purple-600 transition-colors">
-              Referanslar
+              {t('navigation.testimonials')}
             </button>
+            <LanguageSwitcher />
             <Link 
               to="/login" 
               className="px-4 py-2 rounded-lg border border-gray-300 hover:border-purple-300 hover:bg-purple-50 transition-all duration-200"
             >
-              Giriş Yap
+              {t('auth.login')}
             </Link>
             <Link 
               to="/register" 
               className="px-6 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
             >
-              Hemen Başla
+              {t('home.startFree')}
             </Link>
           </nav>
           
           <div className="md:hidden">
+            <LanguageSwitcher />
             <Link 
               to="/register" 
               className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-medium"
             >
-              Başla
+              {t('home.startFree')}
             </Link>
           </div>
         </div>
@@ -168,20 +179,19 @@ const Home: React.FC = () => {
             <div className="space-y-8">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-purple-200 text-sm font-medium text-purple-700">
                 <Zap className="h-4 w-4" />
-                <span>AI Destekli SEO Otomasyonu</span>
+                <span>{t('home.aiPoweredSeo')}</span>
               </div>
               
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight">
-                SEO'nuzu{' '}
+                {t('home.subtitle')}{' '}
                 <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent animate-gradient">
-                  yapay zekâ
+                  {i18n.language === 'en' ? 'artificial intelligence' : 'yapay zekâ'}
                 </span>{' '}
-                ile otomatikleştirin
+                {i18n.language === 'en' ? '' : 'ile otomatikleştirin'}
               </h1>
               
               <p className="text-xl text-gray-600 leading-relaxed max-w-2xl">
-                Tek bir kod satırı ile sitenizi bağlayın. AI destekli kapsamlı SEO analizi, 
-                otomatik raporlar ve eylem planları ile organik trafiğinizi artırın.
+                {t('home.description')}
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
@@ -190,7 +200,7 @@ const Home: React.FC = () => {
                   className="group inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold text-lg hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-200 shadow-xl hover:shadow-2xl"
                 >
                   <Rocket className="h-5 w-5 group-hover:animate-bounce" />
-                  Ücretsiz Başla
+                  {t('home.startFree')}
                   <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 
@@ -199,7 +209,7 @@ const Home: React.FC = () => {
                   className="group inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-white/80 backdrop-blur-sm border border-gray-200 text-gray-700 font-semibold text-lg hover:bg-white hover:border-purple-300 transition-all duration-200"
                 >
                   <Play className="h-5 w-5 group-hover:scale-110 transition-transform" />
-                  Demo İzle
+                  {t('home.watchDemo')}
                 </button>
               </div>
               
@@ -209,25 +219,25 @@ const Home: React.FC = () => {
                   <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                     {stats.sites.toLocaleString('tr-TR')}+
                   </div>
-                  <div className="text-sm text-gray-600">Aktif Site</div>
+                  <div className="text-sm text-gray-600">{t('home.stats.activeSites')}</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                     %{stats.improvement}
                   </div>
-                  <div className="text-sm text-gray-600">Ortalama Artış</div>
+                  <div className="text-sm text-gray-600">{t('home.stats.averageIncrease')}</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                     {stats.scans.toLocaleString('tr-TR')}+
                   </div>
-                  <div className="text-sm text-gray-600">Toplam Tarama</div>
+                  <div className="text-sm text-gray-600">{t('home.stats.totalScans')}</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                     %{stats.satisfaction}
                   </div>
-                  <div className="text-sm text-gray-600">Memnuniyet</div>
+                  <div className="text-sm text-gray-600">{t('home.stats.satisfaction')}</div>
                 </div>
               </div>
             </div>
@@ -338,13 +348,10 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                3 Adımda
-              </span>{' '}
-              SEO Otomasyonu
+              {t('home.howItWorks.title')}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Karmaşık SEO süreçlerini basitleştirdik. Sadece 3 adımda profesyonel sonuçlar alın.
+              {t('home.howItWorks.subtitle')}
             </p>
           </div>
 
@@ -390,13 +397,10 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4">
-              Güçlü{' '}
-              <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Özellikler
-              </span>
+              {t('home.features.title')}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Modern SEO ihtiyaçlarınız için tasarlanmış kapsamlı araç seti
+              {t('home.features.subtitle')}
             </p>
           </div>
 
@@ -404,38 +408,38 @@ const Home: React.FC = () => {
             {[
               {
                 icon: BarChart3,
-                title: "Kapsamlı SEO Analizi",
-                description: "Meta etiketler, başlık yapısı, performans, mobil uyumluluk ve daha fazlası",
+                title: t('home.features.seoAnalysis.title'),
+                description: t('home.features.seoAnalysis.description'),
                 gradient: "from-blue-500 to-purple-600"
               },
               {
                 icon: CalendarClock,
-                title: "Otomatik Raporlama",
-                description: "Haftalık, iki haftalık veya aylık otomatik rapor akışı ve geçmiş takibi",
+                title: t('home.features.autoReporting.title'),
+                description: t('home.features.autoReporting.description'),
                 gradient: "from-green-500 to-blue-500"
               },
               {
                 icon: Sparkles,
-                title: "AI Destekli Öneriler",
-                description: "Yapay zeka ile kişiselleştirilmiş SEO önerileri ve eylem planları",
+                title: t('home.features.aiSuggestions.title'),
+                description: t('home.features.aiSuggestions.description'),
                 gradient: "from-purple-500 to-pink-500"
               },
               {
                 icon: Shield,
-                title: "Güvenli Entegrasyon",
-                description: "Tek satır kod ile güvenli bağlantı, veri gizliliği garantisi",
+                title: t('home.features.secureIntegration.title'),
+                description: t('home.features.secureIntegration.description'),
                 gradient: "from-orange-500 to-red-500"
               },
               {
                 icon: Globe,
-                title: "Çoklu Site Yönetimi",
-                description: "Birden fazla sitenizi tek panelden yönetin ve karşılaştırın",
+                title: t('home.features.multiSite.title'),
+                description: t('home.features.multiSite.description'),
                 gradient: "from-teal-500 to-green-500"
               },
               {
                 icon: TrendingUp,
-                title: "Performans Takibi",
-                description: "Gerçek zamanlı performans metrikleri ve trend analizi",
+                title: t('home.features.performanceTracking.title'),
+                description: t('home.features.performanceTracking.description'),
                 gradient: "from-indigo-500 to-purple-500"
               }
             ].map((feature, index) => (
@@ -469,13 +473,13 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Canlı Demo
-              </span>{' '}
-              İzleyin
+              {t('home.watchDemo')}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              weeme.ai'nin nasıl çalıştığını 2 dakikada görün
+              {i18n.language === 'en' 
+                ? "See how weeme.ai works in 2 minutes"
+                : "weeme.ai'nin nasıl çalıştığını 2 dakikada görün"
+              }
             </p>
           </div>
 
@@ -491,8 +495,12 @@ const Home: React.FC = () => {
               <div className="absolute bottom-4 left-4 right-4 bg-white/80 backdrop-blur-sm rounded-xl p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="font-semibold text-gray-900">SEO Otomasyonu Demo</h4>
-                    <p className="text-sm text-gray-600">Kurulumdan sonuçlara kadar tüm süreç</p>
+                    <h4 className="font-semibold text-gray-900">
+                      {i18n.language === 'en' ? 'SEO Automation Demo' : 'SEO Otomasyonu Demo'}
+                    </h4>
+                    <p className="text-sm text-gray-600">
+                      {i18n.language === 'en' ? 'Complete process from setup to results' : 'Kurulumdan sonuçlara kadar tüm süreç'}
+                    </p>
                   </div>
                   <div className="text-sm text-gray-500">2:30</div>
                 </div>
@@ -507,13 +515,10 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4">
-              Müşteri{' '}
-              <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Deneyimleri
-              </span>
+              {t('home.testimonials.title')}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              500+ mutlu müşterimizin başarı hikayeleri
+              {t('home.testimonials.subtitle')}
             </p>
           </div>
 
@@ -564,13 +569,10 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold mb-4">
-              Basit{' '}
-              <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Fiyatlandırma
-              </span>
+              {t('home.pricing.title')}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              İhtiyacınıza uygun planı seçin, istediğiniz zaman değiştirin
+              {t('home.pricing.subtitle')}
             </p>
           </div>
 
@@ -578,80 +580,56 @@ const Home: React.FC = () => {
             {/* Free Plan */}
             <div className="relative bg-white rounded-2xl p-8 border-2 border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold mb-2">Free</h3>
-                <div className="text-4xl font-bold mb-2">₺0</div>
-                <p className="text-gray-600">Başlangıç için ideal</p>
+                <h3 className="text-2xl font-bold mb-2">{t('home.pricing.free.title')}</h3>
+                <div className="text-4xl font-bold mb-2">{t('home.pricing.free.price')}</div>
+                <p className="text-gray-600">{t('home.pricing.free.description')}</p>
               </div>
 
               <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>3 kredi (3 tarama)</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>Temel SEO raporu</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>Panel erişimi</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>E-posta desteği</span>
-                </li>
+                {t('home.pricing.free.features', { returnObjects: true }).map((feature: string, index: number) => (
+                  <li key={index} className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
               </ul>
 
               <Link 
                 to="/register" 
                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border-2 border-gray-300 text-gray-700 font-semibold hover:border-purple-300 hover:bg-purple-50 transition-all duration-200"
               >
-                Ücretsiz Başla
+                {t('home.startFree')}
               </Link>
             </div>
 
             {/* Pro Plan */}
             <div className="relative bg-white rounded-2xl p-8 border-2 border-blue-300 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold rounded-full">
-                Popüler
+                {t('home.pricing.pro.popular')}
               </div>
 
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold mb-2">Pro</h3>
+                <h3 className="text-2xl font-bold mb-2">{t('home.pricing.pro.title')}</h3>
                 <div className="text-4xl font-bold mb-2">
-                  ₺99<span className="text-lg text-gray-500">/ay</span>
+                  {t('home.pricing.pro.price')}<span className="text-lg text-gray-500">{i18n.language === 'en' ? '/mo' : '/ay'}</span>
                 </div>
-                <p className="text-gray-600">Büyüyen işletmeler için</p>
+                <p className="text-gray-600">{t('home.pricing.pro.description')}</p>
               </div>
 
               <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>Sınırsız tarama</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>AI SEO önerileri</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>Detaylı raporlar</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>Öncelikli destek</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>Çoklu site yönetimi</span>
-                </li>
+                {t('home.pricing.pro.features', { returnObjects: true }).map((feature: string, index: number) => (
+                  <li key={index} className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
               </ul>
 
               <Link 
                 to="/register" 
                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
               >
-                Pro'ya Geç
+                {i18n.language === 'en' ? 'Go Pro' : 'Pro\'ya Geç'}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -659,45 +637,31 @@ const Home: React.FC = () => {
             {/* Advanced Plan */}
             <div className="relative bg-white rounded-2xl p-8 border-2 border-purple-300 shadow-lg hover:shadow-xl transition-all duration-300">
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-semibold rounded-full">
-                En Gelişmiş
+                {t('home.pricing.advanced.badge')}
               </div>
 
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold mb-2">Advanced</h3>
+                <h3 className="text-2xl font-bold mb-2">{t('home.pricing.advanced.title')}</h3>
                 <div className="text-4xl font-bold mb-2">
-                  ₺199<span className="text-lg text-gray-500">/ay</span>
+                  {t('home.pricing.advanced.price')}<span className="text-lg text-gray-500">{i18n.language === 'en' ? '/mo' : '/ay'}</span>
                 </div>
-                <p className="text-gray-600">Kurumsal çözümler</p>
+                <p className="text-gray-600">{t('home.pricing.advanced.description')}</p>
               </div>
 
               <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>Tüm Pro özellikleri</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>AI içerik üretimi</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>Sosyal medya entegrasyonu</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>7/24 destek</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  <span>API erişimi</span>
-                </li>
+                {t('home.pricing.advanced.features', { returnObjects: true }).map((feature: string, index: number) => (
+                  <li key={index} className="flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
               </ul>
 
               <Link 
                 to="/register" 
                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-200 shadow-lg hover:shadow-xl"
               >
-                Advanced'e Geç
+                {i18n.language === 'en' ? 'Go Advanced' : 'Advanced\'e Geç'}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -723,28 +687,40 @@ const Home: React.FC = () => {
           <div className="space-y-6">
             {[
               {
-                question: "weeme.ai nasıl kurulur?",
-                answer: "Çok basit! Panelde üretilen tek satır kodu sitenizin <head> bölümüne ekleyin. Kurulum 3 dakikada tamamlanır ve hemen tarama başlar."
+                question: i18n.language === 'en' ? "How to install weeme.ai?" : "weeme.ai nasıl kurulur?",
+                answer: i18n.language === 'en' 
+                  ? "Very simple! Add the single line of code generated in the panel to your site's <head> section. Installation is completed in 3 minutes and scanning starts immediately."
+                  : "Çok basit! Panelde üretilen tek satır kodu sitenizin <head> bölümüne ekleyin. Kurulum 3 dakikada tamamlanır ve hemen tarama başlar."
               },
               {
-                question: "Hangi CMS'ler destekleniyor?",
-                answer: "WordPress, Shopify, Wix, Squarespace, custom HTML siteleri ve tüm modern web platformları desteklenir. Tek gereksinim HTML head erişimi."
+                question: i18n.language === 'en' ? "Which CMS platforms are supported?" : "Hangi CMS'ler destekleniyor?",
+                answer: i18n.language === 'en'
+                  ? "WordPress, Shopify, Wix, Squarespace, custom HTML sites and all modern web platforms are supported. The only requirement is HTML head access."
+                  : "WordPress, Shopify, Wix, Squarespace, custom HTML siteleri ve tüm modern web platformları desteklenir. Tek gereksinim HTML head erişimi."
               },
               {
-                question: "AI önerileri ne kadar güvenilir?",
-                answer: "AI modelimiz 10,000+ başarılı SEO vakası ile eğitildi. Google'ın güncel algoritma değişikliklerini takip eder ve %95+ doğruluk oranına sahiptir."
+                question: i18n.language === 'en' ? "How reliable are AI suggestions?" : "AI önerileri ne kadar güvenilir?",
+                answer: i18n.language === 'en'
+                  ? "Our AI model was trained with 10,000+ successful SEO cases. It tracks Google's current algorithm changes and has 95%+ accuracy rate."
+                  : "AI modelimiz 10,000+ başarılı SEO vakası ile eğitildi. Google'ın güncel algoritma değişikliklerini takip eder ve %95+ doğruluk oranına sahiptir."
               },
               {
-                question: "Veri güvenliği nasıl sağlanıyor?",
-                answer: "Tüm veriler SSL ile şifrelenir, GDPR uyumludur. Sadece gerekli SEO metriklerini toplarız, kişisel veri saklamayız."
+                question: i18n.language === 'en' ? "How is data security ensured?" : "Veri güvenliği nasıl sağlanıyor?",
+                answer: i18n.language === 'en'
+                  ? "All data is encrypted with SSL, GDPR compliant. We only collect necessary SEO metrics, no personal data is stored."
+                  : "Tüm veriler SSL ile şifrelenir, GDPR uyumludur. Sadece gerekli SEO metriklerini toplarız, kişisel veri saklamayız."
               },
               {
-                question: "Ücretsiz plan sınırları neler?",
-                answer: "3 tarama kredisi, temel rapor ve panel erişimi içerir. Kredi bitince ek kredi satın alabilir veya Pro plana geçebilirsiniz."
+                question: i18n.language === 'en' ? "What are the free plan limitations?" : "Ücretsiz plan sınırları neler?",
+                answer: i18n.language === 'en'
+                  ? "Includes 3 scan credits, basic report and dashboard access. When credits run out, you can buy additional credits or upgrade to Pro plan."
+                  : "3 tarama kredisi, temel rapor ve panel erişimi içerir. Kredi bitince ek kredi satın alabilir veya Pro plana geçebilirsiniz."
               },
               {
-                question: "İptal etmek istediğimde ne olur?",
-                answer: "İstediğiniz zaman iptal edebilirsiniz. Mevcut dönem sonuna kadar hizmet devam eder, otomatik yenileme durur."
+                question: i18n.language === 'en' ? "What happens when I want to cancel?" : "İptal etmek istediğimde ne olur?",
+                answer: i18n.language === 'en'
+                  ? "You can cancel anytime. Service continues until the end of current period, auto-renewal stops."
+                  : "İstediğiniz zaman iptal edebilirsiniz. Mevcut dönem sonuna kadar hizmet devam eder, otomatik yenileme durur."
               }
             ].map((faq, index) => (
               <div key={index} className="bg-gray-50 rounded-2xl p-6 hover:bg-gray-100 transition-colors duration-200">
@@ -761,13 +737,10 @@ const Home: React.FC = () => {
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
-            SEO Otomasyonuna
-            <br />
-            Hemen Başlayın
+            {t('home.cta.title')}
           </h2>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            500+ işletme weeme.ai ile organik trafiğini artırdı. 
-            Sıra sizde! Ücretsiz başlayın, 3 dakikada kurulum yapın.
+            {t('home.cta.description')}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -776,7 +749,7 @@ const Home: React.FC = () => {
              className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-white text-purple-600 font-semibold text-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-200 shadow-xl"
             >
               <Rocket className="h-5 w-5" />
-              Ücretsiz Başla
+              {t('home.startFree')}
             </Link>
             
             <button 
@@ -784,23 +757,17 @@ const Home: React.FC = () => {
              className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl border-2 border-white text-white font-semibold text-lg hover:bg-white hover:text-purple-600 transition-all duration-200"
             >
               <Play className="h-5 w-5" />
-              Demo İzle
+              {t('home.watchDemo')}
             </button>
           </div>
 
           <div className="mt-12 flex items-center justify-center gap-8 text-white/80">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-5 w-5" />
-              <span className="font-medium">Kredi kartı gerektirmez</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-5 w-5" />
-              <span className="font-medium">3 dakikada kurulum</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-5 w-5" />
-              <span className="font-medium">İstediğiniz zaman iptal</span>
-            </div>
+            {t('home.cta.benefits', { returnObjects: true }).map((benefit: string, index: number) => (
+              <div key={index} className="flex items-center gap-2">
+                <CheckCircle2 className="h-5 w-5" />
+                <span className="font-medium">{benefit}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -816,8 +783,10 @@ const Home: React.FC = () => {
                 <span className="font-bold text-xl">weeme.ai</span>
               </div>
               <p className="text-gray-400 leading-relaxed max-w-md">
-                AI destekli SEO otomasyonu ile sitenizin organik trafiğini artırın. 
-                Profesyonel sonuçlar, basit kurulum.
+                {i18n.language === 'en'
+                  ? "Increase your site's organic traffic with AI-powered SEO automation. Professional results, simple setup."
+                  : "AI destekli SEO otomasyonu ile sitenizin organik trafiğini artırın. Profesyonel sonuçlar, basit kurulum."
+                }
               </p>
               <div className="flex items-center gap-4 mt-6">
                 <div className="flex items-center gap-1">
@@ -825,39 +794,47 @@ const Home: React.FC = () => {
                     <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
                   ))}
                 </div>
-                <span className="text-sm text-gray-400">500+ mutlu müşteri</span>
+                <span className="text-sm text-gray-400">
+                  {i18n.language === 'en' ? '500+ happy customers' : '500+ mutlu müşteri'}
+                </span>
               </div>
             </div>
 
             {/* Links */}
             <div>
-              <h4 className="font-semibold mb-4">Ürün</h4>
+              <h4 className="font-semibold mb-4">{i18n.language === 'en' ? 'Product' : 'Ürün'}</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><button onClick={() => scrollTo('features')} className="hover:text-white transition-colors">Özellikler</button></li>
-                <li><button onClick={() => scrollTo('plans')} className="hover:text-white transition-colors">Fiyatlandırma</button></li>
-                <li><button onClick={() => scrollTo('demo')} className="hover:text-white transition-colors">Demo</button></li>
-                <li><Link to="/register" className="hover:text-white transition-colors">Ücretsiz Deneme</Link></li>
+                <li><button onClick={() => scrollTo('features')} className="hover:text-white transition-colors">{t('navigation.features')}</button></li>
+                <li><button onClick={() => scrollTo('plans')} className="hover:text-white transition-colors">{t('navigation.plans')}</button></li>
+                <li><button onClick={() => scrollTo('demo')} className="hover:text-white transition-colors">{t('home.watchDemo')}</button></li>
+                <li><Link to="/register" className="hover:text-white transition-colors">{t('home.startFree')}</Link></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="font-semibold mb-4">Destek</h4>
+              <h4 className="font-semibold mb-4">{i18n.language === 'en' ? 'Support' : 'Destek'}</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><button onClick={() => scrollTo('faq')} className="hover:text-white transition-colors">SSS</button></li>
-                <li><a href="mailto:destek@weeme.ai" className="hover:text-white transition-colors">İletişim</a></li>
-                <li><Link to="/login" className="hover:text-white transition-colors">Giriş Yap</Link></li>
+                <li><button onClick={() => scrollTo('faq')} className="hover:text-white transition-colors">{i18n.language === 'en' ? 'FAQ' : 'SSS'}</button></li>
+                <li><a href="mailto:support@weeme.ai" className="hover:text-white transition-colors">{t('navigation.contact')}</a></li>
+                <li><Link to="/login" className="hover:text-white transition-colors">{t('auth.login')}</Link></li>
               </ul>
             </div>
           </div>
 
           <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between">
             <p className="text-gray-400 text-sm">
-              © 2025 weeme.ai. Tüm hakları saklıdır.
+              {i18n.language === 'en' ? '© 2025 weeme.ai. All rights reserved.' : '© 2025 weeme.ai. Tüm hakları saklıdır.'}
             </p>
             <div className="flex items-center gap-6 mt-4 sm:mt-0">
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Gizlilik</a>
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Şartlar</a>
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Çerezler</a>
+              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">
+                {i18n.language === 'en' ? 'Privacy' : 'Gizlilik'}
+              </a>
+              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">
+                {i18n.language === 'en' ? 'Terms' : 'Şartlar'}
+              </a>
+              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">
+                {i18n.language === 'en' ? 'Cookies' : 'Çerezler'}
+              </a>
             </div>
           </div>
         </div>

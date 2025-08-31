@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { X, CreditCard, Crown, Sparkles, Loader, CheckCircle2, Zap, Target, Users, BarChart3, Code, Globe, Shield, Star, ArrowRight } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -20,45 +21,51 @@ const PACKS: Record<PackageKey, {
   icon: React.ComponentType<any>;
   badge?: string;
   savings?: string;
-}> = {
-  credits: {
-    title: '50 Kredi Paketi',
-    price: '₺29.99',
-    description: 'Free üyeliğinize 50 kredi ekler.',
-    features: ['50 SEO taraması', 'Temel raporlar', 'E-posta desteği', '30 gün geçerlilik'],
-    gradient: 'from-green-500 to-emerald-600',
-    icon: Zap,
-    badge: 'HIZLI ÇÖZÜM'
-  },
-  pro: {
-    title: 'Pro Üyelik',
-    price: '₺99.99',
-    originalPrice: '₺149.99',
-    description: 'Sınırsız SEO taraması + AI önerileri',
-    features: ['Sınırsız tarama', 'AI SEO önerileri', 'Detaylı raporlar', 'Öncelikli destek', 'Çoklu site yönetimi'],
-    popular: true,
-    gradient: 'from-blue-600 to-purple-600',
-    icon: Target,
-    badge: 'EN POPÜLER',
-    savings: '%33 İNDİRİM'
-  },
-  advanced: {
-    title: 'Advanced Üyelik',
-    price: '₺199.99',
-    originalPrice: '₺299.99',
-    description: 'Tüm özellikler + AI içerik üretimi',
-    features: ['Tüm Pro özellikleri', 'AI içerik üretimi', 'Sosyal medya entegrasyonu', 'Kod snippet\'leri', '7/24 destek', 'API erişimi'],
-    gradient: 'from-purple-600 to-pink-600',
-    icon: Sparkles,
-    badge: 'EN GELİŞMİŞ',
-    savings: '%33 İNDİRİM'
-  },
-};
+}> = {};
 
 const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
+  const { t, i18n } = useTranslation();
   const { user, addCredits, upgradeMembership, refreshUser } = useAuth();
   const [selected, setSelected] = useState<PackageKey>('pro');
   const [loading, setLoading] = useState(false);
+
+  // Initialize PACKS with translations
+  React.useMemo(() => {
+    PACKS.credits = {
+      title: t('payment.packages.credits.title'),
+      price: i18n.language === 'en' ? '$9.99' : '₺29.99',
+      description: t('payment.packages.credits.description'),
+      features: t('payment.packages.credits.features', { returnObjects: true }),
+      gradient: 'from-green-500 to-emerald-600',
+      icon: Zap,
+      badge: t('payment.packages.credits.badge')
+    };
+    
+    PACKS.pro = {
+      title: t('payment.packages.pro.title'),
+      price: i18n.language === 'en' ? '$29.99' : '₺99.99',
+      originalPrice: i18n.language === 'en' ? '$44.99' : '₺149.99',
+      description: t('payment.packages.pro.description'),
+      features: t('payment.packages.pro.features', { returnObjects: true }),
+      popular: true,
+      gradient: 'from-blue-600 to-purple-600',
+      icon: Target,
+      badge: t('payment.packages.pro.badge'),
+      savings: t('payment.packages.pro.savings')
+    };
+    
+    PACKS.advanced = {
+      title: t('payment.packages.advanced.title'),
+      price: i18n.language === 'en' ? '$59.99' : '₺199.99',
+      originalPrice: i18n.language === 'en' ? '$89.99' : '₺299.99',
+      description: t('payment.packages.advanced.description'),
+      features: t('payment.packages.advanced.features', { returnObjects: true }),
+      gradient: 'from-purple-600 to-pink-600',
+      icon: Sparkles,
+      badge: t('payment.packages.advanced.badge'),
+      savings: t('payment.packages.advanced.savings')
+    };
+  }, [t, i18n.language]);
 
   if (!isOpen) return null;
 
@@ -70,13 +77,13 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
     setTimeout(() => {
       if (selected === 'credits') {
         addCredits(50);
-        alert('🎉 50 kredi hesabınıza eklendi!');
+        alert(i18n.language === 'en' ? '🎉 50 credits added to your account!' : '🎉 50 kredi hesabınıza eklendi!');
       } else if (selected === 'pro') {
         upgradeMembership('Pro');
-        alert('🚀 Pro üyelik aktif! Tüm AI öneriler artık kullanılabilir.');
+        alert(i18n.language === 'en' ? '🚀 Pro membership active! All AI suggestions are now available.' : '🚀 Pro üyelik aktif! Tüm AI öneriler artık kullanılabilir.');
       } else if (selected === 'advanced') {
         upgradeMembership('Advanced');
-        alert('✨ Advanced üyelik aktif! AI içerik üretimi de dahil tüm özellikler açıldı.');
+        alert(i18n.language === 'en' ? '✨ Advanced membership active! All features including AI content generation are now unlocked.' : '✨ Advanced üyelik aktif! AI içerik üretimi de dahil tüm özellikler açıldı.');
       }
 
       refreshUser();
@@ -94,8 +101,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
         <div className="relative bg-gradient-to-r from-purple-600 via-blue-600 to-pink-600 px-8 py-6">
           <div className="flex items-center justify-between">
             <div className="text-white">
-              <h3 className="text-2xl font-bold">Plan Seçimi</h3>
-              <p className="text-white/90 mt-1">İhtiyacınıza en uygun planı seçin</p>
+              <h3 className="text-2xl font-bold">{t('payment.title')}</h3>
+              <p className="text-white/90 mt-1">{t('payment.description')}</p>
             </div>
             <button 
               onClick={onClose} 
@@ -120,14 +127,14 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                     <Users className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <div className="text-sm text-blue-600 font-medium">Mevcut Planınız</div>
+                    <div className="text-sm text-blue-600 font-medium">{t('payment.currentPlan')}</div>
                     <div className="font-bold text-blue-900 text-lg">
-                      {user.membershipType} {user.membershipType === 'Free' && `• ${user.credits} kredi kaldı`}
+                      {user.membershipType} {user.membershipType === 'Free' && `• ${user.credits} ${i18n.language === 'en' ? 'credits left' : 'kredi kaldı'}`}
                     </div>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-sm text-blue-600 font-medium">Seçilen Plan</div>
+                  <div className="text-sm text-blue-600 font-medium">{t('payment.selectedPlan')}</div>
                   <div className="font-bold text-blue-900 text-lg">{selectedPack.title}</div>
                 </div>
               </div>
@@ -196,7 +203,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                     <div className="mb-4">
                       <div className={`text-3xl font-bold ${isSelected ? 'text-white' : 'text-gray-900'}`}>
                         {pack.price}
-                        {key !== 'credits' && <span className="text-lg font-normal opacity-70"> / ay</span>}
+                        {key !== 'credits' && <span className="text-lg font-normal opacity-70"> {i18n.language === 'en' ? '/ mo' : '/ ay'}</span>}
                       </div>
                       {pack.originalPrice && (
                         <div className={`text-sm line-through ${isSelected ? 'text-white/70' : 'text-gray-500'}`}>
@@ -238,8 +245,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
           <div className="bg-gray-50 rounded-2xl p-6">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h4 className="text-lg font-bold text-gray-900">Ödeme Özeti</h4>
-                <p className="text-gray-600">Seçiminizi onaylayın</p>
+                <h4 className="text-lg font-bold text-gray-900">{t('payment.paymentSummary')}</h4>
+                <p className="text-gray-600">{t('payment.confirmSelection')}</p>
               </div>
               <div className="text-right">
                 <div className="text-2xl font-bold text-gray-900">{selectedPack.price}</div>
@@ -256,12 +263,12 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                   <CreditCard className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <div className="font-medium text-gray-900">Güvenli Ödeme</div>
-                  <div className="text-sm text-gray-600">256-bit SSL şifreleme ile korunur</div>
+                  <div className="font-medium text-gray-900">{t('payment.securePayment')}</div>
+                  <div className="text-sm text-gray-600">{t('payment.sslProtected')}</div>
                 </div>
                 <div className="ml-auto flex items-center gap-2">
                   <Shield className="h-5 w-5 text-green-500" />
-                  <span className="text-sm text-green-600 font-medium">Güvenli</span>
+                  <span className="text-sm text-green-600 font-medium">{t('payment.secure')}</span>
                 </div>
               </div>
             </div>
@@ -272,7 +279,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                 onClick={onClose}
                 className="flex-1 px-6 py-3 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors font-medium"
               >
-                İptal
+                {t('common.cancel')}
               </button>
               
               <button
@@ -283,12 +290,12 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                 {loading ? (
                   <>
                     <Loader className="h-5 w-5 animate-spin" />
-                    <span>İşleniyor...</span>
+                    <span>{t('payment.processing')}</span>
                   </>
                 ) : (
                   <>
                     <CreditCard className="h-5 w-5" />
-                    <span>Onayla & Öde</span>
+                    <span>{t('payment.confirmAndPay')}</span>
                     <ArrowRight className="h-5 w-5" />
                   </>
                 )}
@@ -297,18 +304,14 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
 
             {/* Trust Indicators */}
             <div className="mt-6 flex items-center justify-center gap-8 text-sm text-gray-500">
-              <div className="flex items-center gap-2">
-                <Shield className="h-4 w-4 text-green-500" />
-                <span>SSL Güvenli</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-green-500" />
-                <span>İstediğiniz zaman iptal</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Star className="h-4 w-4 text-yellow-500" />
-                <span>7 gün para iade garantisi</span>
-              </div>
+              {t('payment.trustIndicators', { returnObjects: true }).map((indicator: string, index: number) => (
+                <div key={index} className="flex items-center gap-2">
+                  {index === 0 && <Shield className="h-4 w-4 text-green-500" />}
+                  {index === 1 && <CheckCircle2 className="h-4 w-4 text-green-500" />}
+                  {index === 2 && <Star className="h-4 w-4 text-yellow-500" />}
+                  <span>{indicator}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>

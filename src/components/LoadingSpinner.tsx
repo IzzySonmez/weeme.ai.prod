@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Sparkles } from 'lucide-react';
 
 interface LoadingSpinnerProps {
@@ -8,10 +9,13 @@ interface LoadingSpinnerProps {
 }
 
 const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ 
-  message = 'Yükleniyor...', 
+  message, 
   size = 'md',
   fullScreen = false 
 }) => {
+  const { t } = useTranslation();
+  const displayMessage = message || t('common.loading');
+
   const sizeClasses = {
     sm: 'w-8 h-8',
     md: 'w-16 h-16',
@@ -33,7 +37,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
           <Sparkles className={`${size === 'sm' ? 'h-4 w-4' : size === 'md' ? 'h-6 w-6' : 'h-8 w-8'} text-purple-600 animate-pulse`} />
         </div>
       </div>
-      <p className={`text-gray-600 font-medium ${textSizeClasses[size]}`}>{message}</p>
+      <p className={`text-gray-600 font-medium ${textSizeClasses[size]}`}>{displayMessage}</p>
     </div>
   );
 

@@ -1,0 +1,420 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "refresh": "Refresh",
+    "reset": "Reset"
+  },
+  "auth": {
+    "login": "Sign In",
+    "register": "Sign Up",
+    "logout": "Sign Out",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "welcomeBack": "Welcome Back",
+    "loginToAccount": "Sign in to your account",
+    "createAccount": "Create Account",
+    "freeCreditsStart": "Start with 3 free credits",
+    "alreadyHaveAccount": "Already have an account?",
+    "noAccount": "Don't have an account?",
+    "loginNow": "Sign in",
+    "registerNow": "Sign up now",
+    "loggingIn": "Signing in...",
+    "creatingAccount": "Creating account...",
+    "createFreeAccount": "Create Free Account",
+    "loginRequired": "Login Required",
+    "loginRequiredMessage": "Please sign in to access this feature."
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "suggestions": "AI Suggestions",
+    "aiContent": "Content Generator",
+    "billing": "Plans & Billing",
+    "settings": "Settings",
+    "features": "Features",
+    "howItWorks": "How It Works",
+    "plans": "Plans",
+    "testimonials": "Testimonials",
+    "contact": "Contact"
+  },
+  "home": {
+    "title": "weeme.ai - AI SEO Automation Platform",
+    "subtitle": "Automate your SEO with artificial intelligence",
+    "description": "Connect your site with a single line of code. Increase your organic traffic with AI-powered comprehensive SEO analysis, automated reports, and action plans.",
+    "startFree": "Start Free",
+    "watchDemo": "Watch Demo",
+    "aiPoweredSeo": "AI-Powered SEO Automation",
+    "stats": {
+      "activeSites": "Active Sites",
+      "averageIncrease": "Average Increase",
+      "totalScans": "Total Scans",
+      "satisfaction": "Satisfaction"
+    },
+    "howItWorks": {
+      "title": "SEO Automation in 3 Steps",
+      "subtitle": "We've simplified complex SEO processes. Get professional results in just 3 steps.",
+      "steps": {
+        "addCode": {
+          "title": "Add Code",
+          "description": "Connect your site with a single line of code"
+        },
+        "autoScan": {
+          "title": "Auto Scan",
+          "description": "AI-powered comprehensive SEO analysis"
+        },
+        "getResults": {
+          "title": "Get Results",
+          "description": "Detailed reports and action plans"
+        }
+      }
+    },
+    "features": {
+      "title": "Powerful Features",
+      "subtitle": "Comprehensive toolset designed for modern SEO needs",
+      "seoAnalysis": {
+        "title": "Comprehensive SEO Analysis",
+        "description": "Meta tags, heading structure, performance, mobile compatibility and more"
+      },
+      "autoReporting": {
+        "title": "Automated Reporting",
+        "description": "Weekly, bi-weekly or monthly automated report flow and history tracking"
+      },
+      "aiSuggestions": {
+        "title": "AI-Powered Suggestions",
+        "description": "Personalized SEO recommendations and action plans with artificial intelligence"
+      },
+      "secureIntegration": {
+        "title": "Secure Integration",
+        "description": "Secure connection with single line of code, data privacy guarantee"
+      },
+      "multiSite": {
+        "title": "Multi-Site Management",
+        "description": "Manage and compare multiple sites from a single panel"
+      },
+      "performanceTracking": {
+        "title": "Performance Tracking",
+        "description": "Real-time performance metrics and trend analysis"
+      }
+    },
+    "testimonials": {
+      "title": "Customer Experiences",
+      "subtitle": "Success stories from 500+ happy customers"
+    },
+    "pricing": {
+      "title": "Simple Pricing",
+      "subtitle": "Choose the plan that fits your needs, change anytime",
+      "free": {
+        "title": "Free",
+        "price": "$0",
+        "description": "Perfect for getting started",
+        "features": [
+          "3 credits (3 scans)",
+          "Basic SEO report",
+          "Dashboard access",
+          "Email support"
+        ]
+      },
+      "pro": {
+        "title": "Pro",
+        "price": "$29",
+        "description": "For growing businesses",
+        "popular": "Popular",
+        "features": [
+          "Unlimited scans",
+          "AI SEO suggestions",
+          "Detailed reports",
+          "Priority support",
+          "Multi-site management"
+        ]
+      },
+      "advanced": {
+        "title": "Advanced",
+        "price": "$59",
+        "description": "Enterprise solutions",
+        "badge": "Most Advanced",
+        "features": [
+          "All Pro features",
+          "AI content generation",
+          "Social media integration",
+          "24/7 support",
+          "API access"
+        ]
+      }
+    },
+    "cta": {
+      "title": "Start SEO Automation Now",
+      "description": "500+ businesses increased their organic traffic with weeme.ai. Your turn! Start free, setup in 3 minutes.",
+      "benefits": [
+        "No credit card required",
+        "3-minute setup",
+        "Cancel anytime"
+      ]
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome",
+    "todayIs": "Today",
+    "seoPerformance": "Track and optimize SEO performance",
+    "stats": {
+      "totalScans": "Total Scans",
+      "averageScore": "Average Score",
+      "lastTrend": "Recent Trend",
+      "activeTracking": "Active Tracking",
+      "descriptions": {
+        "totalScans": "Number of SEO analyses performed",
+        "averageScore": "Average SEO score of all sites",
+        "lastTrend": "Change between last two scans",
+        "activeTracking": "Number of automatically tracked sites"
+      }
+    },
+    "quickScan": {
+      "title": "Quick SEO Scan",
+      "description": "Instantly analyze your site's SEO performance",
+      "placeholder": "https://example.com",
+      "scanButton": "Scan",
+      "scanning": "Scanning...",
+      "creditsRemaining": "Credits Remaining",
+      "creditsPerScan": "Each scan uses 1 credit",
+      "buyCredits": "Buy Credits"
+    },
+    "latestReport": {
+      "title": "Latest Scan Result",
+      "seoScore": "SEO Score",
+      "strengths": "Strengths",
+      "improvements": "Improvements"
+    },
+    "trackingCodes": {
+      "title": "Auto Tracking Codes",
+      "description": "Automatically track your sites",
+      "newCode": "New Code",
+      "createNew": "Create New Tracking Code",
+      "create": "Create",
+      "noCodesYet": "No Tracking Codes Yet",
+      "noCodesDescription": "Create tracking codes to automatically monitor your sites.",
+      "createFirst": "Create First Tracking Code",
+      "active": "Active",
+      "inactive": "Inactive",
+      "lastScan": "Last",
+      "nextScan": "Next"
+    },
+    "reportsHistory": {
+      "title": "Scan History",
+      "description": "All your SEO analyses and results",
+      "noReports": "No Scans Yet",
+      "noReportsDescription": "Enter a site URL above to perform your first SEO scan.",
+      "learnFromScan": "What will you learn from scanning?",
+      "scanFeatures": [
+        "Meta tag analysis",
+        "Page speed test",
+        "Mobile compatibility",
+        "SEO recommendations"
+      ]
+    },
+    "upgrade": {
+      "title": "Want More Features?",
+      "description": "Upgrade to Pro or Advanced plan to access AI-powered suggestions, unlimited scans and more.",
+      "upgradePlan": "Upgrade Plan"
+    }
+  },
+  "suggestions": {
+    "title": "AI SEO Assistant",
+    "description": "AI-powered personalized SEO recommendations",
+    "aiAssistant": {
+      "title": "AI SEO Assistant",
+      "description": "Get customized recommendations for your site"
+    },
+    "quickCommands": "Quick Commands",
+    "currentReport": "Current Report Will Be Used as Base",
+    "freePrompt": "Free Prompt Mode",
+    "freePromptDescription": "Report won't be used. You'll get general suggestions based only on your input.",
+    "technicalChecks": "Technical Checks",
+    "reportBased": "Report-Based Suggestions",
+    "freePromptMode": "Free Prompt",
+    "getReportSuggestions": "Get Report-Based Suggestions",
+    "getFreeSuggestions": "Get Free Suggestions",
+    "aiThinking": "AI Thinking...",
+    "quickWins": "Quick Wins",
+    "issuesAndSolutions": "Issues and Solutions",
+    "whyImportant": "Why important:",
+    "howToSolve": "How to solve:",
+    "codeSnippets": "Code Snippets",
+    "roadmap": "30-60-90 Day Roadmap",
+    "first30Days": "First 30 Days",
+    "60Days": "60 Days",
+    "90Days": "90 Days",
+    "importantNotes": "Important Notes",
+    "recentSuggestions": "Recent Suggestions",
+    "upgradeRequired": "AI SEO Suggestions",
+    "upgradeDescription": "Upgrade to Pro or Advanced plan for AI-powered detailed SEO recommendations and code snippets.",
+    "upgradeToAdvanced": "Upgrade to Advanced",
+    "upgradeAdvancedDescription": "For code snippets and advanced AI recommendations"
+  },
+  "aiContent": {
+    "title": "AI Content Generator",
+    "description": "AI-powered content generation for social media platforms",
+    "contentGenerator": {
+      "title": "Content Generator",
+      "description": "Create content with high viral potential using AI"
+    },
+    "selectPlatform": "Select Platform",
+    "industryIdeas": "Industry-Specific Ideas",
+    "randomSelect": "Random select",
+    "yourIndustry": "Your Industry",
+    "targetAudience": "Target Audience",
+    "tone": "Tone",
+    "hashtagCount": "Hashtag Count",
+    "targetLength": "Target Length (for Twitter)",
+    "businessGoal": "Business Goal (Optional)",
+    "contentTopic": "Write your content topic",
+    "includeEmojis": "Include emojis",
+    "generateContent": "Generate Content",
+    "aiGenerating": "AI Generating Content...",
+    "contentHistory": {
+      "title": "Content History",
+      "description": "Your previously generated content",
+      "clearHistory": "Clear History",
+      "noContent": "No Content Generated Yet",
+      "noContentDescription": "Create your first social media content above.",
+      "prompt": "Prompt:",
+      "estimatedEngagement": "Estimated engagement"
+    },
+    "platforms": {
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram",
+      "twitter": "Twitter / X",
+      "facebook": "Facebook"
+    },
+    "industries": {
+      "teknoloji": "Technology",
+      "sağlık": "Healthcare",
+      "eğitim": "Education",
+      "finans": "Finance",
+      "eticaret": "E-commerce",
+      "gayrimenkul": "Real Estate",
+      "turizm": "Tourism",
+      "gıda": "Food & Restaurant",
+      "moda": "Fashion & Textile",
+      "spor": "Sports & Fitness",
+      "diğer": "Other"
+    },
+    "audiences": {
+      "b2b": "B2B (Business)",
+      "b2c": "B2C (Individual Customer)",
+      "genç_yetişkin": "Young Adult (18-35)",
+      "orta_yaş": "Middle Age (35-55)",
+      "üst_düzey_yönetici": "Senior Executive",
+      "girişimci": "Entrepreneur & Startup",
+      "öğrenci": "Student",
+      "anne_baba": "Parents",
+      "emekli": "Retired",
+      "karma": "Mixed Audience"
+    },
+    "tones": {
+      "profesyonel": "Professional",
+      "bilgilendirici": "Informative",
+      "samimi": "Friendly",
+      "eğlenceli": "Fun",
+      "satış_odaklı": "Sales-Focused",
+      "hikaye_anlatımı": "Storytelling"
+    },
+    "upgradeRequired": "AI Content Generator",
+    "upgradeDescription": "AI-powered content generation for social media platforms is only available for Advanced members.",
+    "advancedFeatures": "Advanced Plan Features",
+    "upgradeToAdvanced": "Upgrade to Advanced"
+  },
+  "payment": {
+    "title": "Plan Selection",
+    "description": "Choose the plan that best fits your needs",
+    "currentPlan": "Your Current Plan",
+    "selectedPlan": "Selected Plan",
+    "paymentSummary": "Payment Summary",
+    "confirmSelection": "Confirm your selection",
+    "securePayment": "Secure Payment",
+    "sslProtected": "Protected with 256-bit SSL encryption",
+    "secure": "Secure",
+    "confirmAndPay": "Confirm & Pay",
+    "processing": "Processing...",
+    "trustIndicators": [
+      "SSL Secure",
+      "Cancel anytime",
+      "7-day money back guarantee"
+    ],
+    "packages": {
+      "credits": {
+        "title": "50 Credit Package",
+        "description": "Adds 50 credits to your Free membership.",
+        "badge": "QUICK SOLUTION",
+        "features": [
+          "50 SEO scans",
+          "Basic reports",
+          "Email support",
+          "30-day validity"
+        ]
+      },
+      "pro": {
+        "title": "Pro Membership",
+        "description": "Unlimited SEO scanning + AI suggestions",
+        "badge": "MOST POPULAR",
+        "savings": "33% OFF",
+        "features": [
+          "Unlimited scans",
+          "AI SEO suggestions",
+          "Detailed reports",
+          "Priority support",
+          "Multi-site management"
+        ]
+      },
+      "advanced": {
+        "title": "Advanced Membership",
+        "description": "All features + AI content generation",
+        "badge": "MOST ADVANCED",
+        "savings": "33% OFF",
+        "features": [
+          "All Pro features",
+          "AI content generation",
+          "Social media integration",
+          "Code snippets",
+          "24/7 support",
+          "API access"
+        ]
+      }
+    }
+  },
+  "errors": {
+    "somethingWentWrong": "Something Went Wrong",
+    "unexpectedError": "An unexpected error occurred. Please refresh the page or return to the home page.",
+    "refreshPage": "Refresh Page",
+    "goHome": "Go Home",
+    "errorDetails": "Error Details (Development)"
+  },
+  "seo": {
+    "score": "SEO Score",
+    "excellent": "🎉 Excellent",
+    "good": "👍 Good",
+    "average": "⚠️ Average",
+    "needsImprovement": "🔧 Needs Improvement",
+    "strengths": "Strengths",
+    "improvements": "Improvements",
+    "suggestions": "Suggestions",
+    "metaAnalysis": "Meta tag analysis",
+    "pageSpeed": "Page speed test",
+    "mobileCompatibility": "Mobile compatibility",
+    "seoRecommendations": "SEO recommendations"
+  }
+}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../lib/database';
@@ -47,6 +48,7 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
+  const { t, i18n } = useTranslation();
   const { user, updateCredits } = useAuth();
 
   const [url, setUrl] = useState('');
@@ -202,32 +204,32 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
 
   const stats = [
     {
-      title: 'Toplam Tarama',
+      title: t('dashboard.stats.totalScans'),
       value: totalScans.toString(),
       icon: Search,
       color: 'blue',
-      description: 'Yapılan SEO analizi sayısı'
+      description: t('dashboard.stats.descriptions.totalScans')
     },
     {
-      title: 'Ortalama Skor',
+      title: t('dashboard.stats.averageScore'),
       value: avgScore > 0 ? avgScore.toString() : '—',
       icon: Target,
       color: 'green',
-      description: 'Tüm sitelerin ortalama SEO skoru'
+      description: t('dashboard.stats.descriptions.averageScore')
     },
     {
-      title: 'Son Trend',
+      title: t('dashboard.stats.lastTrend'),
       value: trend > 0 ? `+${trend}` : trend < 0 ? trend.toString() : '—',
       icon: trend >= 0 ? TrendingUp : TrendingDown,
       color: trend >= 0 ? 'emerald' : 'red',
-      description: 'Son iki tarama arasındaki değişim'
+      description: t('dashboard.stats.descriptions.lastTrend')
     },
     {
-      title: 'Aktif Takip',
+      title: t('dashboard.stats.activeTracking'),
       value: trackingCodes.filter(tc => tc.isActive).length.toString(),
       icon: Activity,
       color: 'purple',
-      description: 'Otomatik takip edilen site sayısı'
+      description: t('dashboard.stats.descriptions.activeTracking')
     }
   ];
 
@@ -251,14 +253,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-4xl font-bold text-gray-900 mb-2">
-                Hoş geldin, <span className="text-blue-600">{user.username}</span>! 👋
+                {t('dashboard.welcome')}, <span className="text-blue-600">{user.username}</span>! 👋
               </h1>
-              <p className="text-gray-600 text-lg">SEO performansını takip et ve optimize et</p>
+              <p className="text-gray-600 text-lg">{t('dashboard.seoPerformance')}</p>
             </div>
             <div className="text-right">
-              <div className="text-sm text-gray-500">Bugün</div>
+              <div className="text-sm text-gray-500">{t('dashboard.todayIs')}</div>
               <div className="text-lg font-semibold text-gray-900">
-                {new Date().toLocaleDateString('tr-TR', { 
+                {new Date().toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'tr-TR', { 
                   weekday: 'long', 
                   year: 'numeric', 
                   month: 'long', 
@@ -305,8 +307,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
               <Search className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">Hızlı SEO Taraması</h2>
-              <p className="text-gray-600">Sitenizin SEO performansını anında analiz edin</p>
+              <h2 className="text-2xl font-bold text-gray-900">{t('dashboard.quickScan.title')}</h2>
+              <p className="text-gray-600">{t('dashboard.quickScan.description')}</p>
             </div>
           </div>
 
@@ -317,7 +319,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                   type="url"
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
-                  placeholder="https://example.com"
+                  placeholder={t('dashboard.quickScan.placeholder')}
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   disabled={scanning}
                 />
@@ -332,7 +334,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                 ) : (
                   <Search className="h-5 w-5" />
                 )}
-                <span>{scanning ? 'Taranıyor...' : 'Tara'}</span>
+                <span>{scanning ? t('dashboard.quickScan.scanning') : t('dashboard.quickScan.scanButton')}</span>
               </button>
             </div>
 
@@ -342,15 +344,15 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                   <div className="flex items-center gap-3">
                     <Zap className="h-5 w-5 text-blue-600" />
                     <div>
-                      <div className="font-semibold text-blue-900">Kalan Kredi: {user.credits}</div>
-                      <div className="text-sm text-blue-700">Her tarama 1 kredi harcar</div>
+                      <div className="font-semibold text-blue-900">{t('dashboard.quickScan.creditsRemaining')}: {user.credits}</div>
+                      <div className="text-sm text-blue-700">{t('dashboard.quickScan.creditsPerScan')}</div>
                     </div>
                   </div>
                   <button
                     onClick={onOpenBilling}
                     className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-semibold text-sm shadow-lg hover:shadow-xl transform hover:scale-105"
                   >
-                    Kredi Al
+                    {t('dashboard.quickScan.buyCredits')}
                   </button>
                 </div>
               </div>
@@ -367,12 +369,12 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                   <BarChart3 className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Son Tarama Sonucu</h2>
+                  <h2 className="text-2xl font-bold text-gray-900">{t('dashboard.latestReport.title')}</h2>
                   <p className="text-gray-600">{latestReport.websiteUrl}</p>
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-sm text-gray-500 mb-1">SEO Skoru</div>
+                <div className="text-sm text-gray-500 mb-1">{t('seo.score')}</div>
                 <div className="text-4xl font-bold text-blue-600">
                   {latestReport.score}
                 </div>
@@ -413,9 +415,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                   </div>
                 </div>
                 <div className="text-lg font-semibold text-gray-700">
-                  {latestReport.score >= 80 ? '🎉 Mükemmel' : 
-                   latestReport.score >= 60 ? '👍 İyi' : 
-                   latestReport.score >= 40 ? '⚠️ Orta' : '🔧 Geliştirilmeli'}
+                  {latestReport.score >= 80 ? t('seo.excellent') : 
+                   latestReport.score >= 60 ? t('seo.good') : 
+                   latestReport.score >= 40 ? t('seo.average') : t('seo.needsImprovement')}
                 </div>
               </div>
 
@@ -423,7 +425,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
               <div className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-xl p-6">
                 <div className="flex items-center gap-3 text-green-700 font-semibold mb-4">
                   <CheckCircle2 className="h-5 w-5" />
-                  Güçlü Yönler ({latestReport.positives.length})
+                  {t('seo.strengths')} ({latestReport.positives.length})
                 </div>
                 <ul className="space-y-2">
                   {latestReport.positives.slice(0, 4).map((positive, i) => (
@@ -442,7 +444,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
               <div className="bg-gradient-to-br from-red-50 to-orange-50 border border-red-200 rounded-xl p-6">
                 <div className="flex items-center gap-3 text-red-700 font-semibold mb-4">
                   <AlertTriangle className="h-5 w-5" />
-                  İyileştirme Alanları ({latestReport.negatives.length})
+                  {t('seo.improvements')} ({latestReport.negatives.length})
                 </div>
                 <ul className="space-y-2">
                   {latestReport.negatives.slice(0, 4).map((negative, i) => (
@@ -468,8 +470,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                 <Code className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-gray-900">Otomatik Takip Kodları</h2>
-                <p className="text-gray-600">Sitelerinizi otomatik olarak takip edin</p>
+                <h2 className="text-2xl font-bold text-gray-900">{t('dashboard.trackingCodes.title')}</h2>
+                <p className="text-gray-600">{t('dashboard.trackingCodes.description')}</p>
               </div>
             </div>
             <button
@@ -477,19 +479,19 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
               className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 font-semibold flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105"
             >
               <Plus className="h-4 w-4" />
-              Yeni Kod
+              {t('dashboard.trackingCodes.newCode')}
             </button>
           </div>
 
           {showAddTracking && (
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6 mb-6">
-              <h3 className="font-semibold text-blue-900 mb-4">Yeni Takip Kodu Oluştur</h3>
+              <h3 className="font-semibold text-blue-900 mb-4">{t('dashboard.trackingCodes.createNew')}</h3>
               <div className="flex gap-3">
                 <input
                   type="url"
                   value={newTrackingUrl}
                   onChange={(e) => setNewTrackingUrl(e.target.value)}
-                  placeholder="https://example.com"
+                  placeholder={t('dashboard.quickScan.placeholder')}
                   className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 transition-all duration-200"
                 />
                 <button
@@ -497,13 +499,13 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                   disabled={!newTrackingUrl.trim()}
                   className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-semibold disabled:opacity-50"
                 >
-                  Oluştur
+                  {t('dashboard.trackingCodes.create')}
                 </button>
                 <button
                   onClick={() => setShowAddTracking(false)}
                   className="px-6 py-3 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors font-semibold"
                 >
-                  İptal
+                  {t('common.cancel')}
                 </button>
               </div>
             </div>
@@ -514,14 +516,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
               <div className="w-20 h-20 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Code className="h-10 w-10 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Henüz Takip Kodu Yok</h3>
-              <p className="text-gray-600 mb-6">Sitelerinizi otomatik olarak takip etmek için takip kodu oluşturun.</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">{t('dashboard.trackingCodes.noCodesYet')}</h3>
+              <p className="text-gray-600 mb-6">{t('dashboard.trackingCodes.noCodesDescription')}</p>
               <button
                 onClick={() => setShowAddTracking(true)}
                 className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center gap-2 mx-auto"
               >
                 <Plus className="h-5 w-5" />
-                İlk Takip Kodunu Oluştur
+                {t('dashboard.trackingCodes.createFirst')}
               </button>
             </div>
           ) : (
@@ -536,14 +538,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                       <div>
                         <div className="font-semibold text-gray-900">{code.websiteUrl}</div>
                         <div className="text-sm text-gray-600">
-                          {code.isActive ? 'Aktif' : 'Pasif'} • {code.scanFrequency} tarama
+                          {code.isActive ? t('dashboard.trackingCodes.active') : t('dashboard.trackingCodes.inactive')} • {code.scanFrequency} {i18n.language === 'en' ? 'scan' : 'tarama'}
                         </div>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="text-right text-xs text-gray-500">
-                        <div>Son: {new Date(code.lastScan).toLocaleDateString('tr-TR')}</div>
-                        <div>Sonraki: {new Date(code.nextScan).toLocaleDateString('tr-TR')}</div>
+                        <div>{t('dashboard.trackingCodes.lastScan')}: {new Date(code.lastScan).toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'tr-TR')}</div>
+                        <div>{t('dashboard.trackingCodes.nextScan')}: {new Date(code.nextScan).toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'tr-TR')}</div>
                       </div>
                       <button
                         onClick={() => copyToClipboard(code.code, code.id)}
@@ -555,7 +557,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                           <Copy className="h-4 w-4 text-gray-600" />
                         )}
                         <span className="font-medium">
-                          {copiedId === code.id ? 'Kopyalandı!' : 'Kopyala'}
+                          {copiedId === code.id ? t('common.copied') : t('common.copy')}
                         </span>
                       </button>
                       <button
@@ -585,8 +587,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
               <Activity className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">Tarama Geçmişi</h2>
-              <p className="text-gray-600">Tüm SEO analizleriniz ve sonuçları</p>
+              <h2 className="text-2xl font-bold text-gray-900">{t('dashboard.reportsHistory.title')}</h2>
+              <p className="text-gray-600">{t('dashboard.reportsHistory.description')}</p>
             </div>
           </div>
 
@@ -595,28 +597,18 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
               <div className="w-20 h-20 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Search className="h-10 w-10 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Henüz Tarama Yapılmadı</h3>
-              <p className="text-gray-600 mb-6">İlk SEO taramanızı yapmak için yukarıdan bir site URL'i girin.</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">{t('dashboard.reportsHistory.noReports')}</h3>
+              <p className="text-gray-600 mb-6">{t('dashboard.reportsHistory.noReportsDescription')}</p>
               
               <div className="bg-gray-50 rounded-xl p-6 max-w-md mx-auto">
-                <h4 className="font-semibold text-gray-900 mb-4">Tarama ile neler öğrenirsiniz?</h4>
+                <h4 className="font-semibold text-gray-900 mb-4">{t('dashboard.reportsHistory.learnFromScan')}</h4>
                 <div className="grid grid-cols-2 gap-3 text-sm">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-green-600" />
-                    <span className="text-gray-700">Meta etiket analizi</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-green-600" />
-                    <span className="text-gray-700">Sayfa hızı testi</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-green-600" />
-                    <span className="text-gray-700">Mobil uyumluluk</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-green-600" />
-                    <span className="text-gray-700">SEO önerileri</span>
-                  </div>
+                  {t('dashboard.reportsHistory.scanFeatures', { returnObjects: true }).map((feature: string, index: number) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-green-600" />
+                      <span className="text-gray-700">{feature}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -637,7 +629,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                       <div>
                         <div className="font-semibold text-gray-900">{report.websiteUrl}</div>
                         <div className="text-sm text-gray-600">
-                          {new Date(report.createdAt).toLocaleDateString('tr-TR', {
+                          {new Date(report.createdAt).toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'tr-TR', {
                             year: 'numeric',
                             month: 'short',
                             day: 'numeric',
@@ -664,7 +656,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                     <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                       <div className="flex items-center gap-2 text-green-700 font-semibold mb-2 text-sm">
                         <CheckCircle2 className="h-4 w-4" />
-                        Güçlü Yönler ({report.positives.length})
+                        {t('seo.strengths')} ({report.positives.length})
                       </div>
                       <ul className="space-y-1">
                         {report.positives.slice(0, 3).map((positive, i) => (
@@ -682,7 +674,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                     <div className="bg-red-50 border border-red-200 rounded-lg p-4">
                       <div className="flex items-center gap-2 text-red-700 font-semibold mb-2 text-sm">
                         <AlertTriangle className="h-4 w-4" />
-                        İyileştirmeler ({report.negatives.length})
+                        {t('seo.improvements')} ({report.negatives.length})
                       </div>
                       <ul className="space-y-1">
                         {report.negatives.slice(0, 3).map((negative, i) => (
@@ -715,53 +707,41 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
               </div>
               
               <h3 className="text-2xl font-bold mb-4">
-                Daha Fazla Özellik İster misiniz?
+                {t('dashboard.upgrade.title')}
               </h3>
               
               <p className="text-white/90 mb-8 max-w-2xl mx-auto">
-                Pro veya Advanced plana geçerek AI destekli öneriler, sınırsız tarama ve daha fazlasına erişin.
+                {t('dashboard.upgrade.description')}
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
                   <div className="flex items-center gap-3 mb-4">
                     <Settings className="h-6 w-6" />
-                    <span className="font-bold text-lg">Pro Plan</span>
+                    <span className="font-bold text-lg">{t('home.pricing.pro.title')}</span>
                   </div>
                   <ul className="text-left space-y-2 text-sm">
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4" />
-                      <span>Sınırsız SEO taraması</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4" />
-                      <span>AI SEO önerileri</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4" />
-                      <span>Detaylı raporlar</span>
-                    </li>
+                    {t('home.pricing.pro.features', { returnObjects: true }).slice(0, 3).map((feature: string, index: number) => (
+                      <li key={index} className="flex items-center gap-2">
+                        <CheckCircle2 className="h-4 w-4" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
 
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
                   <div className="flex items-center gap-3 mb-4">
                     <Sparkles className="h-6 w-6" />
-                    <span className="font-bold text-lg">Advanced Plan</span>
+                    <span className="font-bold text-lg">{t('home.pricing.advanced.title')}</span>
                   </div>
                   <ul className="text-left space-y-2 text-sm">
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4" />
-                      <span>Tüm Pro özellikleri</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4" />
-                      <span>AI içerik üretimi</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4" />
-                      <span>Kod snippet'leri</span>
-                    </li>
+                    {t('home.pricing.advanced.features', { returnObjects: true }).slice(0, 3).map((feature: string, index: number) => (
+                      <li key={index} className="flex items-center gap-2">
+                        <CheckCircle2 className="h-4 w-4" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -771,7 +751,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                 className="bg-white text-blue-600 px-8 py-3 rounded-xl hover:bg-gray-100 transition-all duration-200 font-bold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center gap-3 mx-auto"
               >
                 <Rocket className="h-5 w-5" />
-                Planını Yükselt
+                {t('dashboard.upgrade.upgradePlan')}
                 <ArrowRight className="h-5 w-5" />
               </button>
             </div>

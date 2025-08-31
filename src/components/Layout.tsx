@@ -1,6 +1,8 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import LanguageSwitcher from './LanguageSwitcher';
 import { LogOut, BarChart3, Lightbulb, Sparkles, CreditCard, Settings, User, Crown, Bell, Search, Menu, X, Zap, Target } from 'lucide-react';
 
 type Tab = 'dashboard' | 'suggestions' | 'ai-content';
@@ -22,13 +24,14 @@ const Layout: React.FC<LayoutProps> = ({
   onOpenDataTools,
   onLogout,
 }) => {
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   const tabs: Array<{ id: Tab; label: string; icon: React.ComponentType<any>; guard: (m?: string) => boolean; description: string }> = [
-    { id: 'dashboard', label: 'Dashboard', icon: BarChart3, guard: () => true, description: 'SEO raporları ve site yönetimi' },
-    { id: 'suggestions', label: 'AI Öneriler', icon: Lightbulb, guard: (m?: string) => m === 'Pro' || m === 'Advanced', description: 'Yapay zeka destekli SEO önerileri' },
-    { id: 'ai-content', label: 'İçerik Üret', icon: Sparkles, guard: (m?: string) => m === 'Advanced', description: 'AI ile sosyal medya içeriği' },
+    { id: 'dashboard', label: t('navigation.dashboard'), icon: BarChart3, guard: () => true, description: t('navigation.dashboard') },
+    { id: 'suggestions', label: t('navigation.suggestions'), icon: Lightbulb, guard: (m?: string) => m === 'Pro' || m === 'Advanced', description: t('navigation.suggestions') },
+    { id: 'ai-content', label: t('navigation.aiContent'), icon: Sparkles, guard: (m?: string) => m === 'Advanced', description: t('navigation.aiContent') },
   ];
 
   const membershipConfig = {
@@ -92,9 +95,10 @@ const Layout: React.FC<LayoutProps> = ({
 
             {/* Desktop User Info & Actions */}
             <div className="hidden lg:flex items-center space-x-6">
+              <LanguageSwitcher />
               <div className="flex items-center gap-4">
                 <div className="text-gray-700">
-                  Merhaba, <span className="font-semibold text-gray-900">{user?.username}</span>
+                  {t('dashboard.welcome')}, <span className="font-semibold text-gray-900">{user?.username}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   {currentMembership.icon}
@@ -111,19 +115,19 @@ const Layout: React.FC<LayoutProps> = ({
               <button
                 onClick={onOpenBilling}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
-                aria-label="Plan ve ödeme ayarları"
+                aria-label={t('navigation.billing')}
               >
                 <CreditCard className="h-4 w-4" />
-                <span>Plan & Ödeme</span>
+                <span>{t('navigation.billing')}</span>
               </button>
 
               <button
                 onClick={handleLogout}
                 className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 px-3 py-2 rounded-xl hover:bg-gray-100 transition-all duration-200"
-                aria-label="Çıkış yap"
+                aria-label={t('auth.logout')}
               >
                 <LogOut className="h-4 w-4" />
-                <span className="font-medium">Çıkış</span>
+                <span className="font-medium">{t('auth.logout')}</span>
               </button>
             </div>
 
@@ -162,7 +166,7 @@ const Layout: React.FC<LayoutProps> = ({
                   className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
                 >
                   <CreditCard className="h-5 w-5" />
-                  Plan & Ödeme
+                  {t('navigation.billing')}
                 </button>
                 
                 <button
@@ -173,7 +177,7 @@ const Layout: React.FC<LayoutProps> = ({
                   className="w-full text-gray-600 px-6 py-3 rounded-xl border border-gray-300 flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors"
                 >
                   <LogOut className="h-5 w-5" />
-                  Çıkış Yap
+                  {t('auth.logout')}
                 </button>
               </div>
             </div>
@@ -202,7 +206,9 @@ const Layout: React.FC<LayoutProps> = ({
                   }`}
                   disabled={!allowed}
                   aria-current={active ? 'page' : undefined}
-                  title={!allowed ? `Bu sekme ${tab.guard('Pro') ? 'Pro' : 'Advanced'} üyelerde aktif` : tab.description}
+                  title={!allowed ? 
+                    (t('common.upgradeRequired', { plan: tab.guard('Pro') ? 'Pro' : 'Advanced' }) || `This tab requires ${tab.guard('Pro') ? 'Pro' : 'Advanced'} membership`) 
+                    : tab.description}
                   role="tab"
                   aria-selected={active}
                 >
