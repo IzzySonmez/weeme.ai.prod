@@ -396,6 +396,74 @@
       }
     }
   },
+  "industryPresets": {
+    "teknoloji": [
+      "AI trends and their impact on business",
+      "Cybersecurity tips: 2024 threats",
+      "Optimizing cloud computing costs",
+      "Mobile app development best practices"
+    ],
+    "sağlık": [
+      "Digital health solutions and patient experience",
+      "The future of telemedicine and opportunities",
+      "Data security in healthcare sector",
+      "Strategies to increase patient satisfaction"
+    ],
+    "eğitim": [
+      "Online education platform comparison",
+      "Remote learning motivation techniques",
+      "Educational technologies and student success",
+      "Increasing importance of digital literacy"
+    ],
+    "finans": [
+      "Cryptocurrency investment strategies",
+      "Personal finance management tips",
+      "Fintech trends and future of banking",
+      "Investment portfolio diversification guide"
+    ],
+    "eticaret": [
+      "E-commerce conversion rate optimization methods",
+      "Social media sales strategies",
+      "Designing customer loyalty programs",
+      "Shipping and logistics optimization"
+    ],
+    "gayrimenkul": [
+      "Key points in real estate investment",
+      "Real estate sales through digital marketing",
+      "Real estate valuation criteria",
+      "Optimizing rental processes"
+    ],
+    "turizm": [
+      "Sustainable tourism trends",
+      "Destination marketing on social media",
+      "Customer experience and tourism sector",
+      "Digital transformation and hotel management"
+    ],
+    "gıda": [
+      "Organic food trends and consumer preferences",
+      "Digital solutions in restaurant management",
+      "Food safety and quality standards",
+      "Food photography on social media"
+    ],
+    "moda": [
+      "Sustainable fashion and environmental awareness",
+      "Influencer marketing in fashion industry",
+      "E-commerce and fashion: trends and opportunities",
+      "Personal style consulting tips"
+    ],
+    "spor": [
+      "Fitness motivation and goal setting",
+      "Sports nutrition program guide",
+      "Digital fitness app comparison",
+      "Social media strategies in sports sector"
+    ],
+    "diğer": [
+      "Personal brand building strategies",
+      "Digital marketing trends 2024",
+      "How do social media algorithms work?",
+      "Content marketing ROI measurement methods"
+    ]
+  },
   "errors": {
     "somethingWentWrong": "Something Went Wrong",
     "unexpectedError": "An unexpected error occurred. Please refresh the page or return to the home page.",

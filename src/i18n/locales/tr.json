@@ -396,6 +396,74 @@
       }
     }
   },
+  "industryPresets": {
+    "teknoloji": [
+      "Yapay zeka trendleri ve iş dünyasına etkileri",
+      "Siber güvenlik ipuçları: 2024 tehditleri",
+      "Cloud computing maliyetlerini optimize etme",
+      "Mobil uygulama geliştirme best practice'leri"
+    ],
+    "sağlık": [
+      "Dijital sağlık çözümleri ve hasta deneyimi",
+      "Telemedicine'in geleceği ve fırsatları",
+      "Sağlık sektöründe veri güvenliği",
+      "Hasta memnuniyeti artırma stratejileri"
+    ],
+    "eğitim": [
+      "Online eğitim platformları karşılaştırması",
+      "Uzaktan öğrenme motivasyon teknikleri",
+      "Eğitim teknolojileri ve öğrenci başarısı",
+      "Dijital okuryazarlık önemini artırma"
+    ],
+    "finans": [
+      "Kripto para yatırım stratejileri",
+      "Kişisel finans yönetimi ipuçları",
+      "Fintech trendleri ve bankacılığın geleceği",
+      "Yatırım portföyü çeşitlendirme rehberi"
+    ],
+    "eticaret": [
+      "E-ticaret dönüşüm oranı artırma yöntemleri",
+      "Sosyal medya üzerinden satış stratejileri",
+      "Müşteri sadakati programları tasarlama",
+      "Kargo ve lojistik optimizasyonu"
+    ],
+    "gayrimenkul": [
+      "Emlak yatırımında dikkat edilecek noktalar",
+      "Dijital pazarlama ile emlak satışı",
+      "Gayrimenkul değerleme kriterleri",
+      "Kiralama süreçlerini optimize etme"
+    ],
+    "turizm": [
+      "Sürdürülebilir turizm trendleri",
+      "Sosyal medyada destinasyon pazarlama",
+      "Müşteri deneyimi ve turizm sektörü",
+      "Dijital dönüşüm ve otel işletmeciliği"
+    ],
+    "gıda": [
+      "Organik gıda trendleri ve tüketici tercihleri",
+      "Restoran işletmeciliğinde dijital çözümler",
+      "Gıda güvenliği ve kalite standartları",
+      "Sosyal medyada yemek fotoğrafçılığı"
+    ],
+    "moda": [
+      "Sürdürülebilir moda ve çevre bilinci",
+      "Influencer marketing moda sektöründe",
+      "E-ticaret ve moda: trendler ve fırsatlar",
+      "Kişisel stil danışmanlığı ipuçları"
+    ],
+    "spor": [
+      "Fitness motivasyonu ve hedef belirleme",
+      "Spor beslenme programları rehberi",
+      "Dijital fitness uygulamaları karşılaştırması",
+      "Spor sektöründe sosyal medya stratejileri"
+    ],
+    "diğer": [
+      "Kişisel marka oluşturma stratejileri",
+      "Dijital pazarlama trendleri 2024",
+      "Sosyal medya algoritmaları nasıl çalışır?",
+      "İçerik pazarlama ROI ölçüm yöntemleri"
+    ]
+  },
   "errors": {
     "somethingWentWrong": "Bir Hata Oluştu",
     "unexpectedError": "Beklenmeyen bir hata oluştu. Lütfen sayfayı yenileyin veya ana sayfaya dönün.",
