@@ -431,8 +431,8 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                 onClick={() => onOpenBilling?.()}
                 className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-2xl hover:from-purple-700 hover:to-pink-700 transition-all duration-200 font-bold shadow-2xl hover:shadow-3xl transform hover:scale-105"
               >
-              <h2 className="text-3xl font-bold text-gray-900">{t('suggestions.aiAssistant.title')}</h2>
-              <p className="text-gray-600 text-lg">{t('suggestions.aiAssistant.description')}</p>
+                {i18n.language === 'en' ? 'Upgrade' : 'Yükselt'}
+              </button>
             </div>
           </div>
         )}
@@ -445,8 +445,8 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                 <Brain className="h-8 w-8 text-white" />
               </div>
               <div>
-                <h3 className="font-bold text-gray-900 text-2xl">{t('suggestions.upgradeToAdvanced')}</h3>
-                <p className="text-gray-600 text-lg">{t('suggestions.upgradeAdvancedDescription')}</p>
+                <h2 className="text-3xl font-bold text-gray-900">{t('suggestions.aiAssistant.title')}</h2>
+                <p className="text-gray-600 text-lg">{t('suggestions.aiAssistant.description')}</p>
               </div>
             </div>
 
@@ -783,7 +783,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onOpenBilling }) => {
                     </ul>
                   </div>
                 )}
-              {i18n.language === 'en' ? 'Upgrade' : 'Yükselt'}
+              </div>
             )}
           </div>
 
