@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../lib/database';
@@ -137,7 +136,6 @@ const industryPresets: Record<Industry, string[]> = {
 };
 
 const AIContent: React.FC = () => {
-  const { t, i18n } = useTranslation();
   const { user } = useAuth();
 
   const [platform, setPlatform] = useState<Platform>('linkedin');
@@ -358,11 +356,12 @@ const AIContent: React.FC = () => {
             </div>
             
             <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-6">
-              {t('aiContent.upgradeRequired')}
+              AI İçerik Üreticisi
             </h2>
             
             <p className="text-gray-600 text-xl mb-12 leading-relaxed max-w-3xl mx-auto">
-              {t('aiContent.upgradeDescription')}
+              Sosyal medya platformları için AI destekli içerik üretimi sadece 
+              <span className="font-bold text-purple-600"> Advanced </span> üyelerde mevcuttur.
             </p>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
@@ -375,33 +374,37 @@ const AIContent: React.FC = () => {
             </div>
 
             <div className="glass rounded-3xl p-8 border border-purple-200 mb-12 hover:shadow-2xl transition-all duration-500">
-              <h3 className="font-bold text-purple-900 mb-6 text-2xl">{t('aiContent.advancedFeatures')}</h3>
+              <h3 className="font-bold text-purple-900 mb-6 text-2xl">Advanced Plan Özellikleri</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <ul className="text-left space-y-4">
-                  {t('home.pricing.advanced.features', { returnObjects: true }).slice(0, 2).map((feature: string, index: number) => (
-                    <li key={index} className="flex items-center gap-3">
-                      <Sparkles className="h-5 w-5 text-purple-600 flex-shrink-0" />
-                      <span className="text-purple-800">{feature}</span>
-                    </li>
-                  ))}
+                  <li className="flex items-center gap-3">
+                    <Sparkles className="h-5 w-5 text-purple-600 flex-shrink-0" />
+                    <span className="text-purple-800">AI destekli içerik üretimi</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <Target className="h-5 w-5 text-purple-600 flex-shrink-0" />
+                    <span className="text-purple-800">Platform optimizasyonu</span>
+                  </li>
                 </ul>
                 <ul className="text-left space-y-4">
-                  {t('home.pricing.advanced.features', { returnObjects: true }).slice(2, 4).map((feature: string, index: number) => (
-                    <li key={index} className="flex items-center gap-3">
-                      <Users className="h-5 w-5 text-purple-600 flex-shrink-0" />
-                      <span className="text-purple-800">{feature}</span>
-                    </li>
-                  ))}
+                  <li className="flex items-center gap-3">
+                    <Users className="h-5 w-5 text-purple-600 flex-shrink-0" />
+                    <span className="text-purple-800">Hedef kitle analizi</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <TrendingUp className="h-5 w-5 text-purple-600 flex-shrink-0" />
+                    <span className="text-purple-800">Engagement optimizasyonu</span>
+                  </li>
                 </ul>
               </div>
             </div>
 
             <button
-              onClick={() => alert(i18n.language === 'en' ? 'Membership upgrade feature coming soon!' : 'Üyelik yükseltme özelliği yakında eklenecek!')}
+              onClick={() => alert('Üyelik yükseltme özelliği yakında eklenecek!')}
               className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-12 py-6 rounded-3xl hover:from-purple-700 hover:to-pink-700 transition-all duration-200 font-bold text-xl shadow-2xl hover:shadow-3xl transform hover:scale-105 flex items-center gap-4 mx-auto"
             >
               <Rocket className="h-6 w-6" />
-              {t('aiContent.upgradeToAdvanced')}
+              Advanced'a Yükselt
               <ArrowRight className="h-6 w-6" />
             </button>
           </div>
@@ -423,9 +426,9 @@ const AIContent: React.FC = () => {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-4 animate-gradient">
-            {t('aiContent.title')}
+            AI İçerik Üreticisi
           </h1>
-          <p className="text-gray-600 text-xl">{t('aiContent.description')}</p>
+          <p className="text-gray-600 text-xl">Sosyal medya platformları için AI destekli içerik üretimi</p>
         </div>
 
         <div className="space-y-8">
@@ -437,13 +440,13 @@ const AIContent: React.FC = () => {
                   <Sparkles className="h-8 w-8 text-white" />
                 </div>
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900">{t('aiContent.contentGenerator.title')}</h2>
-                  <p className="text-gray-600 text-lg">{t('aiContent.contentGenerator.description')}</p>
+                  <h2 className="text-3xl font-bold text-gray-900">İçerik Üreticisi</h2>
+                  <p className="text-gray-600 text-lg">AI ile viral potansiyeli yüksek içerikler oluşturun</p>
                 </div>
               </div>
 
               <div className="text-sm text-gray-500 glass px-4 py-2 rounded-full">
-                {i18n.language === 'en' ? 'Platform limit:' : 'Platform sınırı:'} <span className="font-semibold">{hardLimit.toLocaleString(i18n.language === 'en' ? 'en-US' : 'tr-TR')} {i18n.language === 'en' ? 'characters' : 'karakter'}</span>
+                Platform sınırı: <span className="font-semibold">{hardLimit.toLocaleString('tr-TR')} karakter</span>
               </div>
             </div>
 
@@ -451,7 +454,7 @@ const AIContent: React.FC = () => {
               {/* Platform Selection */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-4">
-                  {t('aiContent.selectPlatform')}
+                  Platform Seçin
                 </label>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {Object.entries(platformIcons).map(([key, Icon]) => (
@@ -478,7 +481,7 @@ const AIContent: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <label className="block text-sm font-semibold text-gray-700">
-                    {t('aiContent.industryIdeas')}
+                    Sektörünüze Özel Fikirler
                   </label>
                   <button
                     type="button"
@@ -486,7 +489,7 @@ const AIContent: React.FC = () => {
                     className="text-sm text-purple-600 hover:text-purple-700 flex items-center space-x-2 glass px-4 py-2 rounded-full hover:bg-purple-50 transition-colors"
                   >
                     <Wand2 className="h-4 w-4" />
-                    <span>{t('aiContent.randomSelect')}</span>
+                    <span>Rastgele seç</span>
                   </button>
                 </div>
                 <div className="flex flex-wrap gap-3">
@@ -506,30 +509,45 @@ const AIContent: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-3">
-                    {t('aiContent.yourIndustry')}
+                    Sektörünüz
                   </label>
                   <select
                     value={industry}
                     onChange={(e) => setIndustry(e.target.value as Industry)}
                     className="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-purple-500 focus:border-transparent glass transition-all duration-200 text-lg"
                   >
-                    {Object.entries(t('aiContent.industries', { returnObjects: true })).map(([key, value]) => (
-                      <option key={key} value={key}>{value}</option>
-                    ))}
+                    <option value="teknoloji">Teknoloji</option>
+                    <option value="sağlık">Sağlık</option>
+                    <option value="eğitim">Eğitim</option>
+                    <option value="finans">Finans</option>
+                    <option value="eticaret">E-ticaret</option>
+                    <option value="gayrimenkul">Gayrimenkul</option>
+                    <option value="turizm">Turizm</option>
+                    <option value="gıda">Gıda & Restoran</option>
+                    <option value="moda">Moda & Tekstil</option>
+                    <option value="spor">Spor & Fitness</option>
+                    <option value="diğer">Diğer</option>
                   </select>
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-3">
-                    {t('aiContent.targetAudience')}
+                    Hedef Kitleniz
                   </label>
                   <select
                     value={audience}
                     onChange={(e) => setAudience(e.target.value as Audience)}
                     className="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-purple-500 focus:border-transparent glass transition-all duration-200 text-lg"
                   >
-                    {Object.entries(t('aiContent.audiences', { returnObjects: true })).map(([key, value]) => (
-                      <option key={key} value={key}>{value}</option>
-                    ))}
+                    <option value="b2b">B2B (İş Dünyası)</option>
+                    <option value="b2c">B2C (Bireysel Müşteri)</option>
+                    <option value="genç_yetişkin">Genç Yetişkin (18-35)</option>
+                    <option value="orta_yaş">Orta Yaş (35-55)</option>
+                    <option value="üst_düzey_yönetici">Üst Düzey Yönetici</option>
+                    <option value="girişimci">Girişimci & Startup</option>
+                    <option value="öğrenci">Öğrenci</option>
+                    <option value="anne_baba">Anne & Baba</option>
+                    <option value="emekli">Emekli</option>
+                    <option value="karma">Karma Kitle</option>
                   </select>
                 </div>
               </div>
@@ -538,21 +556,24 @@ const AIContent: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-3">
-                    {t('aiContent.tone')}
+                    Ton
                   </label>
                   <select
                     value={tone}
                     onChange={(e) => setTone(e.target.value as Tone)}
                     className="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-purple-500 glass transition-all duration-200 text-lg"
                   >
-                    {Object.entries(t('aiContent.tones', { returnObjects: true })).map(([key, value]) => (
-                      <option key={key} value={key}>{value}</option>
-                    ))}
+                    <option value="profesyonel">Profesyonel</option>
+                    <option value="bilgilendirici">Bilgilendirici</option>
+                    <option value="samimi">Samimi</option>
+                    <option value="eğlenceli">Eğlenceli</option>
+                    <option value="satış_odaklı">Satış Odaklı</option>
+                    <option value="hikaye_anlatımı">Hikaye Anlatımı</option>
                   </select>
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-3">
-                    {t('aiContent.hashtagCount')}
+                    Hashtag Sayısı
                   </label>
                   <input
                     type="number"
@@ -565,7 +586,7 @@ const AIContent: React.FC = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-3">
-                    {t('aiContent.targetLength')}
+                    Hedef Uzunluk (Twitter için)
                   </label>
                   <input
                     type="range"
@@ -577,17 +598,17 @@ const AIContent: React.FC = () => {
                     className="w-full"
                     disabled={platform !== 'twitter'}
                   />
-                  <div className="text-sm text-gray-500 mt-2">{targetLength} {i18n.language === 'en' ? 'characters' : 'karakter'}</div>
+                  <div className="text-sm text-gray-500 mt-2">{targetLength} karakter</div>
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-3">
-                    {t('aiContent.businessGoal')}
+                    İş Hedefi (Opsiyonel)
                   </label>
                   <input
                     type="text"
                     value={businessGoal}
                     onChange={(e) => setBusinessGoal(e.target.value)}
-                    placeholder={i18n.language === 'en' ? 'Increase sales, awareness...' : 'Satış artırma, farkındalık...'}
+                    placeholder="Satış artırma, farkındalık..."
                     className="w-full px-6 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-purple-500 glass transition-all duration-200 text-lg"
                   />
                 </div>
@@ -597,10 +618,10 @@ const AIContent: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <label className="block text-sm font-semibold text-gray-700">
-                    {t('aiContent.contentTopic')}
+                    İçerik konunuzu yazın
                   </label>
                   <div className="text-sm text-gray-500">
-                    {charCount} {i18n.language === 'en' ? 'characters' : 'karakter'}
+                    {charCount} karakter
                   </div>
                 </div>
                 <textarea
@@ -618,14 +639,14 @@ const AIContent: React.FC = () => {
                       checked={includeEmojis}
                       onChange={(e) => setIncludeEmojis(e.target.checked)}
                     />
-                    <span className="font-medium">{t('aiContent.includeEmojis')}</span>
+                    <span className="font-medium">Emojileri dahil et</span>
                   </label>
                   <button
                     type="button"
                     onClick={resetForm}
                     className="text-sm text-gray-600 hover:text-gray-900 inline-flex items-center gap-2 glass px-4 py-2 rounded-full hover:bg-gray-100 transition-colors"
                   >
-                    <RefreshCw className="h-4 w-4" /> {t('common.reset')}
+                    <RefreshCw className="h-4 w-4" /> Sıfırla
                   </button>
                 </div>
               </div>
@@ -640,7 +661,7 @@ const AIContent: React.FC = () => {
                 ) : (
                   <Send className="h-6 w-6" />
                 )}
-                <span>{loading ? t('aiContent.aiGenerating') : t('aiContent.generateContent')}</span>
+                <span>{loading ? 'AI İçerik Üretiyor...' : 'İçerik Üret'}</span>
               </button>
 
               {/* Generated Content */}
@@ -652,16 +673,16 @@ const AIContent: React.FC = () => {
                         {React.createElement(platformIcons[platform], { className: 'h-6 w-6 text-white' })}
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-900 text-xl">{platformNames[platform]} {i18n.language === 'en' ? 'Content' : 'İçeriği'}</h4>
+                        <h4 className="font-bold text-gray-900 text-xl">{platformNames[platform]} İçeriği</h4>
                         <div className="text-sm text-gray-500">
-                          {generatedContent.length}/{hardLimit} {i18n.language === 'en' ? 'characters' : 'karakter'}
+                          {generatedContent.length}/{hardLimit} karakter
                         </div>
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
                       {overLimit && (
                         <div className="text-sm text-red-600 bg-red-50 px-3 py-1 rounded-full">
-                          {i18n.language === 'en' ? 'Limit exceeded' : 'Sınır aşıldı'}
+                          Sınır aşıldı
                         </div>
                       )}
                       <button
@@ -674,7 +695,7 @@ const AIContent: React.FC = () => {
                           <Copy className="h-5 w-5 text-gray-600" />
                         )}
                         <span className="font-medium">
-                          {copiedId === 'current' ? t('common.copied') : t('common.copy')}
+                          {copiedId === 'current' ? 'Kopyalandı!' : 'Kopyala'}
                         </span>
                       </button>
                     </div>
@@ -703,7 +724,7 @@ const AIContent: React.FC = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         <Eye className="h-4 w-4" />
-                        <span>{t('aiContent.contentHistory.estimatedEngagement')}</span>
+                        <span>Tahmini engagement</span>
                       </div>
                     </div>
                   </div>
@@ -720,8 +741,8 @@ const AIContent: React.FC = () => {
                   <BarChart3 className="h-8 w-8 text-white" />
                 </div>
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900">{t('aiContent.contentHistory.title')}</h2>
-                  <p className="text-gray-600 text-lg">{t('aiContent.contentHistory.description')}</p>
+                  <h2 className="text-3xl font-bold text-gray-900">İçerik Geçmişi</h2>
+                  <p className="text-gray-600 text-lg">Daha önce üretilen içerikleriniz</p>
                 </div>
               </div>
               {contentHistory.length > 0 && (
@@ -729,7 +750,7 @@ const AIContent: React.FC = () => {
                   onClick={clearHistory}
                   className="text-sm text-red-600 hover:text-red-700 inline-flex items-center gap-2 bg-red-50 px-4 py-3 rounded-2xl hover:bg-red-100 transition-colors"
                 >
-                  <ListRestart className="h-4 w-4" /> {t('aiContent.contentHistory.clearHistory')}
+                  <ListRestart className="h-4 w-4" /> Geçmişi Temizle
                 </button>
               )}
             </div>
@@ -741,8 +762,8 @@ const AIContent: React.FC = () => {
                     <Sparkles className="h-12 w-12 text-white" />
                   </div>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">{t('aiContent.contentHistory.noContent')}</h3>
-                <p className="text-gray-600 text-lg">{t('aiContent.contentHistory.noContentDescription')}</p>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Henüz İçerik Üretilmedi</h3>
+                <p className="text-gray-600 text-lg">İlk sosyal medya içeriğinizi yukarıdan oluşturun.</p>
               </div>
             ) : (
               <div className="space-y-6">
@@ -760,13 +781,13 @@ const AIContent: React.FC = () => {
                               {platformNames[content.platform as Platform]}
                             </span>
                             <div className="text-sm text-gray-500">
-                              {new Date(content.createdAt).toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'tr-TR', {
+                              {new Date(content.createdAt).toLocaleDateString('tr-TR', {
                                 year: 'numeric',
                                 month: 'short',
                                 day: 'numeric',
                                 hour: '2-digit',
                                 minute: '2-digit'
-                              })} • {content.content.length} {i18n.language === 'en' ? 'characters' : 'karakter'}
+                              })} • {content.content.length} karakter
                             </div>
                           </div>
                         </div>
@@ -781,7 +802,7 @@ const AIContent: React.FC = () => {
                               <Copy className="h-4 w-4" />
                             )}
                             <span className="text-sm font-medium">
-                              {copiedId === content.id ? t('common.copied') : t('common.copy')}
+                              {copiedId === content.id ? 'Kopyalandı!' : 'Kopyala'}
                             </span>
                           </button>
                           <button
@@ -794,7 +815,7 @@ const AIContent: React.FC = () => {
                         </div>
                       </div>
                       <div className="mb-4">
-                        <div className="text-sm text-gray-600 font-semibold mb-2">{t('aiContent.contentHistory.prompt')}</div>
+                        <div className="text-sm text-gray-600 font-semibold mb-2">Prompt:</div>
                         <div className="text-sm text-gray-800 glass rounded-2xl p-4">
                           {content.prompt}
                         </div>
