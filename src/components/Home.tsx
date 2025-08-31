@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 
 const Home: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [activeStep, setActiveStep] = useState(0);
   const [stats, setStats] = useState({
     sites: 0,
