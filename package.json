@@ -6,8 +6,8 @@
     "dev:client": "vite",
     "dev:server": "node server/index.js",
     "dev": "npm-run-all --parallel dev:server dev:client",
-    "build": "npm run build:client",
-    "build:client": "tsc && vite build",
+    "build": "tsc -b && vite build",
+    "build:client": "tsc -b && vite build",
     "build:server": "node server/index.js",
     "start": "NODE_ENV=production node server/index.js",
     "preview": "npm run build && npm run start",
@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
+    "@types/node": "^24.3.0",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@types/uuid": "^10.0.0",
