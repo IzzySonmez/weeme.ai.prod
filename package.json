@@ -6,7 +6,7 @@
     "dev:client": "vite",
     "dev:server": "node server/index.js",
     "dev": "npm-run-all --parallel dev:server dev:client",
-    "build": "tsc && vite build",
+    "build": "npx tsc && npx vite build",
     "build:client": "tsc && vite build",
     "build:server": "node server/index.js",
     "start": "NODE_ENV=production node server/index.js",
