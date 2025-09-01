@@ -4,8 +4,11 @@
 
 [build.environment]
   NODE_ENV = "production"
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
   NPM_FLAGS = "--include=dev"
+
+[functions]
+  directory = "netlify/functions"
 
 [[redirects]]
   from = "/api/*"
@@ -16,9 +19,6 @@
   from = "/*"
   to = "/index.html"
   status = 200
-
-[functions]
-  directory = "netlify/functions"
 
 [[headers]]
   for = "/*"
