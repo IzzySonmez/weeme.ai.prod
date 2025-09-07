@@ -1,4 +1,4 @@
-// server/index.ts
+// server/index.js
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
@@ -52,7 +52,7 @@ app.use(limiter);
 app.use(express.json({ limit: '10mb' }));
 
 // Environment validation and OpenAI setup
-const normalizeKey = (k?: string): string => {
+const normalizeKey = (k) => {
   if (!k) return '';
   
   return k
@@ -67,7 +67,7 @@ const keyValidation = KeySchema.safeParse(rawKey);
 const keyOk = keyValidation.success;
 
 // Mask key for logging (show first 6 and last 4 chars)
-const maskKey = (key: string): string => {
+const maskKey = (key) => {
   if (key.length < 10) return '***';
   return `${key.slice(0, 6)}...${key.slice(-4)}`;
 };
@@ -123,7 +123,7 @@ app.get('/api/health', async (req, res) => {
       model: response.model,
       requestId 
     });
-  } catch (err: any) {
+  } catch (err) {
     const status = err?.status || 500;
     const errorType = err?.error?.type || 'unknown';
     
@@ -143,7 +143,7 @@ app.get('/api/health', async (req, res) => {
   }
 });
 
-// AI endpoint for SEO analysis
+// AI endpoint for general chat
 app.post('/api/ai', async (req, res) => {
   const requestId = uuid();
   const { prompt } = req.body || {};
@@ -196,7 +196,7 @@ app.post('/api/ai', async (req, res) => {
       model: response.model
     });
 
-  } catch (err: any) {
+  } catch (err) {
     const status = err?.status || 500;
     const errorType = err?.error?.type || 'unknown';
     const message = err?.message || 'Unknown error';
@@ -230,7 +230,7 @@ app.post('/api/ai', async (req, res) => {
   }
 });
 
-// Keep existing SEO scan endpoint for backward compatibility
+// SEO scan endpoint (backward compatible)
 app.post('/api/seo-scan', async (req, res) => {
   const requestId = uuid();
   const { url } = req.body;
@@ -306,7 +306,7 @@ Focus on: title tags, meta descriptions, headings, SSL, mobile optimization, pag
       requestId
     });
 
-  } catch (error: any) {
+  } catch (error) {
     logger.error({ requestId, error: error.message }, 'SEO scan failed');
     
     res.status(500).json({
@@ -331,7 +331,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Error handling middleware
-app.use((error: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+app.use((error, req, res, next) => {
   const requestId = uuid();
   logger.error({ requestId, error: error.message, stack: error.stack }, 'Unhandled error');
   
