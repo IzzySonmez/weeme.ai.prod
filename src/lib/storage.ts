@@ -6,14 +6,13 @@ const STORAGE_VERSION = '1'; // v1
 const SESSION_USER_ID_KEY = 'currentSessionUserId';
 const USER_INDEX_KEY = 'userIndex'; // username -> userId mapping
 
-export type MembershipType = 'Free' | 'Pro' | 'Advanced';
+export type MembershipType = 'Free';
 
 export interface PersistedUser {
   id: string;
   username: string;
   email: string;
   membershipType: MembershipType;
-  credits: number;
   createdAt: string;
 }
 

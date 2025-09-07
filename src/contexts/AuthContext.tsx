@@ -11,14 +11,13 @@ import {
   setCurrentSessionUserId,
 } from '../lib/storage';
 
-export type MembershipType = 'Free' | 'Pro' | 'Advanced';
+export type MembershipType = 'Free';
 
 export interface User {
   id: string;
   username: string;
   email: string;
   membershipType: MembershipType;
-  credits: number;
   createdAt: string;
 }
 
@@ -28,11 +27,6 @@ interface AuthContextType {
   login: (username: string, password: string) => Promise<boolean>;
   register: (username: string, email: string, password: string) => Promise<boolean>;
   logout: () => void;
-
-  updateCredits: (credits: number) => void;
-  addCredits: (amount: number) => void;
-  upgradeMembership: (type: MembershipType) => void;
-
   refreshUser: () => void;
 }
 
@@ -122,7 +116,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         username: username.trim(),
         email: `${username.trim()}@example.com`,
         membershipType: 'Free',
-        credits: 3,
         createdAt: new Date().toISOString(),
       };
 
@@ -167,7 +160,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         username: username.trim(),
         email: email.trim(),
         membershipType: 'Free',
-        credits: 3,
         createdAt: new Date().toISOString(),
       };
 
@@ -188,24 +180,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
   };
 
-  const updateCredits = (credits: number) => {
-    if (!user) return;
-    const next = { ...user, credits: Math.max(0, credits) };
-    persistAndSet(next);
-  };
-
-  const addCredits = (amount: number) => {
-    if (!user) return;
-    const next = { ...user, credits: Math.max(0, (user.credits ?? 0) + amount) };
-    persistAndSet(next);
-  };
-
-  const upgradeMembership = (type: MembershipType) => {
-    if (!user) return;
-    const next = { ...user, membershipType: type };
-    persistAndSet(next);
-  };
-
   const refreshUser = () => {
     const u = loadCurrentUser();
     setUser(u ? toRuntime(u) : null);
@@ -218,9 +192,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       login,
       register,
       logout,
-      updateCredits,
-      addCredits,
-      upgradeMembership,
       refreshUser,
     }),
     [user, isLoading]

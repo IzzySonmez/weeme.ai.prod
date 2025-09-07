@@ -4,65 +4,40 @@ import { v4 as uuidv4 } from 'uuid';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../lib/database';
 import { config } from '../lib/config';
-import type { SEOReport, TrackingCode } from '../types';
+import type { SEOReport } from '../types';
 import {
   BarChart3,
-  Globe,
   Search,
   Loader,
   CheckCircle2,
   AlertTriangle,
   TrendingUp,
   TrendingDown,
-  Copy,
-  Check,
-  Trash2,
-  Plus,
   ExternalLink,
-  Calendar,
-  Clock,
   Target,
-  Zap,
-  Shield,
-  Award,
-  Eye,
-  RefreshCw,
-  Settings,
-  Code,
   Activity,
   Sparkles,
-  ArrowRight,
   Star,
   Users,
-  Crown,
   Lock,
   Rocket,
-  LineChart,
-  PieChart,
-  BarChart,
-  TrendingDown as TrendDown
+  ArrowRight,
+  Globe,
+  Zap,
+  Award
 } from 'lucide-react';
 
-interface DashboardProps {
-  onOpenBilling: () => void;
-}
-
-const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
+const Dashboard: React.FC = () => {
   const { t, i18n } = useTranslation();
-  const { user, updateCredits } = useAuth();
+  const { user } = useAuth();
 
   const [url, setUrl] = useState('');
   const [scanning, setScanning] = useState(false);
   const [reports, setReports] = useState<SEOReport[]>([]);
-  const [trackingCodes, setTrackingCodes] = useState<TrackingCode[]>([]);
-  const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [showAddTracking, setShowAddTracking] = useState(false);
-  const [newTrackingUrl, setNewTrackingUrl] = useState('');
 
   useEffect(() => {
     if (user?.id) {
       loadReports();
-      loadTrackingCodes();
     }
   }, [user?.id]);
 
@@ -78,26 +53,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
     }
   };
 
-  const loadTrackingCodes = async () => {
-    if (!user?.id) return;
-    try {
-      const data = await db.getTrackingCodes(user.id);
-      setTrackingCodes(data);
-    } catch (error) {
-      console.error('Failed to load tracking codes:', error);
-      const saved = localStorage.getItem(`trackingCodes_${user.id}`);
-      if (saved) setTrackingCodes(JSON.parse(saved));
-    }
-  };
-
   const scanSite = async () => {
     if (!url.trim() || !user) {
-      alert('Lütfen geçerli bir URL girin.');
-      return;
-    }
-
-    if (user.membershipType === 'Free' && user.credits <= 0) {
-      alert('Kredi bakiyeniz yetersiz. Kredi satın alın veya Pro plana geçin.');
+      alert(i18n.language === 'en' ? 'Please enter a valid URL.' : 'Lütfen geçerli bir URL girin.');
       return;
     }
 
@@ -115,7 +73,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
       if (!response.ok) {
         const errorData = await response.json();
         console.error('[SCAN] API error:', errorData);
-        throw new Error(errorData.message || 'Tarama başarısız');
+        throw new Error(errorData.message || 'Scan failed');
       }
 
       const data = await response.json();
@@ -135,66 +93,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
       setReports([report, ...reports]);
 
       console.log('[SCAN] Report saved successfully');
-
-      if (user.membershipType === 'Free') {
-        updateCredits(user.credits - 1);
-      }
-
       setUrl('');
     } catch (error) {
       console.error('Scan failed:', error);
-      const errorMessage = error instanceof Error ? error.message : 'Bilinmeyen hata';
-      alert(`Tarama başarısız: ${errorMessage}`);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      alert(`${i18n.language === 'en' ? 'Scan failed:' : 'Tarama başarısız:'} ${errorMessage}`);
     } finally {
       setScanning(false);
     }
-  };
-
-  const addTrackingCode = async () => {
-    if (!newTrackingUrl.trim() || !user) return;
-
-    const code = `<!-- weeme.ai SEO Tracking -->
-<script>
-(function() {
-  var script = document.createElement('script');
-  script.src = 'https://cdn.weeme.ai/tracker.js';
-  script.setAttribute('data-site-id', '${uuidv4()}');
-  script.setAttribute('data-user-id', '${user.id}');
-  document.head.appendChild(script);
-})();
-</script>`;
-
-    const trackingCode: TrackingCode = {
-      id: uuidv4(),
-      userId: user.id,
-      websiteUrl: newTrackingUrl.trim(),
-      code,
-      isActive: true,
-      scanFrequency: 'weekly',
-      lastScan: new Date().toISOString(),
-      nextScan: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-      createdAt: new Date().toISOString(),
-    };
-
-    await db.saveTrackingCode(trackingCode);
-    setTrackingCodes([trackingCode, ...trackingCodes]);
-    setNewTrackingUrl('');
-    setShowAddTracking(false);
-  };
-
-  const copyToClipboard = async (text: string, id: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedId(id);
-      setTimeout(() => setCopiedId(null), 1500);
-    } catch (err) {
-      console.error('Kopyalama başarısız:', err);
-    }
-  };
-
-  const removeTrackingCode = async (id: string) => {
-    await db.deleteTrackingCode(id);
-    setTrackingCodes(trackingCodes.filter(tc => tc.id !== id));
   };
 
   const latestReport = reports[0];
@@ -204,32 +110,32 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
 
   const stats = [
     {
-      title: t('dashboard.stats.totalScans'),
+      title: i18n.language === 'en' ? 'Total Scans' : 'Toplam Tarama',
       value: totalScans.toString(),
       icon: Search,
       color: 'blue',
-      description: t('dashboard.stats.descriptions.totalScans')
+      description: i18n.language === 'en' ? 'Number of SEO analyses performed' : 'Yapılan SEO analizi sayısı'
     },
     {
-      title: t('dashboard.stats.averageScore'),
+      title: i18n.language === 'en' ? 'Average Score' : 'Ortalama Skor',
       value: avgScore > 0 ? avgScore.toString() : '—',
       icon: Target,
       color: 'green',
-      description: t('dashboard.stats.descriptions.averageScore')
+      description: i18n.language === 'en' ? 'Average SEO score of all sites' : 'Tüm sitelerin ortalama SEO skoru'
     },
     {
-      title: t('dashboard.stats.lastTrend'),
+      title: i18n.language === 'en' ? 'Last Trend' : 'Son Trend',
       value: trend > 0 ? `+${trend}` : trend < 0 ? trend.toString() : '—',
       icon: trend >= 0 ? TrendingUp : TrendingDown,
       color: trend >= 0 ? 'emerald' : 'red',
-      description: t('dashboard.stats.descriptions.lastTrend')
+      description: i18n.language === 'en' ? 'Change between last two scans' : 'Son iki tarama arasındaki değişim'
     },
     {
-      title: t('dashboard.stats.activeTracking'),
-      value: trackingCodes.filter(tc => tc.isActive).length.toString(),
+      title: i18n.language === 'en' ? 'SEO Potential' : 'SEO Potansiyeli',
+      value: latestReport ? `+${Math.max(0, 100 - latestReport.score)}` : '—',
       icon: Activity,
       color: 'purple',
-      description: t('dashboard.stats.descriptions.activeTracking')
+      description: i18n.language === 'en' ? 'Improvement potential' : 'İyileştirme potansiyeli'
     }
   ];
 
@@ -238,8 +144,12 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center">
         <div className="bg-white rounded-3xl shadow-2xl p-12 text-center max-w-md">
           <Lock className="h-16 w-16 text-gray-400 mx-auto mb-6" />
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">Giriş Gerekli</h3>
-          <p className="text-gray-600 text-lg">Dashboard'a erişmek için önce giriş yapın.</p>
+          <h3 className="text-2xl font-bold text-gray-900 mb-4">
+            {i18n.language === 'en' ? 'Sign In Required' : 'Giriş Gerekli'}
+          </h3>
+          <p className="text-gray-600 text-lg">
+            {i18n.language === 'en' ? 'Please sign in to access the dashboard.' : 'Dashboard\'a erişmek için önce giriş yapın.'}
+          </p>
         </div>
       </div>
     );
@@ -253,12 +163,16 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-4xl font-bold text-gray-900 mb-2">
-                {t('dashboard.welcome')}, <span className="text-blue-600">{user.username}</span>! 👋
+                {i18n.language === 'en' ? 'Welcome' : 'Hoş geldin'}, <span className="text-blue-600">{user.username}</span>! 👋
               </h1>
-              <p className="text-gray-600 text-lg">{t('dashboard.seoPerformance')}</p>
+              <p className="text-gray-600 text-lg">
+                {i18n.language === 'en' ? 'Analyze your website SEO performance' : 'Web sitenizin SEO performansını analiz edin'}
+              </p>
             </div>
             <div className="text-right">
-              <div className="text-sm text-gray-500">{t('dashboard.todayIs')}</div>
+              <div className="text-sm text-gray-500">
+                {i18n.language === 'en' ? 'Today' : 'Bugün'}
+              </div>
               <div className="text-lg font-semibold text-gray-900">
                 {new Date().toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'tr-TR', { 
                   weekday: 'long', 
@@ -307,8 +221,12 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
               <Search className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">{t('dashboard.quickScan.title')}</h2>
-              <p className="text-gray-600">{t('dashboard.quickScan.description')}</p>
+              <h2 className="text-2xl font-bold text-gray-900">
+                {i18n.language === 'en' ? 'Free SEO Analysis' : 'Ücretsiz SEO Analizi'}
+              </h2>
+              <p className="text-gray-600">
+                {i18n.language === 'en' ? 'Get instant SEO analysis for any website' : 'Herhangi bir web sitesi için anında SEO analizi alın'}
+              </p>
             </div>
           </div>
 
@@ -319,14 +237,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                   type="url"
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
-                  placeholder={t('dashboard.quickScan.placeholder')}
+                  placeholder="https://example.com"
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                   disabled={scanning}
                 />
               </div>
               <button
                 onClick={scanSite}
-                disabled={scanning || !url.trim() || (user.membershipType === 'Free' && user.credits <= 0)}
+                disabled={scanning || !url.trim()}
                 className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3 shadow-lg hover:shadow-xl transform hover:scale-105"
               >
                 {scanning ? (
@@ -334,29 +252,23 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                 ) : (
                   <Search className="h-5 w-5" />
                 )}
-                <span>{scanning ? t('dashboard.quickScan.scanning') : t('dashboard.quickScan.scanButton')}</span>
+                <span>{scanning ? (i18n.language === 'en' ? 'Analyzing...' : 'Analiz ediliyor...') : (i18n.language === 'en' ? 'Analyze' : 'Analiz Et')}</span>
               </button>
             </div>
 
-            {user.membershipType === 'Free' && (
-              <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-xl p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Zap className="h-5 w-5 text-blue-600" />
-                    <div>
-                      <div className="font-semibold text-blue-900">{t('dashboard.quickScan.creditsRemaining')}: {user.credits}</div>
-                      <div className="text-sm text-blue-700">{t('dashboard.quickScan.creditsPerScan')}</div>
-                    </div>
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4">
+              <div className="flex items-center gap-3">
+                <Zap className="h-5 w-5 text-green-600" />
+                <div>
+                  <div className="font-semibold text-green-900">
+                    {i18n.language === 'en' ? '100% Free Forever' : '100% Sonsuza Kadar Ücretsiz'}
                   </div>
-                  <button
-                    onClick={onOpenBilling}
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-semibold text-sm shadow-lg hover:shadow-xl transform hover:scale-105"
-                  >
-                    {t('dashboard.quickScan.buyCredits')}
-                  </button>
+                  <div className="text-sm text-green-700">
+                    {i18n.language === 'en' ? 'No limits, no credit card required' : 'Sınır yok, kredi kartı gerektirmez'}
+                  </div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
         </div>
 
@@ -369,12 +281,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                   <BarChart3 className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">{t('dashboard.latestReport.title')}</h2>
+                  <h2 className="text-2xl font-bold text-gray-900">
+                    {i18n.language === 'en' ? 'Latest Analysis Result' : 'Son Analiz Sonucu'}
+                  </h2>
                   <p className="text-gray-600">{latestReport.websiteUrl}</p>
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-sm text-gray-500 mb-1">{t('seo.score')}</div>
+                <div className="text-sm text-gray-500 mb-1">SEO Score</div>
                 <div className="text-4xl font-bold text-blue-600">
                   {latestReport.score}
                 </div>
@@ -415,9 +329,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                   </div>
                 </div>
                 <div className="text-lg font-semibold text-gray-700">
-                  {latestReport.score >= 80 ? t('seo.excellent') : 
-                   latestReport.score >= 60 ? t('seo.good') : 
-                   latestReport.score >= 40 ? t('seo.average') : t('seo.needsImprovement')}
+                  {latestReport.score >= 80 ? (i18n.language === 'en' ? '🎉 Excellent' : '🎉 Mükemmel') : 
+                   latestReport.score >= 60 ? (i18n.language === 'en' ? '👍 Good' : '👍 İyi') : 
+                   latestReport.score >= 40 ? (i18n.language === 'en' ? '⚠️ Average' : '⚠️ Orta') : (i18n.language === 'en' ? '🔧 Needs Work' : '🔧 Geliştirilmeli')}
                 </div>
               </div>
 
@@ -425,7 +339,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
               <div className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-xl p-6">
                 <div className="flex items-center gap-3 text-green-700 font-semibold mb-4">
                   <CheckCircle2 className="h-5 w-5" />
-                  {t('seo.strengths')} ({latestReport.positives.length})
+                  {i18n.language === 'en' ? 'Strengths' : 'Güçlü Yönler'} ({latestReport.positives.length})
                 </div>
                 <ul className="space-y-2">
                   {latestReport.positives.slice(0, 4).map((positive, i) => (
@@ -435,7 +349,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                     </li>
                   ))}
                   {latestReport.positives.length > 4 && (
-                    <li className="text-green-600 text-xs">+{latestReport.positives.length - 4} daha...</li>
+                    <li className="text-green-600 text-xs">+{latestReport.positives.length - 4} {i18n.language === 'en' ? 'more...' : 'daha...'}</li>
                   )}
                 </ul>
               </div>
@@ -444,7 +358,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
               <div className="bg-gradient-to-br from-red-50 to-orange-50 border border-red-200 rounded-xl p-6">
                 <div className="flex items-center gap-3 text-red-700 font-semibold mb-4">
                   <AlertTriangle className="h-5 w-5" />
-                  {t('seo.improvements')} ({latestReport.negatives.length})
+                  {i18n.language === 'en' ? 'Issues' : 'İyileştirme Alanları'} ({latestReport.negatives.length})
                 </div>
                 <ul className="space-y-2">
                   {latestReport.negatives.slice(0, 4).map((negative, i) => (
@@ -454,131 +368,13 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                     </li>
                   ))}
                   {latestReport.negatives.length > 4 && (
-                    <li className="text-red-600 text-xs">+{latestReport.negatives.length - 4} daha...</li>
+                    <li className="text-red-600 text-xs">+{latestReport.negatives.length - 4} {i18n.language === 'en' ? 'more...' : 'daha...'}</li>
                   )}
                 </ul>
               </div>
             </div>
           </div>
         )}
-
-        {/* Tracking Codes */}
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl shadow-lg">
-                <Code className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900">{t('dashboard.trackingCodes.title')}</h2>
-                <p className="text-gray-600">{t('dashboard.trackingCodes.description')}</p>
-              </div>
-            </div>
-            <button
-              onClick={() => setShowAddTracking(true)}
-              className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 font-semibold flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105"
-            >
-              <Plus className="h-4 w-4" />
-              {t('dashboard.trackingCodes.newCode')}
-            </button>
-          </div>
-
-          {showAddTracking && (
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-6 mb-6">
-              <h3 className="font-semibold text-blue-900 mb-4">{t('dashboard.trackingCodes.createNew')}</h3>
-              <div className="flex gap-3">
-                <input
-                  type="url"
-                  value={newTrackingUrl}
-                  onChange={(e) => setNewTrackingUrl(e.target.value)}
-                  placeholder={t('dashboard.quickScan.placeholder')}
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 transition-all duration-200"
-                />
-                <button
-                  onClick={addTrackingCode}
-                  disabled={!newTrackingUrl.trim()}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-semibold disabled:opacity-50"
-                >
-                  {t('dashboard.trackingCodes.create')}
-                </button>
-                <button
-                  onClick={() => setShowAddTracking(false)}
-                  className="px-6 py-3 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors font-semibold"
-                >
-                  {t('common.cancel')}
-                </button>
-              </div>
-            </div>
-          )}
-
-          {trackingCodes.length === 0 ? (
-            <div className="text-center py-16">
-              <div className="w-20 h-20 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Code className="h-10 w-10 text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">{t('dashboard.trackingCodes.noCodesYet')}</h3>
-              <p className="text-gray-600 mb-6">{t('dashboard.trackingCodes.noCodesDescription')}</p>
-              <button
-                onClick={() => setShowAddTracking(true)}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center gap-2 mx-auto"
-              >
-                <Plus className="h-5 w-5" />
-                {t('dashboard.trackingCodes.createFirst')}
-              </button>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {trackingCodes.map((code) => (
-                <div key={code.id} className="border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-300">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className={`p-2 rounded-lg ${code.isActive ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-600'}`}>
-                        <Globe className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <div className="font-semibold text-gray-900">{code.websiteUrl}</div>
-                        <div className="text-sm text-gray-600">
-                          {code.isActive ? t('dashboard.trackingCodes.active') : t('dashboard.trackingCodes.inactive')} • {code.scanFrequency} {i18n.language === 'en' ? 'scan' : 'tarama'}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="text-right text-xs text-gray-500">
-                        <div>{t('dashboard.trackingCodes.lastScan')}: {new Date(code.lastScan).toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'tr-TR')}</div>
-                        <div>{t('dashboard.trackingCodes.nextScan')}: {new Date(code.nextScan).toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'tr-TR')}</div>
-                      </div>
-                      <button
-                        onClick={() => copyToClipboard(code.code, code.id)}
-                        className="flex items-center gap-2 px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm"
-                      >
-                        {copiedId === code.id ? (
-                          <Check className="h-4 w-4 text-green-600" />
-                        ) : (
-                          <Copy className="h-4 w-4 text-gray-600" />
-                        )}
-                        <span className="font-medium">
-                          {copiedId === code.id ? t('common.copied') : t('common.copy')}
-                        </span>
-                      </button>
-                      <button
-                        onClick={() => removeTrackingCode(code.id)}
-                        className="text-gray-500 hover:text-red-600 p-2 rounded-lg transition-colors"
-                        title="Sil"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                    <pre className="text-gray-100 text-xs font-mono whitespace-pre-wrap">
-                      {code.code}
-                    </pre>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
 
         {/* Reports History */}
         <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
@@ -587,8 +383,12 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
               <Activity className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">{t('dashboard.reportsHistory.title')}</h2>
-              <p className="text-gray-600">{t('dashboard.reportsHistory.description')}</p>
+              <h2 className="text-2xl font-bold text-gray-900">
+                {i18n.language === 'en' ? 'Analysis History' : 'Analiz Geçmişi'}
+              </h2>
+              <p className="text-gray-600">
+                {i18n.language === 'en' ? 'All your SEO analyses and results' : 'Tüm SEO analizleriniz ve sonuçları'}
+              </p>
             </div>
           </div>
 
@@ -597,13 +397,24 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
               <div className="w-20 h-20 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Search className="h-10 w-10 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">{t('dashboard.reportsHistory.noReports')}</h3>
-              <p className="text-gray-600 mb-6">{t('dashboard.reportsHistory.noReportsDescription')}</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">
+                {i18n.language === 'en' ? 'No Analyses Yet' : 'Henüz Analiz Yapılmadı'}
+              </h3>
+              <p className="text-gray-600 mb-6">
+                {i18n.language === 'en' ? 'Enter a website URL above to perform your first SEO analysis.' : 'İlk SEO analizinizi yapmak için yukarıdan bir site URL\'i girin.'}
+              </p>
               
               <div className="bg-gray-50 rounded-xl p-6 max-w-md mx-auto">
-                <h4 className="font-semibold text-gray-900 mb-4">{t('dashboard.reportsHistory.learnFromScan')}</h4>
+                <h4 className="font-semibold text-gray-900 mb-4">
+                  {i18n.language === 'en' ? 'What will you learn from analysis?' : 'Analizden neler öğrenirsiniz?'}
+                </h4>
                 <div className="grid grid-cols-2 gap-3 text-sm">
-                  {t('dashboard.reportsHistory.scanFeatures', { returnObjects: true }).map((feature: string, index: number) => (
+                  {[
+                    i18n.language === 'en' ? 'Meta tag analysis' : 'Meta etiket analizi',
+                    i18n.language === 'en' ? 'Page speed test' : 'Sayfa hızı testi',
+                    i18n.language === 'en' ? 'Mobile compatibility' : 'Mobil uyumluluk',
+                    i18n.language === 'en' ? 'SEO recommendations' : 'SEO önerileri'
+                  ].map((feature, index) => (
                     <div key={index} className="flex items-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-green-600" />
                       <span className="text-gray-700">{feature}</span>
@@ -645,7 +456,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-gray-600 hover:text-gray-900 p-2 rounded-lg transition-colors"
-                        title="Siteyi aç"
+                        title={i18n.language === 'en' ? 'Open site' : 'Siteyi aç'}
                       >
                         <ExternalLink className="h-4 w-4" />
                       </a>
@@ -656,7 +467,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                     <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                       <div className="flex items-center gap-2 text-green-700 font-semibold mb-2 text-sm">
                         <CheckCircle2 className="h-4 w-4" />
-                        {t('seo.strengths')} ({report.positives.length})
+                        {i18n.language === 'en' ? 'Strengths' : 'Güçlü Yönler'} ({report.positives.length})
                       </div>
                       <ul className="space-y-1">
                         {report.positives.slice(0, 3).map((positive, i) => (
@@ -666,7 +477,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                           </li>
                         ))}
                         {report.positives.length > 3 && (
-                          <li className="text-green-600 text-xs">+{report.positives.length - 3} daha...</li>
+                          <li className="text-green-600 text-xs">+{report.positives.length - 3} {i18n.language === 'en' ? 'more...' : 'daha...'}</li>
                         )}
                       </ul>
                     </div>
@@ -674,7 +485,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                     <div className="bg-red-50 border border-red-200 rounded-lg p-4">
                       <div className="flex items-center gap-2 text-red-700 font-semibold mb-2 text-sm">
                         <AlertTriangle className="h-4 w-4" />
-                        {t('seo.improvements')} ({report.negatives.length})
+                        {i18n.language === 'en' ? 'Issues' : 'İyileştirmeler'} ({report.negatives.length})
                       </div>
                       <ul className="space-y-1">
                         {report.negatives.slice(0, 3).map((negative, i) => (
@@ -684,7 +495,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
                           </li>
                         ))}
                         {report.negatives.length > 3 && (
-                          <li className="text-red-600 text-xs">+{report.negatives.length - 3} daha...</li>
+                          <li className="text-red-600 text-xs">+{report.negatives.length - 3} {i18n.language === 'en' ? 'more...' : 'daha...'}</li>
                         )}
                       </ul>
                     </div>
@@ -694,69 +505,6 @@ const Dashboard: React.FC<DashboardProps> = ({ onOpenBilling }) => {
             </div>
           )}
         </div>
-
-        {/* Upgrade Prompt for Free Users */}
-        {user.membershipType === 'Free' && (
-          <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 rounded-2xl p-8 text-white relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-12 -translate-x-12"></div>
-            
-            <div className="relative z-10 text-center">
-              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Rocket className="h-8 w-8 text-white" />
-              </div>
-              
-              <h3 className="text-2xl font-bold mb-4">
-                {t('dashboard.upgrade.title')}
-              </h3>
-              
-              <p className="text-white/90 mb-8 max-w-2xl mx-auto">
-                {t('dashboard.upgrade.description')}
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Settings className="h-6 w-6" />
-                    <span className="font-bold text-lg">{t('home.pricing.pro.title')}</span>
-                  </div>
-                  <ul className="text-left space-y-2 text-sm">
-                    {t('home.pricing.pro.features', { returnObjects: true }).slice(0, 3).map((feature: string, index: number) => (
-                      <li key={index} className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Sparkles className="h-6 w-6" />
-                    <span className="font-bold text-lg">{t('home.pricing.advanced.title')}</span>
-                  </div>
-                  <ul className="text-left space-y-2 text-sm">
-                    {t('home.pricing.advanced.features', { returnObjects: true }).slice(0, 3).map((feature: string, index: number) => (
-                      <li key={index} className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              <button
-                onClick={onOpenBilling}
-                className="bg-white text-blue-600 px-8 py-3 rounded-xl hover:bg-gray-100 transition-all duration-200 font-bold shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center gap-3 mx-auto"
-              >
-                <Rocket className="h-5 w-5" />
-                {t('dashboard.upgrade.upgradePlan')}
-                <ArrowRight className="h-5 w-5" />
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

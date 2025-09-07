@@ -1,24 +1,12 @@
 // src/types/index.ts
-export type MembershipType = 'Free' | 'Pro' | 'Advanced';
+export type MembershipType = 'Free';
 
 export interface User {
   id: string;
   username: string;
   email: string;
   membershipType: MembershipType;
-  credits: number;           // sadece Free için anlamlı
   createdAt: string;
-}
-
-export interface TrackingCode {
-  id: string;
-  userId: string;
-  websiteUrl: string;
-  code: string;
-  isActive: boolean;
-  scanFrequency: 'weekly' | 'biweekly' | 'monthly';
-  lastScan: string;
-  nextScan: string;
 }
 
 export interface SEOReport {
@@ -31,6 +19,18 @@ export interface SEOReport {
   suggestions: string[];
   createdAt: string;
   reportData: Record<string, unknown>;
+}
+
+export interface TrackingCode {
+  id: string;
+  userId: string;
+  websiteUrl: string;
+  code: string;
+  isActive: boolean;
+  scanFrequency: 'weekly' | 'biweekly' | 'monthly';
+  lastScan: string;
+  nextScan: string;
+  createdAt: string;
 }
 
 export type SocialPlatform = 'linkedin' | 'instagram' | 'twitter' | 'facebook';
