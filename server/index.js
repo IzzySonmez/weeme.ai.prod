@@ -487,7 +487,7 @@ JSON formatında dön:
         pageSpeed: Math.floor(Math.random() * 20) + 70,
         keywords: analysis.title ? analysis.title.split(' ').slice(0, 5) : [],
         coreWebVitals: aiAnalysis.coreWebVitals,
-        technicalSEO: aiAnalysis.technicalSEO
+        technicalSEO: aiAnalysis.technicalSEO,
         aiOptimization: aiAnalysis.aiOptimization || 'AI search optimization recommended'
       }
     };
