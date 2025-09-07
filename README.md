@@ -1,174 +1,76 @@
-# weeme.ai - AI-Powered SEO Automation Platform
+# weeme.ai - Ücretsiz AI SEO Tarayıcı
 
-Modern, kapsamlı SEO analizi ve AI destekli içerik üretimi platformu. Tek kod satırı ile sitenizi bağlayın, AI destekli raporlar alın.
+Basit, hızlı ve etkili SEO analizi. GPT-4 ile desteklenen ücretsiz araç.
 
-## 🚀 Özellikler
+## 🎯 MVP Özellikleri
 
-### 🎯 Temel Özellikler
-- **Otomatik SEO Analizi**: Kapsamlı website taraması ve 100 üzerinden skorlama
-- **Gerçek Zamanlı Raporlar**: Detaylı SEO metrikleri ve performans analizi
-- **Otomatik Takip**: Tek kod ile sürekli site monitörü
-- **Çoklu Site Yönetimi**: Birden fazla sitenizi tek panelden yönetin
+### ✨ Temel Özellikler
+- **Ücretsiz SEO Analizi**: 3 ücretsiz tarama hakkı
+- **GPT-4 Destekli**: En son AI teknolojisi ile analiz
+- **Anında Sonuç**: Saniyeler içinde detaylı rapor
+- **Basit Kullanım**: URL gir, analiz et, sonucu al
 
-### 🤖 AI Destekli Özellikler (Pro/Advanced)
-- **AI SEO Önerileri**: Yapay zeka destekli kişiselleştirilmiş öneriler
-- **Kod Snippet'leri**: Hazır HTML/CSS/JS kod örnekleri (Advanced)
-- **AI İçerik Üretimi**: Sosyal medya içerik üretimi (Advanced)
-- **30-60-90 Gün Roadmap**: Detaylı iyileştirme planları
-
-### 🛡️ Güvenlik & Performans
-- **Enterprise Güvenlik**: SSL, CORS, Rate limiting
-- **Responsive Tasarım**: Tüm cihazlarda mükemmel deneyim
-- **Hybrid Database**: localStorage + Supabase entegrasyonu
-- **Production Ready**: Docker, Vercel, Netlify desteği
-
-## 📋 Gereksinimler
-
-### Development
-- Node.js 18+
-- npm veya yarn
-- OpenAI API Key (AI özellikler için - opsiyonel)
-- Supabase hesabı (opsiyonel - localStorage fallback mevcut)
-
-### Production
-- SSL sertifikası
-- Domain name
-- Environment variables
-- Supabase database (önerilir)
-- OpenAI API Key (AI özellikler için)
+### 🚀 3 Adımda SEO Analizi
+1. **URL Gir**: Web sitesi adresini yapıştır
+2. **AI Analizi**: GPT-4 ile kapsamlı tarama
+3. **Sonuçları Al**: Güçlü yönler, sorunlar ve öneriler
 
 ## 🛠️ Kurulum
 
-1. **Repository'yi klonlayın**
 ```bash
+# Repository'yi klonla
 git clone <repo-url>
 cd weemeai
-```
 
-2. **Dependencies yükleyin**
-```bash
+# Dependencies yükle
 npm install
-```
 
-3. **Environment variables ayarlayın**
-```bash
+# Environment variables ayarla
 cp .env.example .env.local
-# .env.local dosyasını düzenleyin - en azından OPENAI_API_KEY ekleyin
-```
+# .env.local dosyasına OpenAI API key ekle
 
-4. **Supabase bağlantısı (opsiyonel)**
-- Supabase projenizi oluşturun
-- VITE_SUPABASE_URL ve VITE_SUPABASE_ANON_KEY'i .env.local'e ekleyin
-- Migrations otomatik çalışacak
-
-5. **Development server başlatın**
-```bash
+# Development server başlat
 npm run dev
 ```
 
-## 🎮 Hızlı Başlangıç
+## 🔑 Gerekli Environment Variables
 
-1. **Kayıt olun**: `/register` - 3 ücretsiz kredi ile başlayın
-2. **Site tarayın**: Dashboard'dan URL girin ve "Tara" butonuna basın
-3. **Sonuçları görün**: SEO skoru ve detaylı analiz
-4. **AI önerileri**: Pro/Advanced planla AI destekli öneriler alın
-5. **İçerik üretin**: Advanced planla sosyal medya içeriği oluşturun
-
-## 🔧 Environment Variables
-
-### Zorunlu
 ```env
-# AI özellikler için (yoksa fallback mode)
+# OpenAI API Key (ZORUNLU)
 OPENAI_API_KEY=sk-proj-your-actual-openai-api-key-here
-```
 
-### Opsiyonel
-```env
-# API endpoint
+# API Base URL
 VITE_API_BASE=http://localhost:8787
-
-# Supabase (yoksa localStorage kullanılır)
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-key
-
-# Server
-API_PORT=8787
-NODE_ENV=development
-FRONTEND_URL=http://localhost:5173
 ```
 
 ## 🚀 Production Deployment
 
-### Hızlı Deployment (Vercel - Önerilen)
+### Vercel (Önerilen)
 ```bash
-# Vercel CLI ile
 npm i -g vercel
 vercel --prod
-
-# Environment variables'ları Vercel dashboard'dan ekleyin
 ```
 
-### 1. Environment Hazırlığı
-```env
-NODE_ENV=production
-OPENAI_API_KEY=sk-proj-prod-key-here
-VITE_API_BASE=https://yourdomain.com
-FRONTEND_URL=https://yourdomain.com
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-key
-```
-
-### 2. Build
+### Manuel Deployment
 ```bash
 npm run build
-```
-
-### 3. Production Start
-```bash
 npm start
 ```
 
 ## 📊 API Endpoints
 
-### SEO Scan
+### SEO Tarama
 ```
 POST /api/seo-scan
-Body: { 
-  url: "https://example.com" 
-}
+Body: { url: "https://example.com" }
 Response: {
   ok: true,
   report: {
     score: 85,
     positives: [...],
     negatives: [...],
-    suggestions: [...],
-    reportData: {...}
+    suggestions: [...]
   }
-}
-```
-
-### AI Suggestions (Pro/Advanced)
-```
-POST /api/seo-suggestions
-Body: { 
-  membershipType: "Pro|Advanced",
-  prompt: "SEO sorunuz",
-  reportContext: "...",
-  useReportBase: true
-}
-```
-
-### AI Content (Advanced)
-```
-POST /api/ai-content
-Body: { 
-  membershipType: "Advanced",
-  platform: "linkedin|instagram|twitter|facebook",
-  prompt: "İçerik konusu",
-  industry: "teknoloji",
-  audience: "b2b",
-  tone: "profesyonel"
 }
 ```
 
@@ -177,177 +79,77 @@ Body: {
 GET /health
 Response: {
   status: "healthy",
-  openai: "configured|fallback_mode",
-  environment: "development|production"
+  openai: "configured"
 }
 ```
 
-## 🔒 Güvenlik
+## 🎨 Özellikler
 
-- **Helmet.js**: Güvenlik başlıkları (CSP, HSTS, XSS koruması)
-- **Rate Limiting**: 15 dakikada 50-100 istek (prod/dev)
-- **CORS**: Whitelist bazlı origin kontrolü
-- **Input Validation**: express-validator ile
-- **API Key Security**: Client'a asla expose edilmez
-- **RLS**: Supabase Row Level Security aktif
-- **SSL**: Production'da zorunlu HTTPS
+- ✅ **Tamamen Ücretsiz**: 3 tarama hakkı
+- ✅ **GPT-4 Destekli**: En gelişmiş AI analizi
+- ✅ **Responsive Tasarım**: Tüm cihazlarda çalışır
+- ✅ **Hızlı Sonuç**: 10 saniyede analiz
+- ✅ **Detaylı Rapor**: Güçlü yönler, sorunlar, öneriler
+- ✅ **Kredi Sistemi**: Daha fazla tarama için kredi satın alma
 
-## 📈 Performans
-
-- **Fallback Systems**: OpenAI/Supabase olmadan da çalışır
-- **Error Handling**: Graceful degradation
-- **Request Timeouts**: 30s API, 10s site fetch
-- **Caching**: localStorage + Supabase hybrid
-- **Code Splitting**: Vendor, router, UI chunks
-- **Lazy Loading**: Component ve image lazy loading
-- **Bundle Optimization**: Tree shaking, minification
-
-## 🐛 Troubleshooting
-
-### Genel Sorunlar
-```bash
-# Tüm dependencies'i yeniden yükle
-rm -rf node_modules package-lock.json server/node_modules server/package-lock.json
-npm install
-cd server && npm install
-
-# Cache temizle
-npm run build
-```
-
-### OpenAI API Hatası
-```bash
-# API key test et
-node server/test-openai.js
-
-# .env.local kontrol et
-cat .env.local | grep OPENAI
-```
-
-### Supabase Bağlantı Sorunu
-```bash
-# Environment variables kontrol
-echo $VITE_SUPABASE_URL
-echo $VITE_SUPABASE_ANON_KEY
-
-# Fallback localStorage kullanılır
-```
-
-### Server Başlatma Sorunu
-```bash
-# Port kontrolü
-lsof -i :8787 || netstat -tulpn | grep 8787
-
-# Farklı port dene
-API_PORT=8788 npm run dev:server
-```
-
-### Build Hatası
-```bash
-# TypeScript kontrol
-npx tsc --noEmit
-
-# Lint kontrol
-npm run lint
-
-# Temiz build
-rm -rf dist && npm run build
-```
-
-## 📝 Changelog
-
-### v1.1.0 (Güncel)
-- Tutarlı tasarım sistemi
-- Gelişmiş animasyonlar ve micro-interactions
-- Hybrid database (localStorage + Supabase)
-- Production-ready deployment
-- Comprehensive error handling
-- Enhanced user experience
-
-### v1.0.0
-- İlk release
-- Temel SEO analizi
-- AI entegrasyonu
-- Üyelik sistemi
-
-## 🏗️ Mimari
+## 🔧 Teknik Detaylar
 
 ### Frontend
 - **React 18** + TypeScript
 - **Tailwind CSS** + Custom animations
-- **React Router** v7 routing
-- **Lucide React** icons
+- **React Router** v7
 - **Vite** build tool
 
 ### Backend
 - **Express.js** API server
-- **OpenAI GPT-4o-mini** AI integration
-- **Helmet.js** security
+- **OpenAI GPT-4 Mini** integration
 - **Rate limiting** protection
+- **CORS** security
 
-### Database
-- **Hybrid approach**: localStorage + Supabase
-- **Automatic migration**: v0 -> v1
-- **RLS policies**: Row-level security
-- **Fallback support**: Offline-first design
+### AI Integration
+- **GPT-4 Mini** model kullanımı
+- **Semantic search** optimizasyonu
+- **2025 SEO trends** dahil
+- **Fallback system** API olmadığında
 
-### Deployment
-- **Vercel**: Recommended (zero-config)
-- **Netlify**: Alternative option
-- **Docker**: Container support
-- **VPS**: Manual deployment guide
+## 💡 Kullanım Senaryoları
 
-## 🤝 Contributing
+1. **Web Geliştiriciler**: Müşteri sitelerini hızlı analiz
+2. **Dijital Ajanslar**: SEO audit raporları
+3. **İşletme Sahipleri**: Kendi sitelerini kontrol
+4. **SEO Uzmanları**: Hızlı ön değerlendirme
 
-1. Fork the project
-2. Create feature branch
-3. Commit changes
-4. Push to branch
-5. Open Pull Request
+## 🔄 Gelecek Özellikler
 
-### Development Setup
+- 💳 **Kredi Satın Alma**: Stripe entegrasyonu
+- 📊 **Detaylı Raporlar**: PDF export
+- 🔄 **Otomatik Takip**: Periyodik taramalar
+- 📈 **Trend Analizi**: Zaman içinde değişim
+
+## 🐛 Troubleshooting
+
+### OpenAI API Hatası
 ```bash
-# Clone & install
-git clone <repo-url>
-cd weemeai
-npm install
-cd server && npm install && cd ..
+# API key kontrol et
+echo $OPENAI_API_KEY
 
-# Environment setup
-cp .env.example .env.local
-# Edit .env.local with your keys
+# Test et
+node server/test-openai.js
+```
 
-# Start development
-npm run dev
+### Server Başlatma Sorunu
+```bash
+# Port kontrol
+lsof -i :8787
+
+# Temiz başlatma
+npm run clean && npm install
 ```
 
 ## 📄 License
 
 MIT License - detaylar için LICENSE dosyasına bakın.
 
-## 🔑 API Keys & Configuration
-
-### OpenAI Setup
-1. [OpenAI Platform](https://platform.openai.com/api-keys)'da API key oluşturun
-2. `.env.local` dosyasına `OPENAI_API_KEY=sk-proj-...` ekleyin
-3. Billing setup yapın (kullanım başına ödeme)
-4. Rate limits ayarlayın
-
-### Supabase Setup (Opsiyonel)
-1. [Supabase](https://supabase.com) projesi oluşturun
-2. Database URL ve anon key alın
-3. `.env.local`'e ekleyin
-4. Migrations otomatik çalışacak
-
-### Production Checklist
-- ✅ SSL sertifikası aktif
-- ✅ Environment variables set
-- ✅ OpenAI API key geçerli
-- ✅ Supabase RLS policies aktif
-- ✅ CORS origins doğru
-- ✅ Rate limiting aktif
-- ✅ Error monitoring setup
-
 ---
 
-**🚀 Production Ready!** Tüm özellikler test edildi ve canlı ortam için hazır.
+**🎯 MVP Ready!** Basit, hızlı ve etkili SEO analizi.

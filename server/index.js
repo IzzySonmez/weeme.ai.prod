@@ -1,4 +1,4 @@
-// TAMAMEN YENİDEN YAZILMIŞ VE ÇALIŞIR SERVER
+// BASIT MVP SERVER - GPT-4 DESTEKLI SEO TARAYICI
 import express from 'express';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
@@ -84,7 +84,7 @@ app.use(cors(corsOptions));
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: isProduction ? 50 : 100,
+  max: isProduction ? 100 : 200, // Daha fazla istek için
   message: { error: 'Too many requests, please try again later' },
   standardHeaders: true,
   legacyHeaders: false
@@ -124,7 +124,7 @@ console.log('[INFO] Server starting...');
 console.log('[INFO] Environment:', isProduction ? 'PRODUCTION' : 'DEVELOPMENT');
 console.log('[INFO] OpenAI API Key:', OPENAI_KEY && !OPENAI_KEY.includes('your-actual-openai-api-key-here') ? `Present (${OPENAI_KEY.substring(0, 7)}...)` : 'NOT CONFIGURED');
 
-// OpenAI API çağrısı
+// GPT-4 Mini API çağrısı - SEO analizi için optimize edilmiş
 async function callOpenAI(messages, maxTokens = 2000) {
   if (!OPENAI_KEY || !OPENAI_KEY.startsWith('sk-') || OPENAI_KEY.includes('your-actual-openai-api-key-here')) {
     console.log('[WARNING] OpenAI API key not configured, using fallback');
@@ -271,7 +271,7 @@ function analyzeHTML(html, url) {
   return analysis;
 }
 
-// Health check
+// Health check endpoint
 app.get('/health', (req, res) => {
   res.json({
     status: 'healthy',
@@ -282,7 +282,7 @@ app.get('/health', (req, res) => {
   });
 });
 
-// SEO Scan endpoint
+// Ana SEO Tarama endpoint - GPT-4 ile güçlendirilmiş
 app.post('/api/seo-scan', async (req, res) => {
   const { url } = req.body;
   
@@ -322,10 +322,10 @@ app.post('/api/seo-scan', async (req, res) => {
       hasOG: analysis.hasOG
     });
 
-    // 2. OpenAI ile detaylı analiz
+    // 2. GPT-4 Mini ile detaylı SEO analizi
     let aiAnalysis = null;
     if (OPENAI_KEY && OPENAI_KEY.startsWith('sk-') && !OPENAI_KEY.includes('your-actual-openai-api-key-here')) {
-      const prompt = `Sen 15+ yıl deneyimli bir SEO uzmanısın. Google'da çalışmış, Fortune 500 şirketlerine danışmanlık yapmışsın.
+      const prompt = `Sen 15+ yıl deneyimli bir SEO uzmanısın. Google'da çalışmış, Fortune 500 şirketlerine danışmanlık yapmışsın. 2025 SEO trendlerini çok iyi biliyorsun.
 
 GÖREV: Bu web sitesini 2024 SEO standartlarına göre analiz et.
 
@@ -344,6 +344,7 @@ ANALİZ VERİLERİ:
 2024 SEO KRİTERLERİ:
 - Core Web Vitals optimizasyonu
 - E-A-T (Expertise, Authoritativeness, Trustworthiness)
+- AI ve semantic search uyumluluğu
 - Helpful Content Update uyumluluğu
 - Mobile-first indexing
 - Page Experience signals
@@ -362,7 +363,7 @@ JSON formatında dön:
       const aiResponse = await callOpenAI([
         {
           role: 'system',
-          content: 'Sen Google\'da 15+ yıl çalışmış, Fortune 500 şirketlerine SEO danışmanlığı yapan bir uzmansın. 2024 algoritma güncellemelerini çok iyi biliyorsun. Objektif, detaylı ve uygulanabilir analizler yaparsın.'
+          content: 'Sen Google\'da 15+ yıl çalışmış, Fortune 500 şirketlerine SEO danışmanlığı yapan bir uzmansın. 2025 algoritma güncellemelerini çok iyi biliyorsun. AI ve semantic search konularında uzmansın. Objektif, detaylı ve uygulanabilir analizler yaparsın.'
         },
         {
           role: 'user',
@@ -383,7 +384,7 @@ JSON formatında dön:
       console.log('[INFO] OpenAI API key not available or invalid, using fallback analysis');
     }
 
-    // 3. Fallback analizi (AI çalışmazsa)
+    // 3. Fallback analizi (GPT çalışmazsa)
     if (!aiAnalysis) {
       console.log('[INFO] Using fallback analysis');
       
@@ -403,6 +404,7 @@ JSON formatında dön:
           negatives.push('Title çok uzun (60 karakterden fazla)');
           suggestions.push('Title etiketini 50-60 karakter arasında kısaltın');
         }
+        suggestions.push('Title etiketini semantic search için optimize edin');
       } else {
         negatives.push('Title etiketi eksik');
         suggestions.push('Her sayfa için benzersiz ve açıklayıcı title etiketi ekleyin');
@@ -450,6 +452,7 @@ JSON formatında dön:
       if (analysis.imageCount > 0) {
         score += 3;
         positives.push(`${analysis.imageCount} görsel tespit edildi`);
+        suggestions.push('Görselleri AI arama için optimize edin (alt text, dosya adları)');
         suggestions.push('Tüm görsellere alt text ekleyin');
       }
 
@@ -461,8 +464,9 @@ JSON formatında dön:
         positives,
         negatives,
         suggestions,
-        coreWebVitals: 'Detaylı analiz için Pro üyelik gerekli',
-        mobileOptimization: 'Responsive tasarım kontrolü önerilir',
+        coreWebVitals: 'Core Web Vitals optimizasyonu 2025\'te kritik önem taşıyor',
+        mobileOptimization: 'Mobile-first indexing aktif - responsive tasarım şart',
+        aiOptimization: 'AI ve semantic search için içerik optimizasyonu önerilir',
         technicalSEO: 'Sitemap ve robots.txt kontrolü yapılmalı'
       };
     }
@@ -484,6 +488,7 @@ JSON formatında dön:
         keywords: analysis.title ? analysis.title.split(' ').slice(0, 5) : [],
         coreWebVitals: aiAnalysis.coreWebVitals,
         technicalSEO: aiAnalysis.technicalSEO
+        aiOptimization: aiAnalysis.aiOptimization || 'AI search optimization recommended'
       }
     };
 
@@ -496,341 +501,6 @@ JSON formatında dön:
       error: 'Scan failed',
       message: error.message,
       url: normalizedUrl
-    });
-  }
-});
-
-// AI Suggestions endpoint
-app.post('/api/seo-suggestions', [
-  body('membershipType').isIn(['Pro', 'Advanced']).withMessage('Valid membership type required'),
-  body('prompt').optional().isString().withMessage('Prompt must be a string'),
-], async (req, res) => {
-  // Validation check
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ 
-      error: 'Validation failed', 
-      details: errors.array() 
-    });
-  }
-
-  const { membershipType, prompt, reportContext, websiteUrl, currentScore } = req.body;
-
-  if (membershipType !== 'Pro' && membershipType !== 'Advanced') {
-    return res.status(403).json({ 
-      error: 'insufficient_permissions', 
-      message: 'SEO suggestions require Pro or Advanced membership' 
-    });
-  }
-
-  console.log(`[INFO] Generating AI suggestions for ${membershipType} user`);
-
-  try {
-    let aiResponse = null;
-
-    if (OPENAI_KEY) {
-      const systemPrompt = `Sen Google'da 10+ yıl çalışmış, şimdi Fortune 500 şirketlerine SEO danışmanlığı yapan bir uzmansın. 
-
-KİMLİĞİN:
-- Google algoritma güncellemelerini içeriden biliyorsun
-- 2024 Core Web Vitals, E-A-T, Helpful Content uzmanısın
-- ROI odaklı, ölçülebilir öneriler veriyorsun
-- Her önerinin NEDEN önemli olduğunu ve NASIL yapılacağını açıklarsın
-
-GÖREV: SEO önerileri ver. JSON formatında dön:
-{
-  "quickWins": ["Hızlı kazanımlar - 1-2 hafta içinde"],
-  "issues": [{"title": "Sorun", "why": "Neden önemli", "how": ["Nasıl çözülür"]}],
-  ${membershipType === 'Advanced' ? '"snippets": [{"title": "Kod başlığı", "language": "html/css/js", "code": "kod", "note": "açıklama"}],' : ''}
-  "roadmap": {
-    "d30": ["30 günlük hedefler"],
-    "d60": ["60 günlük hedefler"], 
-    "d90": ["90 günlük hedefler"]
-  },
-  "notes": ["Önemli notlar"]
-}`;
-
-      const userPrompt = `
-MEVCUT DURUM:
-- Site: ${websiteUrl || 'Belirtilmedi'}
-- Mevcut SEO Skoru: ${currentScore || 'Bilinmiyor'}/100
-- Rapor Bağlamı: ${reportContext || 'Yok'}
-
-KULLANICI İSTEĞİ:
-${prompt || 'Genel SEO iyileştirme önerileri ver'}
-
-2024 SEO PRİORİTELERİ:
-- Core Web Vitals (LCP, FID, CLS)
-- E-A-T (Expertise, Authoritativeness, Trustworthiness)
-- Helpful Content Update uyumluluğu
-- Mobile-first indexing
-- Page Experience signals
-
-Her öneri için:
-1. NEDEN önemli (algoritma etkisi)
-2. NASIL yapılacak (adım adım)
-3. BEKLENEN SONUÇ (traffic artışı, ranking)
-4. SÜRE (ne kadar zamanda sonuç)
-
-ROI odaklı, uygulanabilir öneriler ver.`;
-
-      aiResponse = await callOpenAI([
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt }
-      ], 2000);
-
-      if (aiResponse) {
-        try {
-          const parsed = JSON.parse(aiResponse);
-          console.log('[SUCCESS] AI suggestions generated');
-          return res.json({ ok: true, data: parsed });
-        } catch (parseError) {
-          console.error('[ERROR] Failed to parse AI suggestions:', parseError.message);
-        }
-      }
-    }
-
-    // Fallback suggestions
-    console.log('[INFO] Using fallback suggestions');
-    
-    const fallbackSuggestions = {
-      quickWins: [
-        'Meta title ve description\'ları optimize edin (1-2 hafta)',
-        'H1 başlık yapısını düzenleyin (1 hafta)',
-        'XML sitemap oluşturun ve Search Console\'a gönderin (3 gün)',
-        'Görsellere alt text ekleyin (1 hafta)'
-      ],
-      issues: [
-        {
-          title: 'Meta etiketleri optimizasyonu',
-          why: '2024\'te Google meta etiketlere daha fazla önem veriyor. CTR\'ı %15-25 artırabilir.',
-          how: [
-            'Her sayfa için benzersiz meta title yazın (50-60 karakter)',
-            'Meta description\'ları hedef anahtar kelimelerle optimize edin (150-160 karakter)',
-            'Title\'da ana anahtar kelimeyi başa yerleştirin'
-          ]
-        },
-        {
-          title: 'Core Web Vitals optimizasyonu',
-          why: 'Google\'ın ranking faktörü. Sayfa deneyimi skorunu direkt etkiler.',
-          how: [
-            'Görselleri WebP formatına çevirin ve lazy loading uygulayın',
-            'Kritik CSS\'i inline yapın, gereksiz JS\'i geciktirin',
-            'CDN kullanın ve server response time\'ı 200ms altına indirin'
-          ]
-        }
-      ],
-      roadmap: {
-        d30: [
-          'Meta etiketleri ve başlık yapısı optimizasyonu',
-          'XML sitemap ve robots.txt oluşturma',
-          'Google Search Console kurulumu'
-        ],
-        d60: [
-          'İçerik stratejisi geliştirme ve anahtar kelime araştırması',
-          'Internal linking yapısını güçlendirme',
-          'Core Web Vitals optimizasyonu'
-        ],
-        d90: [
-          'Backlink stratejisi ve outreach kampanyası',
-          'Performans takibi ve A/B testleri',
-          'Uzun vadeli içerik takvimi'
-        ]
-      },
-      notes: [
-        'Bu öneriler 2024 Google algoritma güncellemelerine göre hazırlandı',
-        'Her önerinin uygulanması sonrası 2-4 hafta içinde sonuç alınabilir',
-        'ROI takibi için Google Analytics ve Search Console entegrasyonu önemli'
-      ]
-    };
-
-    if (membershipType === 'Advanced') {
-      fallbackSuggestions.snippets = [
-        {
-          title: 'Schema Markup - Organization',
-          language: 'html',
-          code: `<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Şirket Adınız",
-  "url": "${websiteUrl || 'https://example.com'}",
-  "logo": "${websiteUrl || 'https://example.com'}/logo.png"
-}
-</script>`,
-          note: 'Google\'ın sitenizi daha iyi anlaması için'
-        },
-        {
-          title: 'Core Web Vitals - Lazy Loading',
-          language: 'html',
-          code: `<img src="image.jpg" alt="Açıklama" loading="lazy" width="800" height="600">`,
-          note: 'Sayfa yükleme hızını artırır'
-        }
-      ];
-    }
-
-    res.json({ ok: true, data: fallbackSuggestions });
-
-  } catch (error) {
-    console.error('[ERROR] Suggestions generation failed:', error);
-    res.status(500).json({ 
-      error: 'Suggestions failed',
-      message: error.message 
-    });
-  }
-});
-
-// AI Content endpoint
-app.post('/api/ai-content', [
-  body('membershipType').equals('Advanced').withMessage('Advanced membership required'),
-  body('platform').isIn(['linkedin', 'instagram', 'twitter', 'facebook']).withMessage('Valid platform required'),
-  body('prompt').isString().isLength({ min: 1 }).withMessage('Prompt is required'),
-], async (req, res) => {
-  // Validation check
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ 
-      error: 'Validation failed', 
-      details: errors.array() 
-    });
-  }
-
-  const { 
-    membershipType, 
-    platform, 
-    prompt, 
-    industry, 
-    audience, 
-    tone, 
-    includeEmojis, 
-    hashtagCount,
-    targetLength 
-  } = req.body;
-
-  if (membershipType !== 'Advanced') {
-    return res.status(403).json({ 
-      error: 'insufficient_permissions', 
-      message: 'AI content generation requires Advanced membership' 
-    });
-  }
-
-  console.log(`[INFO] Generating AI content for ${platform}`);
-
-  try {
-    let aiResponse = null;
-
-    if (OPENAI_KEY) {
-      const systemPrompt = `Sen her sosyal medya platformunun algoritmasını çok iyi bilen bir içerik uzmanısın.
-
-PLATFORM UZMANLIKLARİN:
-- LinkedIn: B2B odaklı, profesyonel, thought leadership
-- Instagram: Görsel odaklı, lifestyle, hashtag optimizasyonu
-- Twitter/X: Kısa, etkili, viral potansiyeli yüksek
-- Facebook: Topluluk odaklı, engagement yüksek
-
-2024 ALGORİTMA BİLGİLERİN:
-- LinkedIn: Uzun form içerik ve carousel postlar favori
-- Instagram: Reels ve carousel postlar organik reach'i artırıyor
-- Twitter: Thread'ler ve görsel içerik engagement artırıyor
-- Facebook: Video içerik ve grup paylaşımları öncelikli
-
-GÖREV: ${platform} için viral potansiyeli yüksek içerik üret.`;
-
-      const userPrompt = `
-PLATFORM: ${platform}
-KONU: ${prompt}
-SEKTÖR: ${industry}
-HEDEF KİTLE: ${audience}
-TON: ${tone}
-EMOJİ KULLAN: ${includeEmojis ? 'Evet' : 'Hayır'}
-HASHTAG SAYISI: ${hashtagCount}
-${platform === 'twitter' ? `HEDEF UZUNLUK: ${targetLength} karakter` : ''}
-
-Bu parametrelere göre ${platform} algoritmasına optimize edilmiş, yüksek engagement alacak bir içerik üret.
-
-İÇERİK ÖZELLİKLERİ:
-- Platform algoritmasına uygun
-- Hedef kitleye hitap eden
-- Viral potansiyeli yüksek
-- Call-to-action içeren
-- Hashtag stratejisi dahil
-
-Sadece içeriği dön, başka açıklama yapma.`;
-
-      aiResponse = await callOpenAI([
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt }
-      ], 800);
-
-      if (aiResponse) {
-        console.log('[SUCCESS] AI content generated');
-        return res.json({ ok: true, content: aiResponse.trim() });
-      }
-    }
-
-    // Fallback content templates
-    console.log('[INFO] Using fallback content templates');
-    
-    const templates = {
-      linkedin: `🎯 ${prompt || 'İş dünyasında başarı stratejileri'}
-
-${industry === 'teknoloji' ? 'Teknoloji sektöründe' : 'İş dünyasında'} sürekli değişen dinamikleri takip etmek başarının anahtarı.
-
-${audience === 'b2b' ? 'B2B pazarında' : 'Pazarda'} dikkat etmeniz gereken ana noktalar:
-
-• Veri odaklı karar verme süreçleri
-• Müşteri deneyimi optimizasyonu  
-• Sürekli öğrenme ve adaptasyon
-
-${tone === 'profesyonel' ? 'Profesyonel deneyimlerinizi' : 'Deneyimlerinizi'} yorumlarda paylaşır mısınız? 💡
-
-${'#'.repeat(Math.min(hashtagCount, 5))}dijitalpazarlama #strateji #başarı #${industry} #${audience}`.substring(0, 3000),
-
-      instagram: `✨ ${prompt || 'Hayatınızı değiştirecek ipuçları'} ✨
-
-${includeEmojis ? '🔥' : ''} ${industry === 'lifestyle' ? 'Yaşam tarzınızı' : 'İş hayatınızı'} dönüştürecek ipuçları!
-
-🎯 ${audience === 'genç_yetişkin' ? 'Genç profesyoneller' : 'Herkes'} için:
-1️⃣ Bilinçli tercihler yapın
-2️⃣ Sürekli öğrenmeye devam edin  
-3️⃣ Hayallerinizin peşinden gidin
-
-Siz hangi yöntemi kullanıyorsunuz? 👇💬
-
-${'#'.repeat(Math.min(hashtagCount, 8))}motivasyon #başarı #${industry} #${audience} #2024goals #inspiration #lifestyle #success`.substring(0, 2200),
-
-      twitter: `🔥 ${prompt || '2024 trendleri'}
-
-${industry === 'teknoloji' ? 'Tech dünyasında' : 'İş dünyasında'} game-changer trendler:
-
-1️⃣ AI-powered solutions
-2️⃣ Hyper-personalization  
-3️⃣ Sustainable growth
-
-Hangisini denediniz? 🚀
-
-${'#'.repeat(Math.min(hashtagCount, 4))}${industry} #trend2024 #innovation #${audience}`.substring(0, targetLength || 280),
-
-      facebook: `👋 ${prompt || 'Topluluk sohbeti'} konusunda sizlerle sohbet etmek istiyorum.
-
-${industry} sektöründe özellikle şu konularda merak ettiklerim:
-• ${audience === 'b2b' ? 'B2B satış stratejileri' : 'Müşteri kazanma yöntemleri'}
-• Dijital pazarlama entegrasyonu
-• Sürdürülebilir büyüme teknikleri
-
-${tone === 'samimi' ? 'Sizin deneyimleriniz neler?' : 'Profesyonel deneyimlerinizi paylaşır mısınız?'}
-
-${'#'.repeat(Math.min(hashtagCount, 3))}${industry} #topluluk #${audience}`
-    };
-
-    const content = templates[platform] || templates.linkedin;
-    res.json({ ok: true, content });
-
-  } catch (error) {
-    console.error('[ERROR] AI content generation failed:', error);
-    res.status(500).json({ 
-      error: 'Content generation failed',
-      message: error.message 
     });
   }
 });
@@ -851,13 +521,11 @@ const server = app.listen(PORT, () => {
   console.log(`🚀 weeme.ai SERVER READY!`);
   console.log(`🚀 URL: http://localhost:${PORT}`);
   console.log(`🚀 Environment: ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'}`);
-  console.log(`🚀 Mode: ${OPENAI_KEY && OPENAI_KEY.startsWith('sk-') && !OPENAI_KEY.includes('your-actual-openai-api-key-here') ? 'AI-Powered' : 'Fallback'}`);
+  console.log(`🚀 Mode: ${OPENAI_KEY && OPENAI_KEY.startsWith('sk-') && !OPENAI_KEY.includes('your-actual-openai-api-key-here') ? 'GPT-4 Powered' : 'Fallback'}`);
   console.log('🚀 ===================================');
   console.log('');
-  console.log('📊 Available endpoints:');
-  console.log('   POST /api/seo-scan - SEO site analysis');
-  console.log('   POST /api/seo-suggestions - AI SEO recommendations');
-  console.log('   POST /api/ai-content - AI content generation');
+  console.log('📊 MVP Endpoints:');
+  console.log('   POST /api/seo-scan - GPT-4 powered SEO analysis');
   console.log('   GET  /health - Health check');
   console.log('');
   console.log('🔧 Configuration:');
