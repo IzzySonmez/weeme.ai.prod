@@ -16,6 +16,15 @@ const __dirname = path.dirname(__filename);
 const isProduction = process.env.NODE_ENV === 'production';
 config({ path: isProduction ? '.env' : '.env.local' });
 
+// OpenAI API Key validation
+const validateOpenAIKey = (key) => {
+  if (!key) return false;
+  if (!key.startsWith('sk-')) return false;
+  if (key.includes('your-actual-openai-api-key-here')) return false;
+  if (key.length < 50) return false;
+  return true;
+};
+
 // Validate environment on startup
 const validateEnvironment = () => {
   console.log('[STARTUP] Environment validation...');
@@ -23,14 +32,12 @@ const validateEnvironment = () => {
   console.log('[STARTUP] API_PORT:', process.env.API_PORT || '8787');
   console.log('[STARTUP] CORS Origins:', JSON.stringify(corsOptions.origin));
   
-  if (OPENAI_KEY) {
-    if (OPENAI_KEY.startsWith('sk-') && OPENAI_KEY.length > 20 && !OPENAI_KEY.includes('your-actual-openai-api-key-here')) {
-      console.log('[STARTUP] ✅ OpenAI API Key: Valid format');
-    } else {
-      console.log('[STARTUP] ⚠️  OpenAI API Key: Invalid format or placeholder');
-    }
+  if (validateOpenAIKey(OPENAI_KEY)) {
+    console.log('[STARTUP] ✅ OpenAI API Key: Valid format');
   } else {
-    console.log('[STARTUP] ⚠️  OpenAI API Key: Not configured (fallback mode)');
+    console.log('[STARTUP] ❌ OpenAI API Key: Invalid or not configured');
+    console.log('[STARTUP] 🔧 Please update your .env.local file with a valid OpenAI API key');
+    console.log('[STARTUP] 📝 Get your API key from: https://platform.openai.com/api-keys');
   }
   
   // Test basic functionality
@@ -126,7 +133,7 @@ console.log('[INFO] OpenAI API Key:', OPENAI_KEY && !OPENAI_KEY.includes('your-a
 
 // GPT-4 Mini API çağrısı - SEO analizi için optimize edilmiş
 async function callOpenAI(messages, maxTokens = 2000) {
-  if (!OPENAI_KEY || !OPENAI_KEY.startsWith('sk-') || OPENAI_KEY.includes('your-actual-openai-api-key-here')) {
+  if (!validateOpenAIKey(OPENAI_KEY)) {
     console.log('[WARNING] OpenAI API key not configured, using fallback');
     return null;
   }
@@ -154,6 +161,17 @@ async function callOpenAI(messages, maxTokens = 2000) {
     if (!response.ok) {
       const errorText = await response.text();
       console.error('[ERROR] OpenAI API error:', response.status, errorText);
+      
+      // Specific error handling
+      if (response.status === 401) {
+        console.error('[ERROR] 🔑 Invalid API Key! Please check your OpenAI API key in .env.local');
+        console.error('[ERROR] 📝 Get a valid API key from: https://platform.openai.com/api-keys');
+      } else if (response.status === 429) {
+        console.error('[ERROR] 🚫 Rate limit exceeded. Please try again later.');
+      } else if (response.status === 500) {
+        console.error('[ERROR] 🔧 OpenAI server error. Please try again later.');
+      }
+      
       return null;
     }
 
@@ -276,7 +294,7 @@ app.get('/health', (req, res) => {
   res.json({
     status: 'healthy',
     timestamp: new Date().toISOString(),
-    openai: OPENAI_KEY && OPENAI_KEY.startsWith('sk-') && !OPENAI_KEY.includes('your-actual-openai-api-key-here') ? 'configured' : 'fallback_mode',
+    openai: validateOpenAIKey(OPENAI_KEY) ? 'configured' : 'invalid_or_missing',
     environment: isProduction ? 'production' : 'development',
     version: '1.0.0'
   });
@@ -324,7 +342,7 @@ app.post('/api/seo-scan', async (req, res) => {
 
     // 2. GPT-4 Mini ile detaylı SEO analizi
     let aiAnalysis = null;
-    if (OPENAI_KEY && OPENAI_KEY.startsWith('sk-') && !OPENAI_KEY.includes('your-actual-openai-api-key-here')) {
+    if (validateOpenAIKey(OPENAI_KEY)) {
       const prompt = `Sen 15+ yıl deneyimli bir SEO uzmanısın. Google'da çalışmış, Fortune 500 şirketlerine danışmanlık yapmışsın. 2025 SEO trendlerini çok iyi biliyorsun.
 
 GÖREV: Bu web sitesini 2024 SEO standartlarına göre analiz et.
@@ -532,8 +550,19 @@ const server = app.listen(PORT, () => {
   console.log(`   CORS Origins: ${JSON.stringify(corsOptions.origin)}`);
   console.log(`   Rate Limit: ${isProduction ? '50' : '100'} requests per 15 minutes`);
   console.log(`   SSL Required: ${isProduction ? 'Yes' : 'No'}`);
-  console.log(`   Supabase: ${process.env.VITE_SUPABASE_URL ? 'Configured' : 'Not configured'}`);
+  console.log(`   OpenAI Status: ${validateOpenAIKey(OPENAI_KEY) ? '✅ Ready' : '❌ Invalid Key'}`);
   console.log('');
+  
+  // OpenAI key uyarısı
+  if (!validateOpenAIKey(OPENAI_KEY)) {
+    console.log('⚠️  WARNING: OpenAI API key is invalid or missing!');
+    console.log('📝 To fix this:');
+    console.log('   1. Go to https://platform.openai.com/api-keys');
+    console.log('   2. Create a new API key');
+    console.log('   3. Update OPENAI_API_KEY in your .env.local file');
+    console.log('   4. Restart the server');
+    console.log('');
+  }
   
   // Test basic functionality
   console.log('🧪 Running startup tests...');
