@@ -127,33 +127,9 @@ const OPENAI_KEY = process.env.OPENAI_API_KEY;
 // Validate environment on startup
 validateEnvironment();
 
-console.log('\n🚀 SERVER BAŞLATIYOR...');
-console.log('🌍 Environment:', isProduction ? 'PRODUCTION' : 'DEVELOPMENT');
-
-// OpenAI API Key durumu
-if (!OPENAI_KEY) {
-  console.log('❌ OpenAI API Key: YOK');
-  console.log('\n🔧 OPENAI API KEY EKLEME:');
-  console.log('1. https://platform.openai.com/api-keys');
-  console.log('2. "Create new secret key" tıkla');
-  console.log('3. .env.local dosyasına ekle:');
-  console.log('   OPENAI_API_KEY=sk-proj-...');
-  console.log('4. Hesabına kredi ekle: https://platform.openai.com/settings/organization/billing\n');
-} else if (OPENAI_KEY.includes('your-actual-openai-api-key-here')) {
-  console.log('❌ OpenAI API Key: PLACEHOLDER (Gerçek key gerekli)');
-  console.log('\n🔧 GERÇEKLEŞTİRME:');
-  console.log('1. https://platform.openai.com/api-keys adresine git');
-  console.log('2. Gerçek API key oluştur');
-  console.log('3. .env.local dosyasında değiştir\n');
-} else if (!validateOpenAIKey(OPENAI_KEY)) {
-  console.log('❌ OpenAI API Key: GEÇERSİZ FORMAT');
-  console.log('\n🔧 DÜZELTME:');
-  console.log('1. Key "sk-proj-" ile başlamalı');
-  console.log('2. En az 50 karakter olmalı');
-  console.log('3. Yeni key al: https://platform.openai.com/api-keys\n');
-} else {
-  console.log(`✅ OpenAI API Key: Mevcut (${OPENAI_KEY.substring(0, 10)}...)`);
-}
+console.log('[INFO] Server starting...');
+console.log('[INFO] Environment:', isProduction ? 'PRODUCTION' : 'DEVELOPMENT');
+console.log('[INFO] OpenAI API Key:', OPENAI_KEY && !OPENAI_KEY.includes('your-actual-openai-api-key-here') ? `Present (${OPENAI_KEY.substring(0, 7)}...)` : 'NOT CONFIGURED');
 
 // GPT-4 Mini API çağrısı - SEO analizi için optimize edilmiş
 async function callOpenAI(messages, maxTokens = 2000) {
@@ -188,16 +164,8 @@ async function callOpenAI(messages, maxTokens = 2000) {
       
       // Specific error handling
       if (response.status === 401) {
-        console.error('\n❌ OPENAI API KEY GEÇERSİZ!');
-        console.error('🔧 ÇÖZÜM ADIMLARI:');
-        console.error('1. https://platform.openai.com/api-keys adresine git');
-        console.error('2. Eski key\'i sil ve "Create new secret key" ile yeni oluştur');
-        console.error('3. .env.local dosyasını aç ve şunu yaz:');
-        console.error('   OPENAI_API_KEY=sk-proj-YENİ-KEY-BURAYA');
-        console.error('4. https://platform.openai.com/settings/organization/billing');
-        console.error('   adresinden hesabına kredi ekle ($5 minimum)');
-        console.error('5. Server\'ı yeniden başlat: npm run dev');
-        console.error('\n💡 NOT: API key gerçek olmalı, placeholder değil!\n');
+        console.error('[ERROR] 🔑 Invalid API Key! Please check your OpenAI API key in .env.local');
+        console.error('[ERROR] 📝 Get a valid API key from: https://platform.openai.com/api-keys');
       } else if (response.status === 429) {
         console.error('[ERROR] 🚫 Rate limit exceeded. Please try again later.');
       } else if (response.status === 500) {
@@ -587,13 +555,15 @@ const server = app.listen(PORT, () => {
   
   // OpenAI key uyarısı
   if (!validateOpenAIKey(OPENAI_KEY)) {
-    console.log('⚠️  WARNING: OpenAI API key is invalid or missing!');
-    console.log('📝 To fix this:');
-    console.log('   1. Go to https://platform.openai.com/api-keys');
-    console.log('   2. Create a new API key');
-    console.log('   3. Update OPENAI_API_KEY in your .env.local file');
-    console.log('   4. Restart the server');
-    console.log('');
+    console.log('\n⚠️  UYARI: OpenAI API key geçersiz veya eksik!');
+    console.log('\n🔧 ÇÖZÜM ADIMLARI:');
+    console.log('   1. https://platform.openai.com/api-keys adresine git');
+    console.log('   2. Yeni API key oluştur');
+    console.log('   3. .env.local dosyasında OPENAI_API_KEY güncelle');
+    console.log('   4. Hesabına kredi ekle ($5 minimum)');
+    console.log('   5. Server\'ı yeniden başlat');
+    console.log('\n💰 Maliyet: 1 SEO analizi ~$0.001 (çok ucuz!)');
+    console.log('💡 $5 kredi = ~5000 analiz yapabilirsin\n');
   }
   
   // Test basic functionality
