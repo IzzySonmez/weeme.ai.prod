@@ -1,353 +1,273 @@
-# weeme.ai - AI-Powered SEO Automation Platform
+# Weeme.ai - SEO Intelligence Reports
 
-Modern, kapsamlı SEO analizi ve AI destekli içerik üretimi platformu. Tek kod satırı ile sitenizi bağlayın, AI destekli raporlar alın.
+A full-stack SaaS web application that generates comprehensive SEO reports in seconds. Built with Next.js 14, TypeScript, and Tailwind CSS.
 
-## 🚀 Özellikler
+## 🚀 Features
 
-### 🎯 Temel Özellikler
-- **Otomatik SEO Analizi**: Kapsamlı website taraması ve 100 üzerinden skorlama
-- **Gerçek Zamanlı Raporlar**: Detaylı SEO metrikleri ve performans analizi
-- **Otomatik Takip**: Tek kod ile sürekli site monitörü
-- **Çoklu Site Yönetimi**: Birden fazla sitenizi tek panelden yönetin
+- **Instant SEO Analysis**: Generate detailed reports for any domain or keyword
+- **Comprehensive Data**: Technical SEO, on-page analysis, SERP research, and competitor insights
+- **Real-time APIs**: Integration with Google PageSpeed Insights, SERP API, and OpenPageRank
+- **Beautiful Reports**: Print-friendly PDF export with professional design
+- **Smart Caching**: LRU cache with 15-minute TTL for optimal performance
+- **Rate Limiting**: 10 requests per minute per IP address
+- **Responsive Design**: Works perfectly on all devices
 
-### 🤖 AI Destekli Özellikler (Pro/Advanced)
-- **AI SEO Önerileri**: Yapay zeka destekli kişiselleştirilmiş öneriler
-- **Kod Snippet'leri**: Hazır HTML/CSS/JS kod örnekleri (Advanced)
-- **AI İçerik Üretimi**: Sosyal medya içerik üretimi (Advanced)
-- **30-60-90 Gün Roadmap**: Detaylı iyileştirme planları
+## 🛠️ Tech Stack
 
-### 🛡️ Güvenlik & Performans
-- **Enterprise Güvenlik**: SSL, CORS, Rate limiting
-- **Responsive Tasarım**: Tüm cihazlarda mükemmel deneyim
-- **Hybrid Database**: localStorage + Supabase entegrasyonu
-- **Production Ready**: Docker, Vercel, Netlify desteği
+- **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS
+- **UI Components**: shadcn/ui with Radix UI primitives
+- **APIs**: Google PageSpeed Insights, SERP API, OpenPageRank
+- **Caching**: LRU cache with TTL
+- **Rate Limiting**: Token bucket algorithm
+- **Deployment**: Vercel-ready
 
-## 📋 Gereksinimler
+## 📋 Prerequisites
 
-### Development
-- Node.js 18+
-- npm veya yarn
-- OpenAI API Key (AI özellikler için - opsiyonel)
-- Supabase hesabı (opsiyonel - localStorage fallback mevcut)
+- Node.js 18+ 
+- npm or yarn
+- API keys (optional - app works with fallback data):
+  - SERPAPI_KEY (for SERP data)
+  - GOOGLE_API_KEY (for PageSpeed Insights)
+  - OPENPAGERANK_API_KEY (for domain authority)
 
-### Production
-- SSL sertifikası
-- Domain name
-- Environment variables
-- Supabase database (önerilir)
-- OpenAI API Key (AI özellikler için)
+## 🚀 Quick Start
 
-## 🛠️ Kurulum
-
-1. **Repository'yi klonlayın**
+1. **Clone and install**
 ```bash
-git clone <repo-url>
-cd weemeai
-```
-
-2. **Dependencies yükleyin**
-```bash
+git clone <repository-url>
+cd weeme-seo-intelligence
 npm install
 ```
 
-3. **Environment variables ayarlayın**
+2. **Set up environment variables**
 ```bash
-cp .env.example .env.local
-# .env.local dosyasını düzenleyin - en azından OPENAI_API_KEY ekleyin
+cp .env.local.example .env.local
+# Edit .env.local with your API keys (optional)
 ```
 
-4. **Supabase bağlantısı (opsiyonel)**
-- Supabase projenizi oluşturun
-- VITE_SUPABASE_URL ve VITE_SUPABASE_ANON_KEY'i .env.local'e ekleyin
-- Migrations otomatik çalışacak
-
-5. **Development server başlatın**
+3. **Run development server**
 ```bash
 npm run dev
 ```
 
-## 🎮 Hızlı Başlangıç
-
-1. **Kayıt olun**: `/register` - 3 ücretsiz kredi ile başlayın
-2. **Site tarayın**: Dashboard'dan URL girin ve "Tara" butonuna basın
-3. **Sonuçları görün**: SEO skoru ve detaylı analiz
-4. **AI önerileri**: Pro/Advanced planla AI destekli öneriler alın
-5. **İçerik üretin**: Advanced planla sosyal medya içeriği oluşturun
-
-## 🔧 Environment Variables
-
-### Zorunlu
-```env
-# AI özellikler için (yoksa fallback mode)
-OPENAI_API_KEY=sk-proj-your-actual-openai-api-key-here
+4. **Open your browser**
+```
+http://localhost:3000
 ```
 
-### Opsiyonel
+5. **Try the demo**
+Click "Try Patagonia Demo" or enter your own domain/keyword
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create a `.env.local` file with the following variables:
+
 ```env
-# API endpoint
-VITE_API_BASE=http://localhost:8787
+# API Keys (optional - app works without them)
+SERPAPI_KEY=your_serpapi_key_here
+GOOGLE_API_KEY=your_google_api_key_here
+OPENPAGERANK_API_KEY=your_openpagerank_api_key_here
+GOOGLE_CX=your_google_custom_search_cx_here
 
-# Supabase (yoksa localStorage kullanılır)
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-key
+# User Agent
+USER_AGENT=WeemeAI-SEOCrawler/1.0
 
-# Server
-API_PORT=8787
-NODE_ENV=development
-FRONTEND_URL=http://localhost:5173
+# Next.js
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
-## 🚀 Production Deployment
+### API Keys Setup
 
-### Hızlı Deployment (Vercel - Önerilen)
+1. **SERP API** (for search results and competitor data)
+   - Sign up at [serpapi.com](https://serpapi.com)
+   - Get your API key from the dashboard
+   - Add to `SERPAPI_KEY` in `.env.local`
+
+2. **Google PageSpeed Insights** (for Core Web Vitals)
+   - Get API key from [Google Cloud Console](https://console.cloud.google.com)
+   - Enable PageSpeed Insights API
+   - Add to `GOOGLE_API_KEY` in `.env.local`
+
+3. **OpenPageRank** (for domain authority)
+   - Sign up at [openpagerank.com](https://openpagerank.com)
+   - Get your API key
+   - Add to `OPENPAGERANK_API_KEY` in `.env.local`
+
+## 📊 Report Sections
+
+The generated reports include:
+
+1. **Domain Overview**
+   - Domain rank and authority metrics
+   - Indexed pages and organic keywords estimate
+   - International presence analysis
+
+2. **Technical SEO**
+   - Core Web Vitals (LCP, FID, CLS)
+   - Lighthouse scores (Performance, Accessibility, Best Practices, SEO)
+   - Priority action items
+
+3. **On-Page SEO**
+   - Title tags and meta descriptions analysis
+   - Heading structure and content optimization
+   - Schema markup and technical elements
+   - Quick wins and improvement opportunities
+
+4. **SERP Analysis**
+   - Top 10 search results
+   - Featured snippets and People Also Ask
+   - Related searches and competitor analysis
+
+5. **Keyword Opportunities**
+   - High-impact keyword suggestions
+   - Content ideas and blog topics
+   - SERP features to target
+
+6. **Growth Plan**
+   - 30-60-90 day implementation roadmap
+   - Key Performance Indicators (KPIs)
+   - Prioritized action items
+
+## 🏗️ Architecture
+
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── api/seo/report/    # API endpoint for report generation
+│   ├── globals.css        # Global styles
+│   ├── layout.tsx         # Root layout
+│   └── page.tsx           # Home page
+├── components/            # React components
+│   ├── ui/               # shadcn/ui components
+│   ├── ReportGenerator.tsx
+│   └── SEOReport.tsx
+├── lib/                  # Utilities and providers
+│   ├── providers/        # API integrations
+│   │   ├── pagespeed.ts  # Google PageSpeed Insights
+│   │   ├── serp.ts       # SERP API integration
+│   │   ├── openpagerank.ts # Domain authority
+│   │   └── crawl.ts      # Basic HTML parsing
+│   ├── seo/             # SEO logic
+│   │   ├── transform.ts  # Data transformation
+│   │   └── recommend.ts  # Insights generation
+│   ├── cache.ts         # LRU caching
+│   ├── rateLimit.ts     # Rate limiting
+│   └── utils.ts         # Utility functions
+└── types/               # TypeScript definitions
+    └── seo.ts           # Report interfaces
+```
+
+## 🔄 API Endpoints
+
+### POST /api/seo/report
+
+Generate a comprehensive SEO report.
+
+**Request Body:**
+```json
+{
+  "query": "example.com",
+  "mode": "domain"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "inputMode": "domain",
+    "query": "example.com",
+    "fetchedAtISO": "2024-01-15T10:30:00.000Z",
+    "domainOverview": { ... },
+    "technicalSEO": { ... },
+    "onPage": { ... },
+    "serp": { ... },
+    "opportunities": { ... },
+    "growthPlan": { ... }
+  },
+  "cached": false
+}
+```
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+1. **Deploy to Vercel**
 ```bash
-# Vercel CLI ile
 npm i -g vercel
 vercel --prod
-
-# Environment variables'ları Vercel dashboard'dan ekleyin
 ```
 
-### 1. Environment Hazırlığı
-```env
-NODE_ENV=production
-OPENAI_API_KEY=sk-proj-prod-key-here
-VITE_API_BASE=https://yourdomain.com
-FRONTEND_URL=https://yourdomain.com
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-key
-```
+2. **Set environment variables**
+   - Go to Vercel dashboard
+   - Add your API keys in Environment Variables
+   - Redeploy
 
-### 2. Build
-```bash
-npm run build
-```
+### Other Platforms
 
-### 3. Production Start
-```bash
-npm start
-```
+The app is a standard Next.js application and can be deployed to:
+- Netlify
+- Railway
+- DigitalOcean App Platform
+- AWS Amplify
+- Any Node.js hosting provider
 
-## 📊 API Endpoints
+## 🔍 Features in Detail
 
-### SEO Scan
-```
-POST /api/seo-scan
-Body: { 
-  url: "https://example.com" 
-}
-Response: {
-  ok: true,
-  report: {
-    score: 85,
-    positives: [...],
-    negatives: [...],
-    suggestions: [...],
-    reportData: {...}
-  }
-}
-```
+### Smart Fallbacks
+- Works without API keys using estimated data
+- Graceful degradation when APIs are unavailable
+- Clear warnings when using fallback data
 
-### AI Suggestions (Pro/Advanced)
-```
-POST /api/seo-suggestions
-Body: { 
-  membershipType: "Pro|Advanced",
-  prompt: "SEO sorunuz",
-  reportContext: "...",
-  useReportBase: true
-}
-```
+### Performance Optimizations
+- LRU cache with 15-minute TTL
+- Rate limiting (10 requests/minute/IP)
+- Parallel API calls for faster report generation
+- Optimized bundle size with code splitting
 
-### AI Content (Advanced)
-```
-POST /api/ai-content
-Body: { 
-  membershipType: "Advanced",
-  platform: "linkedin|instagram|twitter|facebook",
-  prompt: "İçerik konusu",
-  industry: "teknoloji",
-  audience: "b2b",
-  tone: "profesyonel"
-}
-```
+### Print-Friendly Reports
+- Professional PDF export via browser print
+- Optimized print styles
+- Page break handling
+- Clean typography and layout
 
-### Health Check
-```
-GET /health
-Response: {
-  status: "healthy",
-  openai: "configured|fallback_mode",
-  environment: "development|production"
-}
-```
-
-## 🔒 Güvenlik
-
-- **Helmet.js**: Güvenlik başlıkları (CSP, HSTS, XSS koruması)
-- **Rate Limiting**: 15 dakikada 50-100 istek (prod/dev)
-- **CORS**: Whitelist bazlı origin kontrolü
-- **Input Validation**: express-validator ile
-- **API Key Security**: Client'a asla expose edilmez
-- **RLS**: Supabase Row Level Security aktif
-- **SSL**: Production'da zorunlu HTTPS
-
-## 📈 Performans
-
-- **Fallback Systems**: OpenAI/Supabase olmadan da çalışır
-- **Error Handling**: Graceful degradation
-- **Request Timeouts**: 30s API, 10s site fetch
-- **Caching**: localStorage + Supabase hybrid
-- **Code Splitting**: Vendor, router, UI chunks
-- **Lazy Loading**: Component ve image lazy loading
-- **Bundle Optimization**: Tree shaking, minification
-
-## 🐛 Troubleshooting
-
-### Genel Sorunlar
-```bash
-# Tüm dependencies'i yeniden yükle
-rm -rf node_modules package-lock.json server/node_modules server/package-lock.json
-npm install
-cd server && npm install
-
-# Cache temizle
-npm run build
-```
-
-### OpenAI API Hatası
-```bash
-# API key test et
-node server/test-openai.js
-
-# .env.local kontrol et
-cat .env.local | grep OPENAI
-```
-
-### Supabase Bağlantı Sorunu
-```bash
-# Environment variables kontrol
-echo $VITE_SUPABASE_URL
-echo $VITE_SUPABASE_ANON_KEY
-
-# Fallback localStorage kullanılır
-```
-
-### Server Başlatma Sorunu
-```bash
-# Port kontrolü
-lsof -i :8787 || netstat -tulpn | grep 8787
-
-# Farklı port dene
-API_PORT=8788 npm run dev:server
-```
-
-### Build Hatası
-```bash
-# TypeScript kontrol
-npx tsc --noEmit
-
-# Lint kontrol
-npm run lint
-
-# Temiz build
-rm -rf dist && npm run build
-```
-
-## 📝 Changelog
-
-### v1.1.0 (Güncel)
-- Tutarlı tasarım sistemi
-- Gelişmiş animasyonlar ve micro-interactions
-- Hybrid database (localStorage + Supabase)
-- Production-ready deployment
-- Comprehensive error handling
-- Enhanced user experience
-
-### v1.0.0
-- İlk release
-- Temel SEO analizi
-- AI entegrasyonu
-- Üyelik sistemi
-
-## 🏗️ Mimari
-
-### Frontend
-- **React 18** + TypeScript
-- **Tailwind CSS** + Custom animations
-- **React Router** v7 routing
-- **Lucide React** icons
-- **Vite** build tool
-
-### Backend
-- **Express.js** API server
-- **OpenAI GPT-4o-mini** AI integration
-- **Helmet.js** security
-- **Rate limiting** protection
-
-### Database
-- **Hybrid approach**: localStorage + Supabase
-- **Automatic migration**: v0 -> v1
-- **RLS policies**: Row-level security
-- **Fallback support**: Offline-first design
-
-### Deployment
-- **Vercel**: Recommended (zero-config)
-- **Netlify**: Alternative option
-- **Docker**: Container support
-- **VPS**: Manual deployment guide
+### Responsive Design
+- Mobile-first approach
+- Tablet and desktop optimizations
+- Touch-friendly interface
+- Accessible design patterns
 
 ## 🤝 Contributing
 
-1. Fork the project
-2. Create feature branch
-3. Commit changes
-4. Push to branch
-5. Open Pull Request
-
-### Development Setup
-```bash
-# Clone & install
-git clone <repo-url>
-cd weemeai
-npm install
-cd server && npm install && cd ..
-
-# Environment setup
-cp .env.example .env.local
-# Edit .env.local with your keys
-
-# Start development
-npm run dev
-```
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
 
 ## 📄 License
 
-MIT License - detaylar için LICENSE dosyasına bakın.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🔑 API Keys & Configuration
+## 🆘 Support
 
-### OpenAI Setup
-1. [OpenAI Platform](https://platform.openai.com/api-keys)'da API key oluşturun
-2. `.env.local` dosyasına `OPENAI_API_KEY=sk-proj-...` ekleyin
-3. Billing setup yapın (kullanım başına ödeme)
-4. Rate limits ayarlayın
+- 📧 Email: support@weeme.ai
+- 📖 Documentation: [docs.weeme.ai](https://docs.weeme.ai)
+- 🐛 Issues: [GitHub Issues](https://github.com/weeme-ai/seo-intelligence/issues)
 
-### Supabase Setup (Opsiyonel)
-1. [Supabase](https://supabase.com) projesi oluşturun
-2. Database URL ve anon key alın
-3. `.env.local`'e ekleyin
-4. Migrations otomatik çalışacak
+## 🙏 Acknowledgments
 
-### Production Checklist
-- ✅ SSL sertifikası aktif
-- ✅ Environment variables set
-- ✅ OpenAI API key geçerli
-- ✅ Supabase RLS policies aktif
-- ✅ CORS origins doğru
-- ✅ Rate limiting aktif
-- ✅ Error monitoring setup
+- [shadcn/ui](https://ui.shadcn.com) for beautiful UI components
+- [Lucide](https://lucide.dev) for icons
+- [Tailwind CSS](https://tailwindcss.com) for styling
+- [Next.js](https://nextjs.org) for the framework
 
 ---
 
-**🚀 Production Ready!** Tüm özellikler test edildi ve canlı ortam için hazır.
+**Ready for production!** 🎉
+
+Built with ❤️ by the Weeme.ai team
